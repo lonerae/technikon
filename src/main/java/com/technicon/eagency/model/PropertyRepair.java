@@ -3,9 +3,8 @@ package com.technicon.eagency.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class PropertyRepair {
+public class PropertyRepair extends PersistentClass {
 
-    private long OwnerRepairId;
     private long propertyRepairId;
     private String summaryDesc;
     private LocalDate submissionRepair;
@@ -20,8 +19,7 @@ public class PropertyRepair {
     public PropertyRepair() {
     }
 
-    public PropertyRepair(long OwnerRepairId, long propertyRepairId, String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
-        this.OwnerRepairId = OwnerRepairId;
+    public PropertyRepair(long propertyRepairId, String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
         this.propertyRepairId = propertyRepairId;
         this.summaryDesc = summaryDesc;
         this.submissionRepair = submissionRepair;
@@ -32,14 +30,6 @@ public class PropertyRepair {
         this.startRepair = startRepair;
         this.actualStartDate = actualStartDate;
         this.actualEndDate = actualEndDate;
-    }
-
-    public long getOwnerRepairId() {
-        return OwnerRepairId;
-    }
-
-    public void setOwnerRepairId(long OwnerRepairId) {
-        this.OwnerRepairId = OwnerRepairId;
     }
 
     public long getPropertyRepairId() {
@@ -124,10 +114,7 @@ public class PropertyRepair {
 
     @Override
     public String toString() {
-        return "PropertyRepair{" + "OwnerRepairId=" + OwnerRepairId + ", propertyRepairId=" + propertyRepairId
-                + ", summaryDesc=" + summaryDesc + ", submissionRepair=" + submissionRepair + ", repairDesc=" + repairDesc
-                + ", proposedStartDate=" + proposedStartDate + ", proposedEndDate=" + proposedEndDate + ", cost=" + cost
-                + ", startRepair=" + startRepair + ", actualStartDate=" + actualStartDate + ", actualEndDate=" + actualEndDate + '}';
+        return "PropertyRepair{" + "propertyRepairId=" + propertyRepairId + ", summaryDesc=" + summaryDesc + ", submissionRepair=" + submissionRepair + ", repairDesc=" + repairDesc + ", proposedStartDate=" + proposedStartDate + ", proposedEndDate=" + proposedEndDate + ", cost=" + cost + ", startRepair=" + startRepair + ", actualStartDate=" + actualStartDate + ", actualEndDate=" + actualEndDate + '}';
     }
 
 }

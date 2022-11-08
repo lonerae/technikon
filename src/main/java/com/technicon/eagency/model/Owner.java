@@ -4,9 +4,8 @@ package com.technicon.eagency.model;
  *
  * @author Nick
  */
-public class Owner {
+public class Owner extends PersistentClass {
 
-    private long id;
     private String name;
     private String surname;
     private String address;
@@ -18,22 +17,13 @@ public class Owner {
     public Owner() {
     }
 
-    public Owner(long id, String name, String surname, String address, String phoneNumber, String email, String username, String password) {
-        this.id = id;
+    public Owner(String name, String surname, String address, String phoneNumber, String email, String username, String password) {
         this.surname = surname;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.username = username;
         this.password = password;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -94,9 +84,9 @@ public class Owner {
 
     @Override
     public String toString() {
-        return "Owner{" + "id=" + id + ", name=" + name + ", surname=" + surname
-                + ", address=" + address + ", phoneNumber=" + phoneNumber
-                + ", email=" + email + ", username=" + username + ", password=" + password + '}';
+        return "Owner{" + "name=" + name + ", surname=" + surname + ", address=" + address
+                + ", phoneNumber=" + phoneNumber + ", email=" + email + ", username=" + username
+                + ", password=" + password + '}';
     }
 
 }
