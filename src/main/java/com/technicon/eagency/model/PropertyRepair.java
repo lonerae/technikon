@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 public class PropertyRepair extends PersistentClass {
 
-    private long propertyRepairId;
     private String summaryDesc;
     private LocalDate submissionRepair;
     private String repairDesc;
@@ -19,8 +18,7 @@ public class PropertyRepair extends PersistentClass {
     public PropertyRepair() {
     }
 
-    public PropertyRepair(long propertyRepairId, String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
-        this.propertyRepairId = propertyRepairId;
+    public PropertyRepair(String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
         this.summaryDesc = summaryDesc;
         this.submissionRepair = submissionRepair;
         this.repairDesc = repairDesc;
@@ -30,14 +28,6 @@ public class PropertyRepair extends PersistentClass {
         this.startRepair = startRepair;
         this.actualStartDate = actualStartDate;
         this.actualEndDate = actualEndDate;
-    }
-
-    public long getPropertyRepairId() {
-        return propertyRepairId;
-    }
-
-    public void setPropertyRepairId(long propertyRepairId) {
-        this.propertyRepairId = propertyRepairId;
     }
 
     public String getSummaryDesc() {
@@ -114,7 +104,6 @@ public class PropertyRepair extends PersistentClass {
 
     @Override
     public String toString() {
-        return "PropertyRepair{" + "propertyRepairId=" + propertyRepairId + ", summaryDesc=" + summaryDesc + ", submissionRepair=" + submissionRepair + ", repairDesc=" + repairDesc + ", proposedStartDate=" + proposedStartDate + ", proposedEndDate=" + proposedEndDate + ", cost=" + cost + ", startRepair=" + startRepair + ", actualStartDate=" + actualStartDate + ", actualEndDate=" + actualEndDate + '}';
+        return "PropertyRepair{" + "summaryDesc=" + summaryDesc + ", submissionRepair=" + submissionRepair + ", repairDesc=" + repairDesc + ", proposedStartDate=" + proposedStartDate + ", proposedEndDate=" + proposedEndDate + ", cost=" + cost + ", startRepair=" + startRepair + ", actualStartDate=" + actualStartDate + ", actualEndDate=" + actualEndDate + '}';
     }
-
 }
