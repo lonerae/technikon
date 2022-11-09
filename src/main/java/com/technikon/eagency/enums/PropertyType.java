@@ -1,4 +1,4 @@
-package com.technicon.eagency.enums;
+package com.technikon.eagency.enums;
 
 /**
  *
