@@ -1,9 +1,9 @@
-package com.technicon.eagency.model;
+package com.technikon.eagency.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class PropertyRepair extends PersistentClass {
+public class Repair extends PersistentClass {
 
     private String summaryDesc;
     private LocalDate submissionRepair;
@@ -15,10 +15,10 @@ public class PropertyRepair extends PersistentClass {
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;
 
-    public PropertyRepair() {
+    public Repair() {
     }
 
-    public PropertyRepair(String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
+    public Repair(String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
         this.summaryDesc = summaryDesc;
         this.submissionRepair = submissionRepair;
         this.repairDesc = repairDesc;

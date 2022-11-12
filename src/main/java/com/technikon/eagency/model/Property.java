@@ -1,4 +1,4 @@
-package com.technicon.eagency.model;
+package com.technikon.eagency.model;
 
 import java.time.LocalDate;
 
