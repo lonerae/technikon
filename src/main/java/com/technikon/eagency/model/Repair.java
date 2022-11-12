@@ -7,10 +7,9 @@ import java.time.LocalDateTime;
 
 public class Repair extends PersistentClass {
 
-    private long ownerId;
     private long propertyId;
     private short shortDescription;
-    private int vatNumberOfOwner;
+    private long vatNumberOfOwner;
     private LocalDateTime dateOfSubmisssion;
     private String descriptionOfWork;
     private LocalDateTime proposedDateOfStart;
@@ -21,14 +20,6 @@ public class Repair extends PersistentClass {
     private LocalDateTime dateOfEnd;
     private RepairType repairtype;
     private StatusType statustype;
-
-    public long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
-    }
 
     public long getPropertyId() {
         return propertyId;
@@ -46,11 +37,11 @@ public class Repair extends PersistentClass {
         this.shortDescription = shortDescription;
     }
 
-    public int getVatNumberOfOwner() {
+    public long getVatNumberOfOwner() {
         return vatNumberOfOwner;
     }
 
-    public void setVatNumberOfOwner(int vatNumberOfOwner) {
+    public void setVatNumberOfOwner(long vatNumberOfOwner) {
         this.vatNumberOfOwner = vatNumberOfOwner;
     }
 

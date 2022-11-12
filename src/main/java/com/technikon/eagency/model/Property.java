@@ -11,7 +11,7 @@ public class Property extends PersistentClass {
     private long propertyId;
     private String address;
     private int yearOfConstruction;
-    private int vatNumberOfOwner;
+    private long vatNumberOfOwner;
     private PropertyType propertyType;
 
     public long getPropertyId() {
@@ -38,7 +38,7 @@ public class Property extends PersistentClass {
         this.yearOfConstruction = yearOfConstruction;
     }
 
-    public int getVatNumberOfOwner() {
+    public long getVatNumberOfOwner() {
         return vatNumberOfOwner;
     }
 
