@@ -1,5 +1,7 @@
 package com.technikon.eagency.model;
 
+import com.technikon.eagency.enums.RepairType;
+import com.technikon.eagency.enums.StatusType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -17,6 +19,8 @@ public class Repair extends PersistentClass {
     private boolean acceptance;
     private LocalDateTime dateOfStart;
     private LocalDateTime dateOfEnd;
+    private RepairType repairtype;
+    private StatusType statustype;
 
     public long getOwnerId() {
         return ownerId;
@@ -112,6 +116,22 @@ public class Repair extends PersistentClass {
 
     public void setDateOfEnd(LocalDateTime dateOfEnd) {
         this.dateOfEnd = dateOfEnd;
+    }
+
+    public RepairType getRepairtype() {
+        return repairtype;
+    }
+
+    public void setRepairtype(RepairType repairtype) {
+        this.repairtype = repairtype;
+    }
+
+    public StatusType getStatustype() {
+        return statustype;
+    }
+
+    public void setStatustype(StatusType statustype) {
+        this.statustype = statustype;
     }
 
 }

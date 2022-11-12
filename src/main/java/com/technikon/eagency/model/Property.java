@@ -1,5 +1,7 @@
 package com.technikon.eagency.model;
 
+import com.technikon.eagency.enums.PropertyType;
+
 /**
  *
  * @author Nick
@@ -10,6 +12,7 @@ public class Property extends PersistentClass {
     private String address;
     private int yearOfConstruction;
     private int vatNumberOfOwner;
+    private PropertyType propertyType;
 
     public long getPropertyId() {
         return propertyId;
@@ -41,6 +44,14 @@ public class Property extends PersistentClass {
 
     public void setVatNumberOfOwner(int vatNumberOfOwner) {
         this.vatNumberOfOwner = vatNumberOfOwner;
+    }
+
+    public PropertyType getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(PropertyType propertyType) {
+        this.propertyType = propertyType;
     }
 
 }
