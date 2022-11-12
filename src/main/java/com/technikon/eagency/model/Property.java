@@ -1,24 +1,22 @@
 package com.technikon.eagency.model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author Nick
  */
 public class Property extends PersistentClass {
 
+    private long propertyId;
     private String address;
-    private LocalDate constructionYear;
-    private long id;
+    private int yearOfConstruction;
+    private int vatNumberOfOwner;
 
-    public Property() {
+    public long getPropertyId() {
+        return propertyId;
     }
 
-    public Property(String address, LocalDate constructionYear, long id) {
-        this.address = address;
-        this.constructionYear = constructionYear;
-        this.id = id;
+    public void setPropertyId(long propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getAddress() {
@@ -29,25 +27,20 @@ public class Property extends PersistentClass {
         this.address = address;
     }
 
-    public LocalDate getConstructionYear() {
-        return constructionYear;
+    public int getYearOfConstruction() {
+        return yearOfConstruction;
     }
 
-    public void setConstructionYear(LocalDate constructionYear) {
-        this.constructionYear = constructionYear;
+    public void setYearOfConstruction(int yearOfConstruction) {
+        this.yearOfConstruction = yearOfConstruction;
     }
 
-    public long getId() {
-        return id;
+    public int getVatNumberOfOwner() {
+        return vatNumberOfOwner;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Property{" + "address=" + address + ", constructionYear=" + constructionYear + ", id=" + id + '}';
+    public void setVatNumberOfOwner(int vatNumberOfOwner) {
+        this.vatNumberOfOwner = vatNumberOfOwner;
     }
 
 }

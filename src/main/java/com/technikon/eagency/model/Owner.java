@@ -4,26 +4,21 @@ package com.technikon.eagency.model;
  *
  * @author Nick
  */
-public class Owner extends PersistentClass {
+public class Owner extends Person {
 
+    private long vatNumber;
     private String name;
     private String surname;
     private String address;
-    private String phoneNumber;
+    private String phone_number;
     private String email;
-    private String username;
-    private String password;
 
-    public Owner() {
+    public long getVatNumber() {
+        return vatNumber;
     }
 
-    public Owner(String name, String surname, String address, String phoneNumber, String email, String username, String password) {
-        this.surname = surname;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.username = username;
-        this.password = password;
+    public void setVatNumber(long vatNumber) {
+        this.vatNumber = vatNumber;
     }
 
     public String getName() {
@@ -50,12 +45,12 @@ public class Owner extends PersistentClass {
         this.address = address;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone_number() {
+        return phone_number;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public String getEmail() {
@@ -64,29 +59,6 @@ public class Owner extends PersistentClass {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Owner{" + "name=" + name + ", surname=" + surname + ", address=" + address
-                + ", phoneNumber=" + phoneNumber + ", email=" + email + ", username=" + username
-                + ", password=" + password + '}';
     }
 
 }

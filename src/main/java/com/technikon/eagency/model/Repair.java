@@ -1,109 +1,117 @@
 package com.technikon.eagency.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Repair extends PersistentClass {
 
-    private String summaryDesc;
-    private LocalDate submissionRepair;
-    private String repairDesc;
-    private LocalDate proposedStartDate;
-    private LocalDate proposedEndDate;
-    private BigDecimal cost;
-    private boolean startRepair;
-    private LocalDate actualStartDate;
-    private LocalDate actualEndDate;
+    private long ownerId;
+    private long propertyId;
+    private short shortDescription;
+    private int vatNumberOfOwner;
+    private LocalDateTime dateOfSubmisssion;
+    private String descriptionOfWork;
+    private LocalDateTime proposedDateOfStart;
+    private LocalDateTime proposedDateOfEnd;
+    private BigDecimal proposedCost;
+    private boolean acceptance;
+    private LocalDateTime dateOfStart;
+    private LocalDateTime dateOfEnd;
 
-    public Repair() {
+    public long getOwnerId() {
+        return ownerId;
     }
 
-    public Repair(String summaryDesc, LocalDate submissionRepair, String repairDesc, LocalDate proposedStartDate, LocalDate proposedEndDate, BigDecimal cost, boolean startRepair, LocalDate actualStartDate, LocalDate actualEndDate) {
-        this.summaryDesc = summaryDesc;
-        this.submissionRepair = submissionRepair;
-        this.repairDesc = repairDesc;
-        this.proposedStartDate = proposedStartDate;
-        this.proposedEndDate = proposedEndDate;
-        this.cost = cost;
-        this.startRepair = startRepair;
-        this.actualStartDate = actualStartDate;
-        this.actualEndDate = actualEndDate;
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getSummaryDesc() {
-        return summaryDesc;
+    public long getPropertyId() {
+        return propertyId;
     }
 
-    public void setSummaryDesc(String summaryDesc) {
-        this.summaryDesc = summaryDesc;
+    public void setPropertyId(long propertyId) {
+        this.propertyId = propertyId;
     }
 
-    public LocalDate getSubmissionRepair() {
-        return submissionRepair;
+    public short getShortDescription() {
+        return shortDescription;
     }
 
-    public void setSubmissionRepair(LocalDate submissionRepair) {
-        this.submissionRepair = submissionRepair;
+    public void setShortDescription(short shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
-    public String getRepairDesc() {
-        return repairDesc;
+    public int getVatNumberOfOwner() {
+        return vatNumberOfOwner;
     }
 
-    public void setRepairDesc(String repairDesc) {
-        this.repairDesc = repairDesc;
+    public void setVatNumberOfOwner(int vatNumberOfOwner) {
+        this.vatNumberOfOwner = vatNumberOfOwner;
     }
 
-    public LocalDate getProposedStartDate() {
-        return proposedStartDate;
+    public LocalDateTime getDateOfSubmisssion() {
+        return dateOfSubmisssion;
     }
 
-    public void setProposedStartDate(LocalDate proposedStartDate) {
-        this.proposedStartDate = proposedStartDate;
+    public void setDateOfSubmisssion(LocalDateTime dateOfSubmisssion) {
+        this.dateOfSubmisssion = dateOfSubmisssion;
     }
 
-    public LocalDate getProposedEndDate() {
-        return proposedEndDate;
+    public String getDescriptionOfWork() {
+        return descriptionOfWork;
     }
 
-    public void setProposedEndDate(LocalDate proposedEndDate) {
-        this.proposedEndDate = proposedEndDate;
+    public void setDescriptionOfWork(String descriptionOfWork) {
+        this.descriptionOfWork = descriptionOfWork;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public LocalDateTime getProposedDateOfStart() {
+        return proposedDateOfStart;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setProposedDateOfStart(LocalDateTime proposedDateOfStart) {
+        this.proposedDateOfStart = proposedDateOfStart;
     }
 
-    public boolean isStartRepair() {
-        return startRepair;
+    public LocalDateTime getProposedDateOfEnd() {
+        return proposedDateOfEnd;
     }
 
-    public void setStartRepair(boolean startRepair) {
-        this.startRepair = startRepair;
+    public void setProposedDateOfEnd(LocalDateTime proposedDateOfEnd) {
+        this.proposedDateOfEnd = proposedDateOfEnd;
     }
 
-    public LocalDate getActualStartDate() {
-        return actualStartDate;
+    public BigDecimal getProposedCost() {
+        return proposedCost;
     }
 
-    public void setActualStartDate(LocalDate actualStartDate) {
-        this.actualStartDate = actualStartDate;
+    public void setProposedCost(BigDecimal proposedCost) {
+        this.proposedCost = proposedCost;
     }
 
-    public LocalDate getActualEndDate() {
-        return actualEndDate;
+    public boolean isAcceptance() {
+        return acceptance;
     }
 
-    public void setActualEndDate(LocalDate actualEndDate) {
-        this.actualEndDate = actualEndDate;
+    public void setAcceptance(boolean acceptance) {
+        this.acceptance = acceptance;
     }
 
-    @Override
-    public String toString() {
-        return "PropertyRepair{" + "summaryDesc=" + summaryDesc + ", submissionRepair=" + submissionRepair + ", repairDesc=" + repairDesc + ", proposedStartDate=" + proposedStartDate + ", proposedEndDate=" + proposedEndDate + ", cost=" + cost + ", startRepair=" + startRepair + ", actualStartDate=" + actualStartDate + ", actualEndDate=" + actualEndDate + '}';
+    public LocalDateTime getDateOfStart() {
+        return dateOfStart;
     }
+
+    public void setDateOfStart(LocalDateTime dateOfStart) {
+        this.dateOfStart = dateOfStart;
+    }
+
+    public LocalDateTime getDateOfEnd() {
+        return dateOfEnd;
+    }
+
+    public void setDateOfEnd(LocalDateTime dateOfEnd) {
+        this.dateOfEnd = dateOfEnd;
+    }
+
 }

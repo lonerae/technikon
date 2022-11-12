@@ -10,22 +10,22 @@ package com.technikon.eagency.model;
  */
 public abstract class PersistentClass {
 
-    private long OwnerId;
-    private long propertyId;
+    private int id;
+    private boolean isActive;
 
-    public long getOwnerId() {
-        return OwnerId;
+    public int getId() {
+        return id;
     }
 
-    public void setOwnerId(long OwnerId) {
-        this.OwnerId = OwnerId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public long getPropertyId() {
-        return propertyId;
+    public boolean isIsActive() {
+        return isActive;
     }
 
-    public void setPropertyId(long propertyId) {
-        this.propertyId = propertyId;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }
