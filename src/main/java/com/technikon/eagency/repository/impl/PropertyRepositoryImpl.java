@@ -3,7 +3,8 @@ package com.technikon.eagency.repository.impl;
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.repository.PropertyRepository;
-import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -12,19 +13,34 @@ import java.time.LocalDate;
 public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
 
     @Override
-    public void updateOwnerId(int propertyId, long id) {
+    public Property readPropertyId(long propertyId) {
+        Optional<Property> property = read().stream()
+                .filter(p -> p.getPropertyId()== propertyId)
+                .findFirst();
+        return property.orElse(null);
+    }
+
+    @Override
+    public List<Property> readVatNumber(long vatNumberOfOwner) {
+        List<Property> properties = read().stream()
+                .filter(p -> p.getVatNumberOfOwner()== vatNumberOfOwner)
+                .toList();
+        return properties;
+    }
+
+    @Override
+    public void updateVatNumberOfOwner(int propertyId, long id) {
         Property property = read(propertyId);
         if (property != null) {
-            property.setOwnerId(id);
+            property.setVatNumberOfOwner(id);
         }
     }
 
     @Override
     public void updatePropertyId(int propertyId, long id) {
-        // I am not sure if it's ok to change the uninque id of a property
         Property property = read(propertyId);
         if (property != null) {
-            property.setId(id); // seter??
+            property.setPropertyId(id);
         }
     }
 
@@ -37,10 +53,10 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
     }
 
     @Override
-    public void updateConstructionYear(int propertyId, LocalDate year) {
+    public void updateYearOfConstruction(int propertyId, int year) {
         Property property = read(propertyId);
         if (property != null) {
-            property.setConstructionYear(year);
+            property.setYearOfConstruction(year);
         }
     }
 

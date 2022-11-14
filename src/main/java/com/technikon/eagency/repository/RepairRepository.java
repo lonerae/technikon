@@ -1,18 +1,25 @@
 package com.technikon.eagency.repository;
 
-import com.technikon.eagency.enums.PropertyType;
+import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Repair;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface RepairRepository extends Repository<Repair> {
 
-    void updateOwner(int repairId, int ownerId);
+    List<Repair> readStartDate(LocalDateTime date);
+    
+    List<Repair> readDateRange(LocalDateTime startDate, LocalDateTime endDate);
+    
+    List<Repair> readOwner(long vatNumber);
+    
+    void updateVatNumberOfOwner(int repairId, long vatNumberOfOwner);
 
-    void updateProperty(int repairId, int propertyId);
+    void updatePropertyId(int repairId, long propertyId);
 
-    void updateType(int repairId, PropertyType type);
+    void updateRepairType(int repairId, RepairType type);
 
     void updateShortDescription(int repairId, String description);
 
@@ -24,7 +31,7 @@ public interface RepairRepository extends Repository<Repair> {
 
     void updateProposedEndDate(int repairId, LocalDateTime date);
 
-    void updateCost(int repairId, BigDecimal cost);
+    void updateProposedCost(int repairId, BigDecimal cost);
 
     void updateAcceptance(int repairId, boolean startRepair);
 

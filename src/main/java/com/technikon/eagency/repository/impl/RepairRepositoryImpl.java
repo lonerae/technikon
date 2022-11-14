@@ -1,11 +1,12 @@
 package com.technikon.eagency.repository.impl;
 
-import com.technikon.eagency.enums.PropertyType;
+import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.RepairRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -13,17 +14,41 @@ import java.time.LocalDateTime;
  */
 public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
-    //Error: missin fields and getters/setters 
     @Override
-    public void updateOwner(int repairId, int ownerId) {
+    public List<Repair> readStartDate(LocalDateTime date) {
+        List<Repair> repairs = read().stream()
+                .filter(r -> r.getActualStartDate().isEqual(date))
+                .toList();
+        return repairs;
+    }
+
+    @Override
+    public List<Repair> readDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        List<Repair> repairs = read().stream()
+                .filter(r -> r.getActualStartDate().isEqual(startDate))
+                .filter(r -> r.getActualEndDate().isEqual(endDate))
+                .toList();
+        return repairs;
+    }
+
+    @Override
+    public List<Repair> readOwner(long vatNumber) {
+        List<Repair> repairs = read().stream()
+                .filter(r -> r.getVatNumberOfOwner() == vatNumber)
+                .toList();
+        return repairs;
+    }
+
+    @Override
+    public void updateVatNumberOfOwner(int repairId, long vatNumberOfOwner) {
         Repair repair = read(repairId);
         if (repair != null) {
-            repair.setOwnerId(ownerId);
+            repair.setVatNumberOfOwner(vatNumberOfOwner);
         }
     }
 
     @Override
-    public void updateProperty(int repairId, int propertyId) {
+    public void updatePropertyId(int repairId, long propertyId) {
         Repair repair = read(repairId);
         if (repair != null) {
             repair.setPropertyId(propertyId);
@@ -31,10 +56,10 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateType(int repairId, PropertyType type) {
+    public void updateRepairType(int repairId, RepairType type) {
         Repair repair = read(repairId);
         if (repair != null) {
-            repair.setPropertyType(type);
+            repair.setRepairtype(type);
         }
     }
 
@@ -79,10 +104,10 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateCost(int repairId, BigDecimal cost) {
+    public void updateProposedCost(int repairId, BigDecimal cost) {
         Repair repair = read(repairId);
         if (repair != null) {
-            repair.setCost(cost);
+            repair.setProposedCost(cost);
         }
     }
 
@@ -90,7 +115,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateAcceptance(int repairId, boolean startRepair) {
         Repair repair = read(repairId);
         if (repair != null) {
-            repair.setStartRepair(startRepair);
+            repair.setAcceptance(startRepair);
         }
     }
 
