@@ -7,6 +7,7 @@ import com.technikon.eagency.repository.RepairRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -41,105 +42,105 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
 
     @Override
     public void updateVatNumberOfOwner(int repairId, long vatNumberOfOwner) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setVatNumberOfOwner(vatNumberOfOwner);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setVatNumberOfOwner(vatNumberOfOwner);
         }
     }
 
     @Override
     public void updatePropertyId(int repairId, long propertyId) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setPropertyId(propertyId);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setPropertyId(propertyId);
         }
     }
 
     @Override
     public void updateRepairType(int repairId, RepairType type) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setRepairtype(type);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setRepairtype(type);
         }
     }
 
     @Override
     public void updateShortDescription(int repairId, String description) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setShortDescription(description);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setShortDescription(description);
         }
     }
 
     @Override
     public void updateSubmissionDate(int repairId, LocalDateTime date) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setSubmissionDate(date);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setSubmissionDate(date);
         }
     }
 
     @Override
     public void updateDescription(int repairId, String description) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setDescription(description);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setDescription(description);
         }
     }
 
     @Override
     public void updateProposedStartDate(int repairId, LocalDateTime date) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setProposedStartDate(date);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setProposedStartDate(date);
         }
     }
 
     @Override
     public void updateProposedEndDate(int repairId, LocalDateTime date) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setProposedEndDate(date);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setProposedEndDate(date);
         }
     }
 
     @Override
     public void updateProposedCost(int repairId, BigDecimal cost) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setProposedCost(cost);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setProposedCost(cost);
         }
     }
 
     @Override
     public void updateAcceptance(int repairId, boolean startRepair) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setAcceptance(startRepair);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setAcceptance(startRepair);
         }
     }
 
     @Override
     public void updateStatus(int repairId, StatusType status) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setStatusType(status);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setStatusType(status);
         }
     }
 
     @Override
     public void updateActualStartDate(int repairId, LocalDateTime date) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setActualStartDate(date);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setActualStartDate(date);
         }
     }
 
     @Override
     public void updateActualEndDate(int repairId, LocalDateTime date) {
-        Repair repair = read(repairId);
-        if (repair != null) {
-            repair.setActualEndDate(date);
+        Optional<Repair> repair = read(repairId);
+        if (repair.isPresent()) {
+            repair.get().setActualEndDate(date);
         }
     }
 

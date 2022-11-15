@@ -4,6 +4,7 @@ import com.technikon.eagency.model.PersistentClass;
 import com.technikon.eagency.repository.Repository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
@@ -22,13 +23,15 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     }
 
     @Override
-    public T read(int id) {
-        for (T t : list) {
-            if (t.getId() == id) {
-                return t;
-            }
+    public Optional<T> read(int id) {
+        Optional<T> t = read()
+                .stream()
+                .filter(obj -> obj.getId() == id)
+                .findFirst();
+        if (t.isPresent()) {
+            return t;
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -38,9 +41,9 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public boolean delete(int id) {
-        T t = read(id);
-        if (t != null) {
-            list.remove(t);
+        Optional<T> t = read(id);
+        if (t.isPresent()) {
+            list.remove(t.get());
             return true;
         }
         return false;
@@ -48,9 +51,9 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public boolean safeDelete(int id) {
-        T t = read(id);
-        if (t != null) {
-            t.setIsActive(false);
+        Optional<T> t = read(id);
+        if (t.isPresent()) {
+            t.get().setIsActive(false);
             return true;
         }
         return false;
