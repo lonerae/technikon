@@ -13,11 +13,14 @@ import java.util.Optional;
 public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
 
     @Override
-    public Property readPropertyId(long propertyId) {
+    public Optional<Property> readPropertyId(long propertyId) {
         Optional<Property> property = read().stream()
                 .filter(p -> p.getPropertyId()== propertyId)
                 .findFirst();
-        return property.orElse(null);
+        if (property.isPresent()) {
+            return property;
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -30,41 +33,41 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
 
     @Override
     public void updateVatNumberOfOwner(int propertyId, long id) {
-        Property property = read(propertyId);
-        if (property != null) {
-            property.setVatNumberOfOwner(id);
+        Optional<Property> property = read(propertyId);
+        if (property.isPresent()) {
+            property.get().setVatNumberOfOwner(id);
         }
     }
 
     @Override
     public void updatePropertyId(int propertyId, long id) {
-        Property property = read(propertyId);
-        if (property != null) {
-            property.setPropertyId(id);
+        Optional<Property> property = read(propertyId);
+        if (property.isPresent()) {
+            property.get().setPropertyId(id);
         }
     }
 
     @Override
     public void updateAddress(int propertyId, String address) {
-        Property property = read(propertyId);
-        if (property != null) {
-            property.setAddress(address);
+        Optional<Property> property = read(propertyId);
+        if (property.isPresent()) {
+            property.get().setAddress(address);
         }
     }
 
     @Override
     public void updateYearOfConstruction(int propertyId, int year) {
-        Property property = read(propertyId);
-        if (property != null) {
-            property.setYearOfConstruction(year);
+        Optional<Property> property = read(propertyId);
+        if (property.isPresent()) {
+            property.get().setYearOfConstruction(year);
         }
     }
 
     @Override
     public void updatePropertyType(int propertyId, PropertyType type) {
-        Property property = read(propertyId);
-        if (property != null) {
-            property.setPropertyType(type);
+        Optional<Property> property = read(propertyId);
+        if (property.isPresent()) {
+            property.get().setPropertyType(type);
         }
     }
 
