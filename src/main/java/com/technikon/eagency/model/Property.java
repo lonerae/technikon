@@ -11,8 +11,8 @@ public class Property extends PersistentClass {
     private long propertyId;
     private String address;
     private int yearOfConstruction;
-    private long vatNumberOfOwner;
     private PropertyType propertyType;
+    private long vatNumberOfOwner;
 
     public long getPropertyId() {
         return propertyId;
@@ -38,14 +38,6 @@ public class Property extends PersistentClass {
         this.yearOfConstruction = yearOfConstruction;
     }
 
-    public long getVatNumberOfOwner() {
-        return vatNumberOfOwner;
-    }
-
-    public void setVatNumberOfOwner(int vatNumberOfOwner) {
-        this.vatNumberOfOwner = vatNumberOfOwner;
-    }
-
     public PropertyType getPropertyType() {
         return propertyType;
     }
@@ -54,4 +46,11 @@ public class Property extends PersistentClass {
         this.propertyType = propertyType;
     }
 
+    public long getVatNumberOfOwner() {
+        return vatNumberOfOwner;
+    }
+
+    public void setVatNumberOfOwner(long vatNumberOfOwner) {
+        this.vatNumberOfOwner = vatNumberOfOwner;
+    }
 }

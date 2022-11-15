@@ -14,7 +14,6 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
         this.list = new ArrayList<>();
     }
     
-    /*COMPILATION ERROR : LACK OF ID*/
     @Override
     public int create(T t){
         t.setId(index++);
@@ -31,7 +30,6 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
         }
         return null;
     }
-    /*----------------------------*/
 
     @Override
     public List<T> read() {
@@ -50,7 +48,11 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public boolean safeDelete(int id) {
-        //implementation
+        T t = read(id);
+        if (t != null) {
+            t.setIsActive(false);
+            return true;
+        }
         return false;
     }
     

@@ -13,7 +13,6 @@ public interface Repository<T extends PersistentClass> {
 
     boolean delete(int id);
 
-    //maybe implement with use of isActive flag on Persistent?
     boolean safeDelete(int id);
     
 }

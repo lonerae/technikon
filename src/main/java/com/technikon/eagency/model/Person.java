@@ -2,9 +2,9 @@ package com.technikon.eagency.model;
 
 /**
  *
- * @author Public
+ * @author Nick
  */
-public class Person extends PersistentClass {
+public abstract class Person extends PersistentClass {
 
     private String username;
     private String password;

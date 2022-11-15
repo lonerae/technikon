@@ -2,12 +2,29 @@ package com.technikon.eagency.repository.impl;
 
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.repository.OwnerRepository;
+import java.util.Optional;
 
 /**
  *
  * @author panos
  */
 public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {
+
+    @Override
+    public Owner readVatNumber(long vatNumber) {
+        Optional<Owner> owner = read().stream()
+                .filter(o -> o.getVatNumber() == vatNumber)
+                .findFirst();
+        return owner.orElse(null);
+    }
+
+    @Override
+    public Owner readEmail(String email) {
+        Optional<Owner> owner = read().stream()
+                .filter(o -> o.getEmail().equals(email))
+                .findFirst();
+        return owner.orElse(null);
+    }
 
     @Override
     public void updateAddress(int ownerId, String address) {
