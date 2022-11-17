@@ -1,6 +1,8 @@
 package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.enums.StatusType;
+import com.technikon.eagency.exceptions.OwnerException;
+import com.technikon.eagency.exceptions.OwnerExceptionCodes;
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class OwnerServiceImpl implements OwnerService {
@@ -28,6 +32,27 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public void registerOwner(Owner owner) {
+        if (owner == null) {
+            try {
+                throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
+            } catch (OwnerException ex) {
+                System.out.println("The owner is null");
+            }
+        }
+        if (owner.getEmail() == null) {
+            try {
+                throw new OwnerException(OwnerExceptionCodes.OWNER_MISSING_DATA);
+            } catch (OwnerException ex) {
+                System.out.println("Not all data are given to create a owner");
+            }
+        }
+        if (owner.getEmail().contains("gmail")) {
+            try {
+                throw new OwnerException(OwnerExceptionCodes.OWNER_INVALID_DATA);
+            } catch (OwnerException ex) {
+                Logger.getLogger(OwnerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         //exceptions
         ownerRepository.create(owner);
     }
