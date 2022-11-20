@@ -137,20 +137,25 @@ public class IOServiceImpl implements IOService {
                 try{
                     String[] words = line.split(",");
                     Repair repair = new Repair();
+                    Property property = new Property();
+                    Owner owner = new Owner();
+                    
                     repair.setId(Integer.parseInt(words[0]));
-                    repair.setPropertyId(Long.parseLong(words[1].trim()));
+                    repair.setProperty(property);
+                    
                     repair.setShortDescription(words[2].trim());
-                    repair.setVatNumberOfOwner(Long.parseLong(words[3].trim()));
-                    repair.setSubmissionDate(LocalDate.parse(words[4].trim()));
-                    repair.setDescription(words[5].trim());
-                    repair.setProposedStartDate(LocalDate.parse(words[6].trim()));
-                    repair.setProposedEndDate(LocalDate.parse(words[7].trim()));
+                    repair.setOwner(owner);
+           
+                    repair.setDateOfSubmisssion(LocalDate.parse(words[4].trim()));
+                    repair.setDescriptionOfWork(words[5].trim());
+                    repair.setProposedDateOfStart(LocalDate.parse(words[6].trim()));
+                    repair.setProposedDateOfEnd(LocalDate.parse(words[7].trim()));
                     repair.setProposedCost(BigDecimal.valueOf(Double.parseDouble(words[8].trim())));
                     repair.setAcceptance(Boolean.parseBoolean(words[9].trim()));
-                    repair.setActualStartDate(LocalDate.parse(words[10].trim()));
-                    repair.setActualEndDate(LocalDate.parse(words[11].trim()));
+                    repair.setDateOfStart(LocalDate.parse(words[10].trim()));
+                    repair.setDateOfEnd(LocalDate.parse(words[11].trim()));
                     repair.setRepairtype(RepairType.valueOf(words[12].trim()));
-                    repair.setStatusType(StatusType.valueOf(words[13].trim()));
+                    repair.setStatustype(StatusType.valueOf(words[13].trim()));
                     
                     repairRepository.create(repair);
                     rowsRead++;

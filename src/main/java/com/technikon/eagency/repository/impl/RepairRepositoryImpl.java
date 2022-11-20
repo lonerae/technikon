@@ -125,7 +125,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateStatus(int repairId, StatusType status) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setStatusType(status);
+            repair.get().setStatustype(status);
         }
     }
 
