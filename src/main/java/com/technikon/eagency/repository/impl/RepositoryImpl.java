@@ -53,7 +53,7 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     public boolean safeDelete(int id) {
         Optional<T> t = read(id);
         if (t.isPresent()) {
-            t.get().setIsActive(false);
+            t.get().setActive(false);
             return true;
         }
         return false;

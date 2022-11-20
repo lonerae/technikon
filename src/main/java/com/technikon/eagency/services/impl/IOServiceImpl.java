@@ -1,4 +1,5 @@
 
+
 package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.enums.PropertyType;
@@ -43,6 +44,7 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
+    
     public int readOwnerFromCsv(String filename) throws OwnerException {
 
         File file = new File(filename);
@@ -58,7 +60,7 @@ public class IOServiceImpl implements IOService {
                     String[] words = line.split(",");
                     Owner owner = new Owner();
                     owner.setId(Integer.parseInt(words[0]));
-                    owner.setIsActive(Boolean.parseBoolean(words[1].trim()));
+                    owner.setActive(Boolean.parseBoolean(words[1].trim()));
                     owner.setUsername(words[2].trim());
                     owner.setPassword(words[3].trim());
                     owner.setVatNumber(Long.parseLong(words[4].trim()));
@@ -95,11 +97,12 @@ public class IOServiceImpl implements IOService {
                 try{
                     String[] words = line.split(",");
                     Property property = new Property();
+                    Owner owner = new Owner();
                     property.setId(Integer.parseInt(words[0]));
                     property.setPropertyId(Long.parseLong(words[1].trim()));
                     property.setAddress(words[2].trim());
                     property.setYearOfConstruction(Integer.parseInt(words[3].trim()));
-                    property.setVatNumberOfOwner(Long.parseLong(words[4].trim()));
+                    property.setOwner(owner);
                     property.setPropertyType(PropertyType.valueOf(words[5]));
                     
                     propertyRepository.create(property);

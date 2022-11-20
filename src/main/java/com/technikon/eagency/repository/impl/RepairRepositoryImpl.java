@@ -19,7 +19,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     @Override
     public List<Repair> readStartDate(LocalDate date) {
         List<Repair> repairs = read().stream()
-                .filter(r -> r.getActualStartDate().isEqual(date))
+                .filter(r -> r.getDateOfStart().isEqual(date))
                 .toList();
         return repairs;
     }
@@ -27,8 +27,8 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     @Override
     public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
         List<Repair> repairs = read().stream()
-                .filter(r -> r.getActualStartDate().isEqual(startDate))
-                .filter(r -> r.getActualEndDate().isEqual(endDate))
+                .filter(r -> r.getDateOfStart().isEqual(startDate))
+                .filter(r -> r.getDateOfEnd().isEqual(endDate))
                 .toList();
         return repairs;
     }
@@ -36,7 +36,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     @Override
     public List<Repair> readOwner(long vatNumber) {
         List<Repair> repairs = read().stream()
-                .filter(r -> r.getVatNumberOfOwner() == vatNumber)
+                .filter(r -> r.getOwner().getVatNumber() == vatNumber)
                 .toList();
         return repairs;
     }
@@ -45,7 +45,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateVatNumberOfOwner(int repairId, long vatNumberOfOwner) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setVatNumberOfOwner(vatNumberOfOwner);
+            repair.get().getOwner().setVatNumber(vatNumberOfOwner);
         }
     }
 
@@ -53,7 +53,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updatePropertyId(int repairId, long propertyId) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setPropertyId(propertyId);
+            repair.get().getProperty().setPropertyId(propertyId);
         }
     }
 
@@ -77,7 +77,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateSubmissionDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setSubmissionDate(date);
+            repair.get().setDateOfSubmisssion(date);
         }
     }
 
@@ -85,7 +85,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateDescription(int repairId, String description) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setDescription(description);
+            repair.get().setDescriptionOfWork(description);
         }
     }
 
@@ -93,7 +93,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateProposedStartDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setProposedStartDate(date);
+            repair.get().setProposedDateOfStart(date);
         }
     }
 
@@ -101,7 +101,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateProposedEndDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setProposedEndDate(date);
+            repair.get().setProposedDateOfEnd(date);
         }
     }
 
@@ -133,7 +133,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateActualStartDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setActualStartDate(date);
+            repair.get().setDateOfStart(date);
         }
     }
 
@@ -141,7 +141,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateActualEndDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setActualEndDate(date);
+            repair.get().setDateOfEnd(date);
         }
     }
 
