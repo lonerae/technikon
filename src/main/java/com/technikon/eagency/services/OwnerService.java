@@ -4,6 +4,7 @@ import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +26,9 @@ public interface OwnerService {
 
     List<Property> findProperties(long vatNumberOfOwner);
 
-    List<Repair> findRepairs(LocalDateTime startDate);
+    List<Repair> findRepairs(LocalDate startDate);
 
-    List<Repair> findRepairs(LocalDateTime startDate, LocalDateTime endDate);
+    List<Repair> findRepairs(LocalDate startDate, LocalDate endDate);
 
     List<Repair> findRepairs(long vatNumberOfOwner);
     

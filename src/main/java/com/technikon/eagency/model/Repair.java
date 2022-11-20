@@ -3,6 +3,7 @@ package com.technikon.eagency.model;
 import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,15 +16,15 @@ public class Repair extends PersistentClass {
     private long propertyId;
     private RepairType repairtype;
     private String shortDescription;
-    private LocalDateTime dateOfSubmisssion;
+    private LocalDate dateOfSubmisssion;
     private String descriptionOfWork;
-    private LocalDateTime proposedDateOfStart;
-    private LocalDateTime proposedDateOfEnd;
+    private LocalDate proposedDateOfStart;
+    private LocalDate proposedDateOfEnd;
     private BigDecimal proposedCost;
     private boolean acceptance;
     private StatusType statustype;
-    private LocalDateTime dateOfStart;
-    private LocalDateTime dateOfEnd;
+    private LocalDate dateOfStart;
+    private LocalDate dateOfEnd;
 
     public long getVatNumberOfOwner() {
         return vatNumberOfOwner;
@@ -57,11 +58,11 @@ public class Repair extends PersistentClass {
         this.shortDescription = shortDescription;
     }
 
-    public LocalDateTime getSubmissionDate() {
+    public LocalDate getSubmissionDate() {
         return dateOfSubmisssion;
     }
 
-    public void setSubmissionDate(LocalDateTime dateOfSubmisssion) {
+    public void setSubmissionDate(LocalDate dateOfSubmisssion) {
         this.dateOfSubmisssion = dateOfSubmisssion;
     }
 
@@ -73,19 +74,19 @@ public class Repair extends PersistentClass {
         this.descriptionOfWork = descriptionOfWork;
     }
 
-    public LocalDateTime getProposedStartDate() {
+    public LocalDate getProposedStartDate() {
         return proposedDateOfStart;
     }
 
-    public void setProposedStartDate(LocalDateTime proposedDateOfStart) {
+    public void setProposedStartDate(LocalDate proposedDateOfStart) {
         this.proposedDateOfStart = proposedDateOfStart;
     }
 
-    public LocalDateTime getProposedEndDate() {
+    public LocalDate getProposedEndDate() {
         return proposedDateOfEnd;
     }
 
-    public void setProposedEndDate(LocalDateTime proposedDateOfEnd) {
+    public void setProposedEndDate(LocalDate proposedDateOfEnd) {
         this.proposedDateOfEnd = proposedDateOfEnd;
     }
 
@@ -113,19 +114,19 @@ public class Repair extends PersistentClass {
         this.statustype = statustype;
     }
 
-    public LocalDateTime getActualStartDate() {
+    public LocalDate getActualStartDate() {
         return dateOfStart;
     }
 
-    public void setActualStartDate(LocalDateTime dateOfStart) {
+    public void setActualStartDate(LocalDate dateOfStart) {
         this.dateOfStart = dateOfStart;
     }
 
-    public LocalDateTime getActualEndDate() {
+    public LocalDate getActualEndDate() {
         return dateOfEnd;
     }
 
-    public void setActualEndDate(LocalDateTime dateOfEnd) {
+    public void setActualEndDate(LocalDate dateOfEnd) {
         this.dateOfEnd = dateOfEnd;
     }
 

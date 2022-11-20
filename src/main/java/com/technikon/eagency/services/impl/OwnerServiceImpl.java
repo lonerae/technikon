@@ -10,6 +10,7 @@ import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.OwnerService;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -90,12 +91,12 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDateTime startDate) {
+    public List<Repair> findRepairs(LocalDate startDate) {
         return repairRepository.readStartDate(startDate);
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) {
         return repairRepository.readDateRange(startDate, endDate);
     }
 

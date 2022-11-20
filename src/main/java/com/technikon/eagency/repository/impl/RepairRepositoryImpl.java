@@ -5,6 +5,7 @@ import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.RepairRepository;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
     @Override
-    public List<Repair> readStartDate(LocalDateTime date) {
+    public List<Repair> readStartDate(LocalDate date) {
         List<Repair> repairs = read().stream()
                 .filter(r -> r.getActualStartDate().isEqual(date))
                 .toList();
@@ -24,7 +25,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public List<Repair> readDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
         List<Repair> repairs = read().stream()
                 .filter(r -> r.getActualStartDate().isEqual(startDate))
                 .filter(r -> r.getActualEndDate().isEqual(endDate))
@@ -73,7 +74,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateSubmissionDate(int repairId, LocalDateTime date) {
+    public void updateSubmissionDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setSubmissionDate(date);
@@ -89,7 +90,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateProposedStartDate(int repairId, LocalDateTime date) {
+    public void updateProposedStartDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setProposedStartDate(date);
@@ -97,7 +98,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateProposedEndDate(int repairId, LocalDateTime date) {
+    public void updateProposedEndDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setProposedEndDate(date);
@@ -129,7 +130,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateActualStartDate(int repairId, LocalDateTime date) {
+    public void updateActualStartDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setActualStartDate(date);
@@ -137,7 +138,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateActualEndDate(int repairId, LocalDateTime date) {
+    public void updateActualEndDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setActualEndDate(date);

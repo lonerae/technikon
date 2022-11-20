@@ -4,14 +4,15 @@ import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Repair;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RepairRepository extends Repository<Repair> {
 
-    List<Repair> readStartDate(LocalDateTime date);
+    List<Repair> readStartDate(LocalDate date);
     
-    List<Repair> readDateRange(LocalDateTime startDate, LocalDateTime endDate);
+    List<Repair> readDateRange(LocalDate startDate, LocalDate endDate);
     
     List<Repair> readOwner(long vatNumber);
     
@@ -23,13 +24,13 @@ public interface RepairRepository extends Repository<Repair> {
 
     void updateShortDescription(int repairId, String description);
 
-    void updateSubmissionDate(int repairId, LocalDateTime date);
+    void updateSubmissionDate(int repairId, LocalDate date);
 
     void updateDescription(int repairId, String description);
 
-    void updateProposedStartDate(int repairId, LocalDateTime date);
+    void updateProposedStartDate(int repairId, LocalDate date);
 
-    void updateProposedEndDate(int repairId, LocalDateTime date);
+    void updateProposedEndDate(int repairId, LocalDate date);
 
     void updateProposedCost(int repairId, BigDecimal cost);
 
@@ -37,8 +38,8 @@ public interface RepairRepository extends Repository<Repair> {
 
     void updateStatus(int repairId, StatusType status);
 
-    void updateActualStartDate(int repairId, LocalDateTime date);
+    void updateActualStartDate(int repairId, LocalDate date);
 
-    void updateActualEndDate(int repairId, LocalDateTime date);
+    void updateActualEndDate(int repairId, LocalDate date);
 
 }
