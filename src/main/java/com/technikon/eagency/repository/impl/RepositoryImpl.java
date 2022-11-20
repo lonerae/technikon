@@ -28,8 +28,8 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public Optional<T> read(int id) {
-        Optional<T> t = null;
-         return entityManager.find(t.getClass(), id);
+         
+         return entityManager.find(Optional.class, id);
         
     }
 
@@ -40,8 +40,7 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public boolean delete(int id) {
-        Optional<T> t = null;
-        t = entityManager.find(t.getClass(), id);
+        Optional<T> t = entityManager.find(Optional.class, id);
         
         if (t.isPresent()) {
         entityManager.getTransaction().begin();
