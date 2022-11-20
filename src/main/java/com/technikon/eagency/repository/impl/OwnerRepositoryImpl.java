@@ -4,10 +4,6 @@ import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.repository.OwnerRepository;
 import java.util.Optional;
 
-/**
- *
- * @author panos
- */
 public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {
 
     @Override

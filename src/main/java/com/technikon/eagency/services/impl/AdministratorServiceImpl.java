@@ -40,14 +40,14 @@ public class AdministratorServiceImpl implements AdministratorService {
     public LocalDateTime checkStartDate(int repairId) {
         // exception?
         Optional<Repair> repair = repairRepository.read(repairId);
-        return repair.get().getActualStartDate();
+        return repair.get().getDateOfStart();
     }
 
     @Override
     public LocalDateTime checkEndDate(int repairId) {
         // exception?
         Optional<Repair> repair = repairRepository.read(repairId);
-        return repair.get().getActualEndDate();
+        return repair.get().getDateOfEnd();
     }
 
     @Override
