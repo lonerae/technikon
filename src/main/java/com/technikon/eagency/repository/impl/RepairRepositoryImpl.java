@@ -4,9 +4,11 @@ import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.RepairRepository;
+import com.technikon.eagency.util.JPAUtil;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,29 +18,22 @@ import java.util.Optional;
  */
 public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
+    private EntityManager entityManager = JPAUtil.getEntityManager();
+    private List<Repair> listOfRepairs = new ArrayList<>();
+
     @Override
     public List<Repair> readStartDate(LocalDate date) {
-        List<Repair> repairs = read().stream()
-                .filter(r -> r.getDateOfStart().isEqual(date))
-                .toList();
-        return repairs;
+        return  entityManager.createQuery(listOfRepairs.getClass(), date).getResultList();
     }
 
     @Override
     public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
-        List<Repair> repairs = read().stream()
-                .filter(r -> r.getDateOfStart().isEqual(startDate))
-                .filter(r -> r.getDateOfEnd().isEqual(endDate))
-                .toList();
-        return repairs;
+        return  entityManager.createQuery(listOfRepairs.getClass(), startDate, endDate).getResultList();
     }
 
     @Override
     public List<Repair> readOwner(long vatNumber) {
-        List<Repair> repairs = read().stream()
-                .filter(r -> r.getOwner().getVatNumber() == vatNumber)
-                .toList();
-        return repairs;
+        return entityManager.createQuery(listOfRepairs.getClass(), vatNumber).getResultList();
     }
 
     @Override
