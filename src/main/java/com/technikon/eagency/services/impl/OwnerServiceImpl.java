@@ -109,8 +109,8 @@ public class OwnerServiceImpl implements OwnerService {
         return repairRepository
                 .readOwner(vatNumberOfOwner)
                 .stream()
-                .filter(r -> r.getVatNumberOfOwner() == vatNumberOfOwner)
-                .collect(Collectors.toMap(Repair::getPropertyId, Repair::getStatusType));
+                .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
+                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
     }
 
 }

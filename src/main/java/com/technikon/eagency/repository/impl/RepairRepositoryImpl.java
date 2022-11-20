@@ -35,7 +35,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     @Override
     public List<Repair> readOwner(long vatNumber) {
         List<Repair> repairs = read().stream()
-                .filter(r -> r.getVatNumberOfOwner() == vatNumber)
+                .filter(r -> r.getOwner().getVatNumber() == vatNumber)
                 .toList();
         return repairs;
     }
@@ -44,7 +44,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateVatNumberOfOwner(int repairId, long vatNumberOfOwner) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setVatNumberOfOwner(vatNumberOfOwner);
+            repair.get().getOwner().setVatNumber(vatNumberOfOwner);
         }
     }
 
@@ -52,7 +52,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updatePropertyId(int repairId, long propertyId) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setPropertyId(propertyId);
+            repair.get().getProperty().setPropertyId(propertyId);
         }
     }
 

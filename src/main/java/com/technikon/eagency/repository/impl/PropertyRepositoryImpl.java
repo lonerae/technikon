@@ -26,7 +26,7 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
     @Override
     public List<Property> readVatNumber(long vatNumberOfOwner) {
         List<Property> properties = read().stream()
-                .filter(p -> p.getVatNumberOfOwner()== vatNumberOfOwner)
+                .filter(p -> p.getOwner().getVatNumber() == vatNumberOfOwner)
                 .toList();
         return properties;
     }
@@ -35,7 +35,7 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
     public void updateVatNumberOfOwner(int propertyId, long id) {
         Optional<Property> property = read(propertyId);
         if (property.isPresent()) {
-            property.get().setVatNumberOfOwner(id);
+            property.get().getOwner().setVatNumber(id);
         }
     }
 
