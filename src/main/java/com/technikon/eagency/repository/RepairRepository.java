@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RepairRepository extends Repository<Repair> {
-    
 
     List<Repair> readStartDate(LocalDateTime date);
 

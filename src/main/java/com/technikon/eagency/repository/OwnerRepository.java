@@ -4,7 +4,6 @@ import com.technikon.eagency.model.Owner;
 import java.util.Optional;
 
 public interface OwnerRepository extends Repository<Owner> {
-    
 
     Optional<Owner> readVatNumber(long vatNumber);
 
