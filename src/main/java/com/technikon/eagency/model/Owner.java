@@ -1,5 +1,6 @@
 package com.technikon.eagency.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import java.util.List;
