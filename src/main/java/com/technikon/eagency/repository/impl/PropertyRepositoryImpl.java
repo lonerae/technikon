@@ -3,6 +3,9 @@ package com.technikon.eagency.repository.impl;
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.repository.PropertyRepository;
+import com.technikon.eagency.util.JPAUtil;
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,11 +15,12 @@ import java.util.Optional;
  */
 public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
 
+    private EntityManager entityManager = JPAUtil.getEntityManager();
+    private List<Property> listOfProperties = new ArrayList<>();
+
     @Override
     public Optional<Property> readPropertyId(long propertyId) {
-        Optional<Property> property = read().stream()
-                .filter(p -> p.getPropertyId()== propertyId)
-                .findFirst();
+        Optional<Property> property = entityManager.find(Property.class, propertyId);
         if (property.isPresent()) {
             return property;
         }
@@ -25,10 +29,8 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
 
     @Override
     public List<Property> readVatNumber(long vatNumberOfOwner) {
-        List<Property> properties = read().stream()
-                .filter(p -> p.getOwner().getVatNumber() == vatNumberOfOwner)
-                .toList();
-        return properties;
+        return (List<Property>) entityManager.createQuery("from Owner", listOfProperties.getClass(), vatNumberOfOwner).getResultList();
+
     }
 
     @Override

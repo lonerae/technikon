@@ -10,11 +10,11 @@ import java.util.List;
 public interface RepairRepository extends Repository<Repair> {
 
     List<Repair> readStartDate(LocalDateTime date);
-    
+
     List<Repair> readDateRange(LocalDateTime startDate, LocalDateTime endDate);
-    
+
     List<Repair> readOwner(long vatNumber);
-    
+
     void updateVatNumberOfOwner(int repairId, long vatNumberOfOwner);
 
     void updatePropertyId(int repairId, long propertyId);

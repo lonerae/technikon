@@ -2,15 +2,16 @@ package com.technikon.eagency.repository.impl;
 
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.repository.OwnerRepository;
+import com.technikon.eagency.util.JPAUtil;
 import java.util.Optional;
 
 public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {
 
+    private EntityManager entityManager = JPAUtil.getEntityManager();
+
     @Override
     public Optional<Owner> readVatNumber(long vatNumber) {
-        Optional<Owner> owner = read().stream()
-                .filter(o -> o.getVatNumber() == vatNumber)
-                .findFirst();
+        Optional<Owner> owner = entityManager.find(Owner.class, vatNumber);
         if (owner.isPresent()) {
             return owner;
         }
@@ -19,9 +20,7 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
 
     @Override
     public Optional<Owner> readEmail(String email) {
-        Optional<Owner> owner = read().stream()
-                .filter(o -> o.getEmail().equals(email))
-                .findFirst();
+        Optional<Owner> owner = entityManager.find(Owner.class, email);
         if (owner.isPresent()) {
             return owner;
         }

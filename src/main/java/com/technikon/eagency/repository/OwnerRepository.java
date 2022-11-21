@@ -6,9 +6,9 @@ import java.util.Optional;
 public interface OwnerRepository extends Repository<Owner> {
 
     Optional<Owner> readVatNumber(long vatNumber);
-    
+
     Optional<Owner> readEmail(String email);
-    
+
     void updateAddress(int ownerId, String address);
 
     void updateEmail(int ownerId, String email);

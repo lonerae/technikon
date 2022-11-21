@@ -39,6 +39,10 @@ public class OwnerServiceImpl implements OwnerService {
         if (owner == null) {
             throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
+        if (owner.getEmail().contains("gmail")) {
+            throw new OwnerException(OwnerExceptionCodes.OWNER_ALREADY_EXISTS);
+        }
+        Logger.getLogger(OwnerServiceImpl.class.getName()).log(Level.SEVERE, null, owner);
         //exceptions
         ownerRepository.create(owner);
     }
@@ -48,6 +52,10 @@ public class OwnerServiceImpl implements OwnerService {
         if (property == null) {
             throw new PropertyException(PropertyExceptionCodes.PROPERTY_IS_NULL);
         }
+        if (property.getAddress() == null) {
+            throw new PropertyException(PropertyExceptionCodes.PROPERTY_MISSING_DATA);
+        }
+        Logger.getLogger(OwnerServiceImpl.class.getName()).log(Level.SEVERE, null, property);
         //exceptions
         propertyRepository.create(property);
     }
@@ -57,6 +65,10 @@ public class OwnerServiceImpl implements OwnerService {
         if (repair == null) {
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
+        if (repair.getRepairtype() == null) {
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
+        }
+        Logger.getLogger(OwnerServiceImpl.class.getName()).log(Level.SEVERE, null, repair);
         //exceptions
         repairRepository.create(repair);
     }
@@ -101,8 +113,7 @@ public class OwnerServiceImpl implements OwnerService {
         return repairRepository
                 .readOwner(vatNumberOfOwner)
                 .stream()
-                .filter(r -> r.getVatNumberOfOwner() == vatNumberOfOwner)
-                .collect(Collectors.toMap(Repair::getPropertyId, Repair::getStatusType));
+                .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
+                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
     }
-
 }

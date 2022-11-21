@@ -7,5 +7,5 @@ package com.technikon.eagency.exceptions;
 public class PropertyExceptionCodes {
 
     public final static String PROPERTY_IS_NULL = "The property is null";
-    public final static String PROPERTY_ALREADY_EXISTS = "The property already exists";
+    public final static String PROPERTY_MISSING_DATA = "Not all data are given to create a property";
 }
