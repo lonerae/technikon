@@ -1,4 +1,3 @@
-
 ﻿id;propertyId;shortDescription;vatNumberOfOwner;dateOfSubmission;descriptionOfWork;proposedDateOfStart;proposedDateOfEnd;proposedCost;acceptance;dateOfStart;dateOfEnd;repairType;statusType
 1;1536;Painting repairs inside and/or outside of the property;647342486;2022-10-06;Painting in the master bedroom, living room, kitchen.;2022-11-30;2022-12-02;8202;TRUE;2022-12-02;2022-12-05;PAINTING;PENDING
 2;6012;Insulation installation (including the materials);933017639;2022-09-13;Insulation installation ;2022-11-24;2023-01-11;9489;FALSE;2022-11-26;2023-01-11;INSULATION;DECLINED
