@@ -6,7 +6,6 @@ package com.technikon.eagency.services;
 
 import com.technikon.eagency.exceptions.OwnerException;
 
-
 /**
  *
  * @author Hara
