@@ -1,6 +1,7 @@
 package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.enums.StatusType;
+import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.AdministratorService;
@@ -20,7 +21,10 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void proposeCost(int repairId, BigDecimal proposedCost) {
+    public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException{
+        if (repairId == null) {
+            throw new RepairException(OwnerExceptionCodes.OWNER_IS_NULL);
+        }
         // exception?
         repairRepository.updateProposedCost(repairId, proposedCost);
     }
