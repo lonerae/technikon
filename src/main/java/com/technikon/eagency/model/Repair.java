@@ -1,6 +1,5 @@
 package com.technikon.eagency.model;
 
-
 import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import jakarta.persistence.Entity;

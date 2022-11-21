@@ -1,6 +1,5 @@
 package com.technikon.eagency.model;
 
-
 import com.technikon.eagency.enums.PropertyType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

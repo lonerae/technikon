@@ -12,7 +12,6 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     private EntityManager entityManager = JPAUtil.getEntityManager();
     private List<T> list = new ArrayList<>();
- 
 
     public RepositoryImpl() {
         this.list = new ArrayList<>();
@@ -28,9 +27,9 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public Optional<T> read(int id) {
-         
-         return entityManager.find(Optional.class, id);
-        
+
+        return entityManager.find(Optional.class, id);
+
     }
 
     @Override
@@ -41,11 +40,11 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     @Override
     public boolean delete(int id) {
         Optional<T> t = entityManager.find(Optional.class, id);
-        
+
         if (t.isPresent()) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(t);
-        entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.remove(t);
+            entityManager.getTransaction().commit();
             return true;
         }
         return false;
