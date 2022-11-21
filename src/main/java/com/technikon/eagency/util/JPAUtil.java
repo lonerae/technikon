@@ -12,7 +12,6 @@ public class JPAUtil {
 
     private static final String PERSISTENCE_UNIT_NAME = "Persistence";
     private static EntityManagerFactory factory;
-    
 
     public static EntityManagerFactory getEntityManagerFactory() {
         if (factory == null) {
