@@ -1,6 +1,5 @@
 package com.technikon.eagency.repository.impl;
 
-
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.repository.PropertyRepository;

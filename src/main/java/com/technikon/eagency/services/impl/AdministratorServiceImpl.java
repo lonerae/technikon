@@ -21,7 +21,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException{
+    public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException {
         if (repairId == null) {
             throw new RepairException(OwnerExceptionCodes.OWNER_IS_NULL);
         }

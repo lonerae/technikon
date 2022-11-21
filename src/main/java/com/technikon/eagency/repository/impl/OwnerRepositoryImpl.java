@@ -1,6 +1,5 @@
 package com.technikon.eagency.repository.impl;
 
-
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.util.JPAUtil;
