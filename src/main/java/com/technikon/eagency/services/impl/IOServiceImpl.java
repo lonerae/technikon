@@ -1,6 +1,5 @@
 package com.technikon.eagency.services.impl;
 
-
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
