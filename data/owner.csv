@@ -1,4 +1,5 @@
 ﻿id;isActive;username;password;vatNumber;name;surname;address;phoneNumber;email
+
 1;TRUE;athanasia123;a3oI4G^i5x8M;647342486;Athanasia;Dima;Mpizaniou 103, Ilion;6980071645;athanasiadima@email.com
 2;TRUE;marin89;sB6d904Th&bW;933017639;Marina;Nikolaou;Kostantinoupoleos 2, Petroupoli;6932554834;marinanik@email.com
 3;FALSE;dimit0;j71Lm21^8pBh;658900599;Dimitra;Dimopoulou;Elaion 78, Pagrati;6387210096;dimitradim@ediil.com
