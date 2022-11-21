@@ -1,6 +1,9 @@
 package com.technikon.eagency.services;
 
 import com.technikon.eagency.enums.StatusType;
+import com.technikon.eagency.exceptions.OwnerException;
+import com.technikon.eagency.exceptions.PropertyException;
+import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
@@ -10,12 +13,12 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface OwnerService {
-    
-    void registerOwner(Owner owner);
 
-    void registerProperty(Property property);
+    void registerOwner(Owner owner) throws OwnerException;
 
-    void submitRepair(Repair repair);
+    void registerProperty(Property property) throws PropertyException;
+
+    void submitRepair(Repair repair) throws RepairException;
 
     Optional<Owner> findOwner(long vatNumber);
 
@@ -30,6 +33,6 @@ public interface OwnerService {
     List<Repair> findRepairs(LocalDateTime startDate, LocalDateTime endDate);
 
     List<Repair> findRepairs(long vatNumberOfOwner);
-    
+
     Map<Long, StatusType> getReport(long vatNumberOfOwner);
 }

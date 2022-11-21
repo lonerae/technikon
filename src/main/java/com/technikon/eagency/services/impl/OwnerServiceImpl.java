@@ -3,6 +3,10 @@ package com.technikon.eagency.services.impl;
 import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.OwnerException;
 import com.technikon.eagency.exceptions.OwnerExceptionCodes;
+import com.technikon.eagency.exceptions.PropertyException;
+import com.technikon.eagency.exceptions.PropertyExceptionCodes;
+import com.technikon.eagency.exceptions.RepairException;
+import com.technikon.eagency.exceptions.RepairExceptionCodes;
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
@@ -31,40 +35,28 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void registerOwner(Owner owner) {
+    public void registerOwner(Owner owner) throws OwnerException {
         if (owner == null) {
-            try {
-                throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
-            } catch (OwnerException ex) {
-                System.out.println("The owner is null");
-            }
-        }
-        if (owner.getEmail() == null) {
-            try {
-                throw new OwnerException(OwnerExceptionCodes.OWNER_MISSING_DATA);
-            } catch (OwnerException ex) {
-                System.out.println("Not all data are given to create a owner");
-            }
-        }
-        if (owner.getEmail().contains("gmail")) {
-            try {
-                throw new OwnerException(OwnerExceptionCodes.OWNER_INVALID_DATA);
-            } catch (OwnerException ex) {
-                Logger.getLogger(OwnerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
         //exceptions
         ownerRepository.create(owner);
     }
 
     @Override
-    public void registerProperty(Property property) {
+    public void registerProperty(Property property) throws PropertyException {
+        if (property == null) {
+            throw new PropertyException(PropertyExceptionCodes.PROPERTY_IS_NULL);
+        }
         //exceptions
         propertyRepository.create(property);
     }
 
     @Override
-    public void submitRepair(Repair repair) {
+    public void submitRepair(Repair repair) throws RepairException {
+        if (repair == null) {
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
         //exceptions
         repairRepository.create(repair);
     }
@@ -109,8 +101,8 @@ public class OwnerServiceImpl implements OwnerService {
         return repairRepository
                 .readOwner(vatNumberOfOwner)
                 .stream()
-                .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
-                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
+                .filter(r -> r.getVatNumberOfOwner() == vatNumberOfOwner)
+                .collect(Collectors.toMap(Repair::getPropertyId, Repair::getStatusType));
     }
 
 }
