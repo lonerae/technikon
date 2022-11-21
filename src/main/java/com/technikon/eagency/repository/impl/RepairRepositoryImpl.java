@@ -4,8 +4,11 @@ import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.RepairRepository;
+import com.technikon.eagency.util.JPAUtil;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,29 +18,22 @@ import java.util.Optional;
  */
 public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
+    private EntityManager entityManager = JPAUtil.getEntityManager();
+    private List<Repair> listOfRepairs = new ArrayList<>();
+
     @Override
-    public List<Repair> readStartDate(LocalDateTime date) {
-        List<Repair> repairs = read().stream()
-                .filter(r -> r.getDateOfStart().isEqual(date))
-                .toList();
-        return repairs;
+    public List<Repair> readStartDate(LocalDate date) {
+        return entityManager.createQuery(listOfRepairs.getClass(), date).getResultList();
     }
 
     @Override
-    public List<Repair> readDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        List<Repair> repairs = read().stream()
-                .filter(r -> r.getDateOfStart().isEqual(startDate))
-                .filter(r -> r.getDateOfEnd().isEqual(endDate))
-                .toList();
-        return repairs;
+    public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
+        return entityManager.createQuery(listOfRepairs.getClass(), startDate, endDate).getResultList();
     }
 
     @Override
     public List<Repair> readOwner(long vatNumber) {
-        List<Repair> repairs = read().stream()
-                .filter(r -> r.getOwner().getVatNumber() == vatNumber)
-                .toList();
-        return repairs;
+        return entityManager.createQuery(listOfRepairs.getClass(), vatNumber).getResultList();
     }
 
     @Override
@@ -73,7 +69,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateSubmissionDate(int repairId, LocalDateTime date) {
+    public void updateSubmissionDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setDateOfSubmisssion(date);
@@ -89,7 +85,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateProposedStartDate(int repairId, LocalDateTime date) {
+    public void updateProposedStartDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setProposedDateOfStart(date);
@@ -97,7 +93,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateProposedEndDate(int repairId, LocalDateTime date) {
+    public void updateProposedEndDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setProposedDateOfEnd(date);
@@ -124,12 +120,12 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public void updateStatus(int repairId, StatusType status) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
-            repair.get().setStatusType(status);
+            repair.get().setStatustype(status);
         }
     }
 
     @Override
-    public void updateActualStartDate(int repairId, LocalDateTime date) {
+    public void updateActualStartDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setDateOfStart(date);
@@ -137,7 +133,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public void updateActualEndDate(int repairId, LocalDateTime date) {
+    public void updateActualEndDate(int repairId, LocalDate date) {
         Optional<Repair> repair = read(repairId);
         if (repair.isPresent()) {
             repair.get().setDateOfEnd(date);

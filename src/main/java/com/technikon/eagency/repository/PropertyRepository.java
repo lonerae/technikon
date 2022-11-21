@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface PropertyRepository extends Repository<Property> {
 
     Optional<Property> readPropertyId(long propertyId);
-    
+
     List<Property> readVatNumber(long vatNumberOfOwner);
-    
+
     void updateVatNumberOfOwner(int propertyId, long id);
 
     void updatePropertyId(int propertyId, long id);

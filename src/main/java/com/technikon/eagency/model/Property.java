@@ -20,7 +20,7 @@ public class Property extends PersistentClass {
 
     @ManyToOne
     private Owner owner;
-    
+
     @OneToMany(mappedBy = "property")
     private List<Repair> repairList;
 }

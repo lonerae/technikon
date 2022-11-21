@@ -19,10 +19,10 @@ public class Owner extends PersistentClass {
     private String address;
     private String phoneNumber;
     private String email;
-    
+
     @OneToMany(mappedBy = "owner")
     private List<Property> propertyList;
-    
+
     @OneToMany(mappedBy = "owner")
     private List<Repair> repairList;
 }
