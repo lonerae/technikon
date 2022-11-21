@@ -15,9 +15,9 @@ public interface AdministratorService {
 
     void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException;
 
-    LocalDate checkStartDate(int repairId);
+    LocalDate checkStartDate(int repairId) throws RepairException;
 
-    LocalDate checkEndDate(int repairId);
+    LocalDate checkEndDate(int repairId) throws RepairException;
 
     List<Repair> findAllPendingRepairs();
 
