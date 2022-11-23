@@ -3,6 +3,7 @@ package com.technikon.eagency.repository.impl;
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.util.JPAUtil;
+import jakarta.persistence.EntityManager;
 import java.util.Optional;
 
 public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {

@@ -33,7 +33,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
 
     @Override
     public List<Repair> readOwner(long vatNumber) {
-        return entityManager.createQuery(listOfRepairs.getClass(), vatNumber).getResultList();
+        return entityManager.createQuery(listOfRepairs.getClass(), vatNumber).getResultList();//
     }
 
     @Override
