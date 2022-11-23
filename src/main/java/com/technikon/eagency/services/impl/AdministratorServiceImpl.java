@@ -6,9 +6,7 @@ import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AdministratorServiceImpl implements AdministratorService {
@@ -40,15 +38,15 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public LocalDate checkStartDate(int repairId) {
         // exception?
-        Optional<Repair> repair = repairRepository.read(repairId);
-        return repair.get().getDateOfStart();
+        Repair repair = repairRepository.read(repairId);
+        return repair.getDateOfStart();
     }
 
     @Override
     public LocalDate checkEndDate(int repairId) {
         // exception?
-        Optional<Repair> repair = repairRepository.read(repairId);
-        return repair.get().getDateOfEnd();
+        Repair repair = repairRepository.read(repairId);
+        return repair.getDateOfEnd();
     }
 
     @Override

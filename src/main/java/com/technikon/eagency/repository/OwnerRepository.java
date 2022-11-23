@@ -1,18 +1,17 @@
 package com.technikon.eagency.repository;
 
 import com.technikon.eagency.model.Owner;
-import java.util.Optional;
 
 public interface OwnerRepository extends Repository<Owner> {
 
-    Optional<Owner> readVatNumber(long vatNumber);
-    
-    Optional<Owner> readEmail(String email);
-    
-    void updateAddress(int ownerId, String address);
+    Owner readVatNumber(long vatNumber);
 
-    void updateEmail(int ownerId, String email);
+    Owner readEmail(String email);
 
-    void updatePassword(int ownerId, String password);
+    boolean updateAddress(int ownerId, String address);
+
+    boolean updateEmail(int ownerId, String email);
+
+    boolean updatePassword(int ownerId, String password);
 
 }
