@@ -97,12 +97,12 @@ public class IOServiceImpl implements IOService {
                 try{
                     String[] words = line.split(",");
                     Property property = new Property();
-                    Owner owner = new Owner();
+                    //Owner owner = new Owner();
                     property.setId(Integer.parseInt(words[0]));
                     property.setPropertyId(Long.parseLong(words[1].trim()));
                     property.setAddress(words[2].trim());
                     property.setYearOfConstruction(Integer.parseInt(words[3].trim()));
-                    property.setOwner(owner);
+                   // property.setOwner(ownerRepository.read(Integer.parseInt(words[4].trim())));
                     property.setPropertyType(PropertyType.valueOf(words[5]));
                     
                     propertyRepository.create(property);
@@ -141,10 +141,10 @@ public class IOServiceImpl implements IOService {
                     Owner owner = new Owner();
                     
                     repair.setId(Integer.parseInt(words[0]));
-                    repair.setProperty(property);
+                    //repair.setProperty(propertyRepository.read(Integer.parseInt(words[1].trim())));
                     
                     repair.setShortDescription(words[2].trim());
-                    repair.setOwner(owner);
+                    //repair.setOwner(ownerRepository.read(Integer.parseInt(words[3].trim())));
            
                     repair.setDateOfSubmisssion(LocalDate.parse(words[4].trim()));
                     repair.setDescriptionOfWork(words[5].trim());

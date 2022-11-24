@@ -4,6 +4,7 @@ import com.technikon.eagency.model.Property;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
+
 import java.util.List;
 
 public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
