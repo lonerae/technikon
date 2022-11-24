@@ -72,7 +72,7 @@ public class OwnerServiceImpl implements OwnerService {
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         if (repair.getRepairtype() == null) {
-            logger.warning("The property is null");
+            logger.warning("The Repairtype is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
         //exceptions

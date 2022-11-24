@@ -32,8 +32,6 @@ public class AdministratorServiceImpl implements AdministratorService {
             logger.warning("The proposedCost is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, repairId);
-        Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, proposedCost);
         // exception?
         repairRepository.updateProposedCost(repairId, proposedCost);
         logger.info("The register was successful");
