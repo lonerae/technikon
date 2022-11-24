@@ -1,74 +1,43 @@
 package com.technikon.eagency.repository.impl;
 
-import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.repository.PropertyRepository;
-import java.util.List;
-import java.util.Optional;
+import com.technikon.eagency.util.JPAUtil;
+import jakarta.persistence.EntityManager;
 
-/**
- *
- * @author panos
- */
+import java.util.List;
+
 public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
 
+    private final EntityManager entityManager;
+
+    public PropertyRepositoryImpl() {
+        entityManager = JPAUtil.getEntityManager();
+    }
+
     @Override
-    public Optional<Property> readPropertyId(long propertyId) {
-        Optional<Property> property = read().stream()
-                .filter(p -> p.getPropertyId()== propertyId)
-                .findFirst();
-        if (property.isPresent()) {
-            return property;
-        }
-        return Optional.empty();
+    public Property readPropertyId(long propertyId) {
+        return (Property) entityManager.createQuery("from Property p Where p.propertyId =:propertyId ", Property.class)
+                .setParameter("propertyId", propertyId);
     }
 
     @Override
     public List<Property> readVatNumber(long vatNumberOfOwner) {
-        List<Property> properties = read().stream()
-                .filter(p -> p.getOwner().getVatNumber() == vatNumberOfOwner)
-                .toList();
-        return properties;
+//        TODO
+//        return entityManager.createQuery("from Property p Where p.vatNumber =:vatNumber ", Property.class)
+//                .setParameter("propertyId", vatNumberOfOwner)
+//                .getResultList();
+        return null;
+
     }
 
     @Override
-    public void updateVatNumberOfOwner(int propertyId, long id) {
-        Optional<Property> property = read(propertyId);
-        if (property.isPresent()) {
-            property.get().getOwner().setVatNumber(id);
-        }
-    }
-
-    @Override
-    public void updatePropertyId(int propertyId, long id) {
-        Optional<Property> property = read(propertyId);
-        if (property.isPresent()) {
-            property.get().setPropertyId(id);
-        }
-    }
-
-    @Override
-    public void updateAddress(int propertyId, String address) {
-        Optional<Property> property = read(propertyId);
-        if (property.isPresent()) {
-            property.get().setAddress(address);
-        }
-    }
-
-    @Override
-    public void updateYearOfConstruction(int propertyId, int year) {
-        Optional<Property> property = read(propertyId);
-        if (property.isPresent()) {
-            property.get().setYearOfConstruction(year);
-        }
-    }
-
-    @Override
-    public void updatePropertyType(int propertyId, PropertyType type) {
-        Optional<Property> property = read(propertyId);
-        if (property.isPresent()) {
-            property.get().setPropertyType(type);
-        }
+    public boolean update(Property property) {
+        // exception if it doesn't exist then return false (services?)        
+        entityManager.getTransaction().begin();
+        entityManager.merge(property);
+        entityManager.getTransaction().commit();
+        return true;
     }
 
 }

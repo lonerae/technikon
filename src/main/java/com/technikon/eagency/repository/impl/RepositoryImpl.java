@@ -2,48 +2,47 @@ package com.technikon.eagency.repository.impl;
 
 import com.technikon.eagency.model.PersistentClass;
 import com.technikon.eagency.repository.Repository;
-import java.util.ArrayList;
+import com.technikon.eagency.util.JPAUtil;
+import jakarta.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
+
 
 public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
-    private List<T> list = new ArrayList<>();
-    private int index;
+    private final EntityManager entityManager;
+    private Class<T> classGeneric;
 
     public RepositoryImpl() {
-        this.list = new ArrayList<>();
+        entityManager = JPAUtil.getEntityManager();
     }
-    
+
     @Override
-    public int create(T t){
-        t.setId(index++);
-        list.add(t);
+    public int create(T t) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(t);
+        entityManager.getTransaction().commit();
         return t.getId();
     }
 
     @Override
-    public Optional<T> read(int id) {
-        Optional<T> t = read()
-                .stream()
-                .filter(obj -> obj.getId() == id)
-                .findFirst();
-        if (t.isPresent()) {
-            return t;
-        }
-        return Optional.empty();
+    public T read(int id) {
+
+        return entityManager.find(classGeneric, id);
     }
 
     @Override
     public List<T> read() {
-        return list;
+        return entityManager.createQuery("from " + classGeneric.getName(), classGeneric).getResultList();
     }
 
     @Override
     public boolean delete(int id) {
-        Optional<T> t = read(id);
-        if (t.isPresent()) {
-            list.remove(t.get());
+        T t = entityManager.find(classGeneric, id);
+
+        if (t != null) {
+            entityManager.getTransaction().begin();
+            entityManager.remove(t);
+            entityManager.getTransaction().commit();
             return true;
         }
         return false;
@@ -51,12 +50,12 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public boolean safeDelete(int id) {
-        Optional<T> t = read(id);
-        if (t.isPresent()) {
-            t.get().setActive(false);
+        T t = read(id);
+        if (t != null) {
+            t.setActive(false);
             return true;
         }
         return false;
     }
-    
+
 }

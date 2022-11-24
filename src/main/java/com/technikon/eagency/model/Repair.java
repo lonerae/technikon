@@ -5,6 +5,7 @@ import com.technikon.eagency.enums.StatusType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,16 +13,16 @@ public class Repair extends PersistentClass {
 
     private RepairType repairtype;
     private String shortDescription;
-    private LocalDateTime dateOfSubmisssion;
+    private LocalDate dateOfSubmisssion;
     private String descriptionOfWork;
-    private LocalDateTime proposedDateOfStart;
-    private LocalDateTime proposedDateOfEnd;
+    private LocalDate proposedDateOfStart;
+    private LocalDate proposedDateOfEnd;
     private BigDecimal proposedCost;
     private boolean acceptance;
-    private StatusType statusType;
-    private LocalDateTime dateOfStart;
-    private LocalDateTime dateOfEnd;
-    
+    private StatusType statustype;
+    private LocalDate dateOfStart;
+    private LocalDate dateOfEnd;
+
     @ManyToOne
     private Owner owner;
 
@@ -130,7 +131,6 @@ public class Repair extends PersistentClass {
 
     public void setProperty(Property property) {
         this.property = property;
-    }
-    
-    
+    } 
+
 }

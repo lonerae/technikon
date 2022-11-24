@@ -11,7 +11,7 @@ public abstract class PersistentClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     private boolean isActive;
 
     public int getId() {
