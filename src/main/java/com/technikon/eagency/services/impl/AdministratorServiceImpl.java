@@ -18,56 +18,64 @@ import java.util.stream.Collectors;
 public class AdministratorServiceImpl implements AdministratorService {
 
     private final RepairRepository repairRepository;
+    private final Logger logger;
 
     public AdministratorServiceImpl(RepairRepository repairRepository) {
         this.repairRepository = repairRepository;
+        logger = Logger.getLogger("AdministratorServiceImpl.class");
     }
 
     @Override
     public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException {
-        if (repairId < 1 && repairId > 20) {
+        if (repairId <= 0) {
+            logger.warning("The given data are not appropriate to create a repairId");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
         }
         if (proposedCost == null) {
+            logger.warning("The proposedCost is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, repairId);
         Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, proposedCost);
         // exception?
         repairRepository.updateProposedCost(repairId, proposedCost);
+        logger.info("The register was successful");
     }
 
     @Override
     public void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException {
-        if (repairId < 1 && repairId > 20) {
+        if (repairId <= 0) {
+            logger.warning("The given data are not appropriate to create a repairId");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
         }
         if (proposedStartDate == null) {
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+            logger.warning("Not all data are given to create a proposedStartDate");
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
-        Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, repairId);
-        Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, proposedStartDate);
         // exception?
         repairRepository.updateProposedStartDate(repairId, proposedStartDate);
+        logger.info("The register was successful");
     }
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-        if (repairId < 1 && repairId > 20) {
+        if (repairId <= 0) {
+            logger.warning("The given data are not appropriate to create a repairId");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
         }
         if (proposedEndDate == null) {
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+            logger.warning("The property is null");
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
-        Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, repairId);
-        Logger.getLogger(AdministratorServiceImpl.class.getName()).log(Level.SEVERE, null, proposedEndDate);
         // exception?
         repairRepository.updateProposedEndDate(repairId, proposedEndDate);
+        logger.info("The register was successful");
     }
 
     @Override
     public LocalDate checkStartDate(int repairId) throws RepairException {
-        if (repairId < 1 && repairId > 20) {
+        if (repairId <= 0) {
+            logger.warning("The given data are not appropriate to create a repairId");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
         }
         // exception?
@@ -77,7 +85,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public LocalDate checkEndDate(int repairId) throws RepairException {
-        if (repairId < 1 && repairId > 20) {
+        if (repairId <= 0) {
+            logger.warning("The given data are not appropriate to create a repairId");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
         }
         // exception?
