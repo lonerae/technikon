@@ -2,20 +2,21 @@ package com.technikon.eagency.services;
 
 import com.technikon.eagency.model.Repair;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+
 
 public interface AdministratorService {
 
     void proposeCost(int repairId, BigDecimal proposedCost);
 
-    void proposeStartDate(int repairId, LocalDateTime proposedStartDate);
+    void proposeStartDate(int repairId, LocalDate proposedStartDate);
 
-    void proposeEndDate(int repairId, LocalDateTime proposedEndDate);
+    void proposeEndDate(int repairId, LocalDate proposedEndDate);
 
-    LocalDateTime checkStartDate(int repairId);
+    LocalDate checkStartDate(int repairId);
 
-    LocalDateTime checkEndDate(int repairId);
+    LocalDate checkEndDate(int repairId);
 
     List<Repair> findAllPendingRepairs();
 

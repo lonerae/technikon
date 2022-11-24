@@ -10,7 +10,7 @@ import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.OwnerService;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -70,17 +70,17 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Optional<Owner> findOwner(long vatNumber) {
+    public Owner findOwner(long vatNumber) {
         return ownerRepository.readVatNumber(vatNumber);
     }
 
     @Override
-    public Optional<Owner> findOwner(String email) {
+    public Owner findOwner(String email) {
         return ownerRepository.readEmail(email);
     }
 
     @Override
-    public Optional<Property> findProperty(long propertyId) {
+    public Property findProperty(long propertyId) {
         return propertyRepository.readPropertyId(propertyId);
     }
 
@@ -90,12 +90,12 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDateTime startDate) {
+    public List<Repair> findRepairs(LocalDate startDate) {
         return repairRepository.readStartDate(startDate);
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) {
         return repairRepository.readDateRange(startDate, endDate);
     }
 
@@ -110,7 +110,7 @@ public class OwnerServiceImpl implements OwnerService {
                 .readOwner(vatNumberOfOwner)
                 .stream()
                 .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
-                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
+                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatustype));
     }
 
 }
