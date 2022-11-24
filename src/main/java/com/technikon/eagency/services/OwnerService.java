@@ -19,11 +19,11 @@ public interface OwnerService {
 
     void submitRepair(Repair repair) throws RepairException;
 
-    Owner findOwner(long vatNumber);
+    Owner findOwner(long vatNumber) throws OwnerException;
 
-    Owner findOwner(String email);
+    Owner findOwner(String email) throws OwnerException;
 
-    Property findProperty(long propertyId);
+    Property findProperty(long propertyId) throws PropertyException;
 
     List<Property> findProperties(long vatNumberOfOwner);
 

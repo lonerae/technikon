@@ -17,7 +17,6 @@ import com.technikon.eagency.services.OwnerService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -81,7 +80,12 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Owner findOwner(long vatNumber) {
+    public Owner findOwner(long vatNumber) throws OwnerException {
+        if (vatNumber <= 0) {
+            logger.warning("The given data are not appropriate to find an owner");
+            throw new OwnerException(OwnerExceptionCodes.OWNER_INVALID_DATA);
+        }
+        logger.info("The search of Owner was successful");
         return ownerRepository.readVatNumber(vatNumber);
     }
 
@@ -91,7 +95,12 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Property findProperty(long propertyId) {
+    public Property findProperty(long propertyId) throws PropertyException {
+        if (propertyId <= 0) {
+            logger.warning("The given data are not appropriate to find a property");
+            throw new PropertyException(PropertyExceptionCodes.PROPERTY_INVALID_DATA);
+        }
+        logger.info("The search of property was successful");
         return propertyRepository.readPropertyId(propertyId);
     }
 
@@ -121,6 +130,6 @@ public class OwnerServiceImpl implements OwnerService {
                 .readOwner(vatNumberOfOwner)
                 .stream()
                 .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
-                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatustype));
+                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
     }
 }
