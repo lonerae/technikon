@@ -4,52 +4,63 @@ import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
-import java.util.Optional;
 
 public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {
 
-    private EntityManager entityManager = JPAUtil.getEntityManager();
+    private final EntityManager entityManager;
 
-    @Override
-    public Optional<Owner> readVatNumber(long vatNumber) {
-        Optional<Owner> owner = entityManager.find(Owner.class, vatNumber);
-        if (owner.isPresent()) {
-            return owner;
-        }
-        return Optional.empty();
+    public OwnerRepositoryImpl() {
+        entityManager = JPAUtil.getEntityManager();
     }
 
     @Override
-    public Optional<Owner> readEmail(String email) {
-        Optional<Owner> owner = entityManager.find(Owner.class, email);
-        if (owner.isPresent()) {
-            return owner;
-        }
-        return Optional.empty();
+    public Owner readVatNumber(long vatNumber) {
+        return (Owner) entityManager.createQuery("from Owner o Where o.vatNumber =:propertyId ", Owner.class)
+                .setParameter("vatNumber", vatNumber);
     }
 
     @Override
-    public void updateAddress(int ownerId, String address) {
-        Optional<Owner> owner = read(ownerId);
-        if (owner.isPresent()) {
-            owner.get().setAddress(address);
-        }
+    public Owner readEmail(String email) {
+        return (Owner) entityManager.createQuery("from Owner o Where o.email =:email ", Owner.class)
+                .setParameter("email", email);
     }
 
     @Override
-    public void updateEmail(int ownerId, String email) {
-        Optional<Owner> owner = read(ownerId);
-        if (owner.isPresent()) {
-            owner.get().setEmail(email);
+    public boolean updateAddress(int ownerId, String address) {
+        Owner owner = read(ownerId);
+        if (owner != null) {
+            owner.setAddress(address);
+            entityManager.getTransaction().begin();
+            entityManager.merge(owner);
+            entityManager.getTransaction().commit();
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void updatePassword(int ownerId, String password) {
-        Optional<Owner> owner = read(ownerId);
-        if (owner.isPresent()) {
-            owner.get().setPassword(password);
+    public boolean updateEmail(int ownerId, String email) {
+        Owner owner = read(ownerId);
+        if (owner != null) {
+            owner.setEmail(email);
+            entityManager.getTransaction().begin();
+            entityManager.merge(owner);
+            entityManager.getTransaction().commit();
+            return true;
         }
+        return false;
     }
 
+    @Override
+    public boolean updatePassword(int ownerId, String password) {
+        Owner owner = read(ownerId);
+        if (owner != null) {
+            owner.setPassword(password);
+            entityManager.getTransaction().begin();
+            entityManager.merge(owner);
+            entityManager.getTransaction().commit();
+            return true;
+        }
+        return false;
+    }
 }
