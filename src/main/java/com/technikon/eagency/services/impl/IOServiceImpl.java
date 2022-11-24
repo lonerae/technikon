@@ -42,7 +42,6 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
-
     public int readOwnerFromCsv(String filename) throws OwnerException {
 
         File file = new File(filename);
@@ -85,17 +84,16 @@ public class IOServiceImpl implements IOService {
     public int readPropertyFromCsv(String filename) {
         File file = new File(filename);
         int rowsRead = 0;
-
-        try {
+        try{
             Scanner scanner2 = new Scanner(file);
-
+            
             scanner2.nextLine();
-            while (scanner2.hasNext()) {
+            while(scanner2.hasNext()){
                 String line = scanner2.nextLine();
-                try {
+                try{
                     String[] words = line.split(",");
                     Property property = new Property();
-                    Owner owner = new Owner();
+                    //Owner owner = new Owner();
                     property.setId(Integer.parseInt(words[0]));
                     property.setPropertyId(Long.parseLong(words[1].trim()));
                     property.setAddress(words[2].trim());
@@ -129,17 +127,49 @@ public class IOServiceImpl implements IOService {
             while (scanner3.hasNext()) {
                 String line = scanner3.nextLine();
                 try {
+                   // property.setOwner(ownerRepository.read(Integer.parseInt(words[4].trim())));
+                    property.setPropertyType(PropertyType.valueOf(words[5]));
+                    
+                    propertyRepository.create(property);
+                    rowsRead++;
+                }
+                catch(Exception e)
+                {
+                    System.out.println("This row has been dropped");
+                }
+            }
+        }
+        catch (FileNotFoundException ex) {
+            Logger.getLogger(IOServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+      
+    }
+        return rowsRead;
+    }
+    
+
+    @Override
+    public int readRepairFromCsv(String filename) {
+        
+        File file = new File(filename);
+        int rowsRead = 0;
+        try{
+            Scanner scanner3 = new Scanner(file);
+            
+            scanner3.nextLine();
+            
+            while (scanner3.hasNext()){
+                String line = scanner3.nextLine();
+                try{
                     String[] words = line.split(",");
                     Repair repair = new Repair();
                     Property property = new Property();
                     Owner owner = new Owner();
-
                     repair.setId(Integer.parseInt(words[0]));
-                    repair.setProperty(property);
-
+                    //repair.setProperty(propertyRepository.read(Integer.parseInt(words[1].trim())));
+                    
                     repair.setShortDescription(words[2].trim());
-                    repair.setOwner(owner);
-
+                    //repair.setOwner(ownerRepository.read(Integer.parseInt(words[3].trim())));
+           
                     repair.setDateOfSubmisssion(LocalDate.parse(words[4].trim()));
                     repair.setDescriptionOfWork(words[5].trim());
                     repair.setProposedDateOfStart(LocalDate.parse(words[6].trim()));
@@ -150,19 +180,23 @@ public class IOServiceImpl implements IOService {
                     repair.setDateOfEnd(LocalDate.parse(words[11].trim()));
                     repair.setRepairtype(RepairType.valueOf(words[12].trim()));
                     repair.setStatustype(StatusType.valueOf(words[13].trim()));
-
+                    
                     repairRepository.create(repair);
                     rowsRead++;
-
-                } catch (Exception e) {
+                    
+                }
+                catch(Exception e)
+                {
                     System.out.println("This row has been dropped");
                 }
             }
-
-        } catch (FileNotFoundException ex) {
+            
+        }
+        catch (FileNotFoundException ex) {
             Logger.getLogger(IOServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return rowsRead;
-
+         return rowsRead;
+        
+    
     }
-}
+  }

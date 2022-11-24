@@ -34,4 +34,5 @@ public class Repair extends PersistentClass {
     private Property property;
 
 }
+
 //setdateOfSubmission(LocalDate.parse(words[4].trim()))

@@ -1,5 +1,4 @@
 package com.technikon.eagency.util;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -20,7 +19,7 @@ public class JPAUtil {
         return factory;
     }
 
-    public static EntityManager getEntityManager() {
+    public static EntityManager getEntityManager(){
         return getEntityManagerFactory().createEntityManager();
     }
 
