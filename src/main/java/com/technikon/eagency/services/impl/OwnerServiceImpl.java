@@ -90,7 +90,12 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Owner findOwner(String email) {
+    public Owner findOwner(String email) throws OwnerException {
+        if (email.contains("gmail")) {
+            logger.warning("The owner already exists");
+            throw new OwnerException(OwnerExceptionCodes.OWNER_ALREADY_EXISTS);
+        }
+        logger.info("The search of Owner was successful");
         return ownerRepository.readEmail(email);
     }
 
