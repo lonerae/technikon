@@ -6,6 +6,7 @@ package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.model.Property;
+import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
@@ -34,4 +35,18 @@ public class OwnerServiceImplTest {
         service = new OwnerServiceImpl(ownerRepo, propertyRepo, repairRepo);
     }
 
+    @Test
+    public void addNullPropertyAndCheckIfPropertyIsNotAdded() {
+        Property property = null;
+        service.registerProperty(property);
+        assertEquals(0, propertyRepo.read().size());
+    }
+    
+    @Test
+    public void addNullRepairAndCheckIfRepairIsNotAdded() {
+        Repair repair = null;
+        service.submitRepair(repair);
+        assertEquals(0, repairRepo.read().size());
+    }
+    
 }
