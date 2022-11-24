@@ -7,19 +7,19 @@ import java.util.List;
 
 public interface RepairRepository extends Repository<Repair> {
 
-    List<Repair> readStartDate(LocalDate date);
+  List<Repair> readStartDate(LocalDate date);
     
-    List<Repair> readDateRange(LocalDate startDate, LocalDate endDate);
+  List<Repair> readDateRange(LocalDate startDate, LocalDate endDate);
     
-    List<Repair> readOwner(long vatNumber);
+  List<Repair> readOwner(long vatNumber);
     
-    boolean updateProposedStartDate(int repairId, LocalDate date);
+  boolean updateProposedStartDate(int repairId, LocalDate date);
 
-    boolean updateProposedEndDate(int repairId, LocalDate date);
+  boolean updateProposedEndDate(int repairId, LocalDate date);
 
-    boolean updateProposedCost(int repairId, BigDecimal cost);
+  boolean updateProposedCost(int repairId, BigDecimal cost);
     
-    boolean update(Repair repair);
+  boolean update(Repair repair);
 
 }
 

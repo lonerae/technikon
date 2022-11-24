@@ -1,5 +1,3 @@
-
-
 package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.enums.PropertyType;
@@ -44,7 +42,6 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
-    
     public int readOwnerFromCsv(String filename) throws OwnerException {
 
         File file = new File(filename);
@@ -87,7 +84,6 @@ public class IOServiceImpl implements IOService {
     public int readPropertyFromCsv(String filename) {
         File file = new File(filename);
         int rowsRead = 0;
-        
         try{
             Scanner scanner2 = new Scanner(file);
             
@@ -102,6 +98,35 @@ public class IOServiceImpl implements IOService {
                     property.setPropertyId(Long.parseLong(words[1].trim()));
                     property.setAddress(words[2].trim());
                     property.setYearOfConstruction(Integer.parseInt(words[3].trim()));
+                    property.setOwner(owner);
+                    property.setPropertyType(PropertyType.valueOf(words[5]));
+
+                    propertyRepository.create(property);
+                    rowsRead++;
+                } catch (Exception e) {
+                    System.out.println("This row has been dropped");
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(IOServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return rowsRead;
+    }
+
+    @Override
+    public int readRepairFromCsv(String filename) {
+
+        File file = new File(filename);
+        int rowsRead = 0;
+        try {
+            Scanner scanner3 = new Scanner(file);
+
+            scanner3.nextLine();
+
+            while (scanner3.hasNext()) {
+                String line = scanner3.nextLine();
+                try {
                    // property.setOwner(ownerRepository.read(Integer.parseInt(words[4].trim())));
                     property.setPropertyType(PropertyType.valueOf(words[5]));
                     
@@ -139,7 +164,6 @@ public class IOServiceImpl implements IOService {
                     Repair repair = new Repair();
                     Property property = new Property();
                     Owner owner = new Owner();
-                    
                     repair.setId(Integer.parseInt(words[0]));
                     //repair.setProperty(propertyRepository.read(Integer.parseInt(words[1].trim())));
                     
@@ -175,6 +199,4 @@ public class IOServiceImpl implements IOService {
         
     
     }
-    }
-
-
+  }

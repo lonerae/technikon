@@ -4,9 +4,9 @@ package com.technikon.eagency.exceptions;
  *
  * @author Public
  */
-public class OwnerException extends Exception {
+public class RepairException extends Exception {
 
-    public OwnerException(String message) {
+    public RepairException(String message) {
         super(message);
     }
 }

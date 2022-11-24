@@ -11,7 +11,7 @@ import com.technikon.eagency.exceptions.OwnerException;
  * @author Hara
  */
 public interface IOService {
-    
+
     /*
     void saveOwnerToCsv (String filename) throws OwnerException;
     void savePropertyToCsv (String filename); 

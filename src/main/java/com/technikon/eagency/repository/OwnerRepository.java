@@ -1,6 +1,5 @@
 package com.technikon.eagency.repository;
 
-
 import com.technikon.eagency.model.Owner;
 
 public interface OwnerRepository extends Repository<Owner> {

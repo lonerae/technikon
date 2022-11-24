@@ -28,7 +28,6 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     public T read(int id) {
 
         return entityManager.find(classGeneric, id);
-
     }
 
     @Override
