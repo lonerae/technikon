@@ -14,7 +14,7 @@ import java.util.Map;
 public interface OwnerService {
 
 
-    void registerOwner(Owner owner);
+   // void registerOwner(Owner owner);
 
     void registerOwner(Owner owner) throws OwnerException;
 

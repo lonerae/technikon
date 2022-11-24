@@ -9,6 +9,7 @@ import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -95,7 +96,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public List<Repair> findAllPendingRepairs() {
         return repairRepository.read()
                 .stream()
-                .filter(r -> StatusType.PENDING == r.getStatustype())
+                .filter(r -> StatusType.PENDING == r.getStatusType())
                 .collect(Collectors.toList());
 
     }
