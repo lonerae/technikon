@@ -22,3 +22,4 @@ public interface RepairRepository extends Repository<Repair> {
     boolean update(Repair repair);
 
 }
+

@@ -1,5 +1,6 @@
 package com.technikon.eagency.repository;
 
+
 import com.technikon.eagency.model.Owner;
 
 public interface OwnerRepository extends Repository<Owner> {
@@ -13,5 +14,4 @@ public interface OwnerRepository extends Repository<Owner> {
     boolean updateEmail(int ownerId, String email);
 
     boolean updatePassword(int ownerId, String password);
-
 }

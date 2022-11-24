@@ -5,11 +5,11 @@ import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
-public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements OwnerRepository {
+public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {
 
     private final EntityManager entityManager;
 
-    public JPAOwnerRepositoryImpl() {
+    public OwnerRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
 
@@ -63,5 +63,4 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
         }
         return false;
     }
-
 }

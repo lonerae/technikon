@@ -6,11 +6,11 @@ import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
-public class JPAPropertyRepositoryImpl extends JPARepositoryImpl<Property> implements PropertyRepository {
+public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
 
     private final EntityManager entityManager;
 
-    public JPAPropertyRepositoryImpl() {
+    public PropertyRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
 

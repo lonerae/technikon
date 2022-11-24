@@ -7,12 +7,12 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 
-public abstract class JPARepositoryImpl<T extends PersistentClass> implements Repository<T> {
+public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
     private final EntityManager entityManager;
     private Class<T> classGeneric;
 
-    public JPARepositoryImpl() {
+    public RepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
 

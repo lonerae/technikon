@@ -1,9 +1,7 @@
 package com.technikon.eagency.repository;
 
-import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.model.Property;
 import java.util.List;
-import java.util.Optional;
 
 public interface PropertyRepository extends Repository<Property> {
 
@@ -13,3 +11,4 @@ public interface PropertyRepository extends Repository<Property> {
     
     boolean update(Property property);
 }
+

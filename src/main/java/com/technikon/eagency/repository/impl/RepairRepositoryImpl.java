@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implements RepairRepository {
+public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
     private final EntityManager entityManager;
 
-    public JPARepairRepositoryImpl() {
+    public RepairRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
 

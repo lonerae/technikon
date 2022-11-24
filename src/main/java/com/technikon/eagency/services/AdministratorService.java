@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+
 public interface AdministratorService {
 
     void proposeCost(int repairId, BigDecimal proposedCost);

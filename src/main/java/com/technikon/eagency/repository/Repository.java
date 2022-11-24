@@ -16,3 +16,4 @@ public interface Repository<T extends PersistentClass> {
     boolean safeDelete(int id);
     
 }
+

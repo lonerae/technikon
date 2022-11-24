@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface OwnerService {
-    
+
     void registerOwner(Owner owner);
 
     void registerProperty(Property property);
@@ -29,6 +29,7 @@ public interface OwnerService {
     List<Repair> findRepairs(LocalDate startDate, LocalDate endDate);
 
     List<Repair> findRepairs(long vatNumberOfOwner);
-    
+
     Map<Long, StatusType> getReport(long vatNumberOfOwner);
+
 }
