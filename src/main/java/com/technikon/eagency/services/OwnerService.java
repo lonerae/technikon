@@ -25,13 +25,13 @@ public interface OwnerService {
 
     Property findProperty(long propertyId) throws PropertyException;
 
-    List<Property> findProperties(long vatNumberOfOwner);
+    List<Property> findProperties(long vatNumberOfOwner) throws PropertyException;
 
-    List<Repair> findRepairs(LocalDate startDate);
+    List<Repair> findRepairs(LocalDate startDate) throws RepairException;
 
-    List<Repair> findRepairs(LocalDate startDate, LocalDate endDate);
+    List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) throws RepairException;
 
-    List<Repair> findRepairs(long vatNumberOfOwner);
+    List<Repair> findRepairs(long vatNumberOfOwner) throws RepairException;
 
     Map<Long, StatusType> getReport(long vatNumberOfOwner);
 

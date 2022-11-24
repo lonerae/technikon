@@ -105,22 +105,46 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<Property> findProperties(long vatNumberOfOwner) {
+    public List<Property> findProperties(long vatNumberOfOwner) throws PropertyException {
+        if (vatNumberOfOwner <= 0) {
+            logger.warning("The given data are not appropriate to find a property");
+            throw new PropertyException(PropertyExceptionCodes.PROPERTY_INVALID_DATA);
+        }
+        logger.info("The search of property was successful");
         return propertyRepository.readVatNumber(vatNumberOfOwner);
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDate startDate) {
+    public List<Repair> findRepairs(LocalDate startDate) throws RepairException {
+        if (startDate == null) {
+            logger.warning("The given data are not appropriate to find a repair");
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
+        logger.info("The search of repair was successful");
         return repairRepository.readStartDate(startDate);
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) {
+    public List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) throws RepairException {
+        if (startDate == null) {
+            logger.warning("The given data are not appropriate to find a repair");
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
+        if (endDate == null) {
+            logger.warning("The given data are not appropriate to find a repair");
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
+        logger.info("The search of repair was successful");
         return repairRepository.readDateRange(startDate, endDate);
     }
 
     @Override
-    public List<Repair> findRepairs(long vatNumberOfOwner) {
+    public List<Repair> findRepairs(long vatNumberOfOwner) throws RepairException {
+        if (vatNumberOfOwner <= 0) {
+            logger.warning("The given data are not appropriate to find a repair");
+            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
+        }
+        logger.info("The search of repair was successful");
         return repairRepository.readOwner(vatNumberOfOwner);
     }
 
