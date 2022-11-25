@@ -13,10 +13,20 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
         entityManager = JPAUtil.getEntityManager();
     }
 
+   @Override
+    public Class<Owner> getEntityClass() {
+        return Owner.class;}
+
+    /*
     @Override
     public Owner readVatNumber(long vatNumber) {
         return (Owner) entityManager.createQuery("from Owner o Where o.vatNumber =:propertyId ", Owner.class)
                 .setParameter("vatNumber", vatNumber);
+    }
+     */
+    @Override
+    public Owner readVatNumber(long vatNumber) {
+        return (Owner)entityManager.createQuery("SELECT o.vatNumber FROM Owner ");
     }
 
     @Override
@@ -63,4 +73,7 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
         }
         return false;
     }
+
+    
+
 }

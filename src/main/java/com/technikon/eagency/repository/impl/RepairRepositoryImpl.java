@@ -16,6 +16,10 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public RepairRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
+   @Override
+    public Class<Repair> getEntityClass() {
+        return Repair.class;}
+    
 
     @Override
     public List<Repair> readStartDate(LocalDate date) {
@@ -87,4 +91,6 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
         entityManager.getTransaction().commit();
         return true;
     }
+
+ 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
     private final EntityManager entityManager;
-    private Class<T> classGeneric;
+    public abstract Class<T> getEntityClass();
 
     public RepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
@@ -27,17 +27,17 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     @Override
     public T read(int id) {
 
-        return entityManager.find(classGeneric, id);
+        return entityManager.find(getEntityClass(), id);
     }
 
     @Override
     public List<T> read() {
-        return entityManager.createQuery("from " + classGeneric.getName(), classGeneric).getResultList();
+        return entityManager.createQuery("from " + getEntityClass().getName(), getEntityClass()).getResultList();
     }
 
     @Override
     public boolean delete(int id) {
-        T t = entityManager.find(classGeneric, id);
+        T t = entityManager.find(getEntityClass(), id);
 
         if (t != null) {
             entityManager.getTransaction().begin();

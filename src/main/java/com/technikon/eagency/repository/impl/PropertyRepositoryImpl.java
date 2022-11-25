@@ -14,7 +14,10 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
     public PropertyRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
-
+@Override
+    public Class<Property> getEntityClass() {
+     return Property.class;}
+ 
     @Override
     public Property readPropertyId(long propertyId) {
         return (Property) entityManager.createQuery("from Property p Where p.propertyId =:propertyId ", Property.class)
@@ -39,5 +42,9 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
         entityManager.getTransaction().commit();
         return true;
     }
+
+    
+
+  
 
 }
