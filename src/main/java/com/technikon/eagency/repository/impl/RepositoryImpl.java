@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
     private final EntityManager entityManager;
-    public abstract Class<T> getEntityClass();
+   
 
     public RepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
