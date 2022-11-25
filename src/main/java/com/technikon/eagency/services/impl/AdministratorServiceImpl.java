@@ -9,27 +9,24 @@ import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdministratorServiceImpl implements AdministratorService {
 
     private final RepairRepository repairRepository;
-    private final Logger logger;
+    private static Logger logger = LoggerFactory.getLogger(AdministratorServiceImpl.class);
 
     public AdministratorServiceImpl(RepairRepository repairRepository) {
         this.repairRepository = repairRepository;
-        logger = Logger.getLogger("AdministratorServiceImpl.class");
     }
 
     @Override
     public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException {
-        if (repairId <= 0) {
-            logger.warning("The given data are not appropriate to create a repairId");
-            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
-        }
+        
         if (proposedCost == null) {
-            logger.warning("The proposedCost is null");
+            logger.warn("The proposedCost is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         // exception?
@@ -39,12 +36,14 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException {
-        if (repairId <= 0) {
-            logger.warning("The given data are not appropriate to create a repairId");
-            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
+        if (ownerRepository.readEmail(email) == null) {
+            logger.warn("The owner is null");
+            throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
+        logger.info("The search of owner was successful");
+        return ownerRepository.readEmail(email);
         if (proposedStartDate == null) {
-            logger.warning("Not all data are given to create a proposedStartDate");
+            logger.warn("Not all data are given to create a proposedStartDate");
             throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
         // exception?
@@ -54,10 +53,12 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-        if (repairId <= 0) {
-            logger.warning("The given data are not appropriate to create a repairId");
-            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
+         if (repairRepository == null) {
+            logger.warn("The repair is null");
+            throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
+        logger.info("The search of owner was successful");
+        return ownerRepository.readEmail(email);
         if (proposedEndDate == null) {
             logger.warning("The property is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
@@ -69,12 +70,12 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public LocalDate checkStartDate(int repairId) throws RepairException {
-        if (repairId <= 0) {
+        Repair repair = repairRepository.read(repairId);
+        if (repairId == null) {
             logger.warning("The given data are not appropriate to create a repairId");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
         }
         // exception?
-        Repair repair = repairRepository.read(repairId);
         return repair.getDateOfStart();
     }
 
