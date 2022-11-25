@@ -22,18 +22,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class OwnerServiceImpl implements OwnerService {
-    
+
     private final OwnerRepository ownerRepository;
     private final PropertyRepository propertyRepository;
     private final RepairRepository repairRepository;
     private static Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
-    
+
     public OwnerServiceImpl(OwnerRepository ownerRepository, PropertyRepository propertyRepository, RepairRepository repairRepository) {
         this.ownerRepository = ownerRepository;
         this.propertyRepository = propertyRepository;
         this.repairRepository = repairRepository;
     }
-    
+
     @Override
     public void registerOwner(Owner owner) throws OwnerException {
         if (owner == null) {
@@ -44,7 +44,7 @@ public class OwnerServiceImpl implements OwnerService {
         ownerRepository.create(owner);
         logger.info("The register was successful");
     }
-    
+
     @Override
     public void registerProperty(Property property) throws PropertyException {
         if (property == null) {
@@ -59,7 +59,7 @@ public class OwnerServiceImpl implements OwnerService {
         propertyRepository.create(property);
         logger.info("The register of Property was successful");
     }
-    
+
     @Override
     public void submitRepair(Repair repair) throws RepairException {
         if (repair == null) {
@@ -74,7 +74,7 @@ public class OwnerServiceImpl implements OwnerService {
         repairRepository.create(repair);
         logger.info("The submit of repair was successful");
     }
-    
+
     @Override
     public Owner findOwner(long vatNumber) throws OwnerException {
         if (ownerRepository.readVatNumber(vatNumber) == null) {
@@ -84,7 +84,7 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("The search of owner was successful");
         return ownerRepository.readVatNumber(vatNumber);
     }
-    
+
     @Override
     public Owner findOwner(String email) throws OwnerException {
         if (ownerRepository.readEmail(email) == null) {
@@ -94,7 +94,7 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("The search of owner was successful");
         return ownerRepository.readEmail(email);
     }
-    
+
     @Override
     public Property findProperty(long propertyId) throws PropertyException {
         if (propertyRepository.readPropertyId(propertyId) == null) {
@@ -104,7 +104,7 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("The search of property was successful");
         return propertyRepository.readPropertyId(propertyId);
     }
-    
+
     @Override
     public List<Property> findProperties(long vatNumberOfOwner) throws PropertyException {
         if (propertyRepository.readVatNumber(vatNumberOfOwner) == null) {
@@ -114,7 +114,7 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("The search of property was successful");
         return propertyRepository.readVatNumber(vatNumberOfOwner);
     }
-    
+
     @Override
     public List<Repair> findRepairs(LocalDate startDate) throws RepairException {
         if (repairRepository.readStartDate(startDate) == null) {
@@ -124,21 +124,17 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("The search of repair was successful");
         return repairRepository.readStartDate(startDate);
     }
-    
+
     @Override
     public List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) throws RepairException {
-        if (startDate == null) {
-            logger.warn("The given data are not appropriate to find a repair");
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
-        }
-        if (endDate == null) {
-            logger.warn("The given data are not appropriate to find a repair");
+        if (repairRepository.readDateRange(startDate, endDate) == null) {
+            logger.warn("The repair is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         logger.info("The search of repair was successful");
         return repairRepository.readDateRange(startDate, endDate);
     }
-    
+
     @Override
     public List<Repair> findRepairs(long vatNumberOfOwner) throws RepairException {
         if (ownerRepository.readVatNumber(vatNumberOfOwner) == null) {
@@ -148,7 +144,7 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("The search of repair was successful");
         return (List<Repair>) ownerRepository.readVatNumber(vatNumberOfOwner);
     }
-    
+
     @Override
     public Map<Long, StatusType> getReport(long vatNumberOfOwner) {
         return repairRepository
