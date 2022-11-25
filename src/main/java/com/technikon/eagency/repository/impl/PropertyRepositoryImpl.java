@@ -20,17 +20,17 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
  
     @Override
     public Property readPropertyId(long propertyId) {
-        return (Property) entityManager.createQuery("from Property p Where p.propertyId =:propertyId ", Property.class)
+        return (Property) entityManager.createQuery("FROM Property p WHERE p.propertyId = :propertyId ", Property.class)
                 .setParameter("propertyId", propertyId);
     }
 
     @Override
     public List<Property> readVatNumber(long vatNumberOfOwner) {
-//        TODO
-//        return entityManager.createQuery("from Property p Where p.vatNumber =:vatNumber ", Property.class)
-//                .setParameter("propertyId", vatNumberOfOwner)
-//                .getResultList();
-        return null;
+
+      return entityManager.createQuery("FROM Property p Where p.vatNumber =:vatNumber ", Property.class)
+                .setParameter("propertyId", vatNumberOfOwner)
+                .getResultList();
+    
 
     }
 

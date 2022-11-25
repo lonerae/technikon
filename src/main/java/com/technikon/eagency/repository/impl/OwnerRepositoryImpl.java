@@ -13,9 +13,10 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
         entityManager = JPAUtil.getEntityManager();
     }
 
-   @Override
+    @Override
     public Class<Owner> getEntityClass() {
-        return Owner.class;}
+        return Owner.class;
+    }
 
     /*
     @Override
@@ -26,12 +27,13 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
      */
     @Override
     public Owner readVatNumber(long vatNumber) {
-        return (Owner)entityManager.createQuery("SELECT o.vatNumber FROM Owner ");
+        return (Owner) entityManager.createQuery(" FROM Owner o WHERE o.vatNumber  = :vatNumber", Owner.class)
+                .setParameter("vatNumber", vatNumber);
     }
 
     @Override
     public Owner readEmail(String email) {
-        return (Owner) entityManager.createQuery("from Owner o Where o.email =:email ", Owner.class)
+        return (Owner) entityManager.createQuery(" FROM Owner o WHERE o.email =:email ", Owner.class)
                 .setParameter("email", email);
     }
 
@@ -73,7 +75,5 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
         }
         return false;
     }
-
-    
 
 }
