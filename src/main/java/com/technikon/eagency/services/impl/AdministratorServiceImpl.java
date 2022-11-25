@@ -4,6 +4,8 @@ import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.exceptions.RepairExceptionCodes;
 import com.technikon.eagency.model.Repair;
+import com.technikon.eagency.repository.OwnerRepository;
+import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;
@@ -16,15 +18,19 @@ import org.slf4j.LoggerFactory;
 public class AdministratorServiceImpl implements AdministratorService {
 
     private final RepairRepository repairRepository;
+    private final OwnerRepository ownerRepository;
+    private final PropertyRepository propertyRepository;
     private static Logger logger = LoggerFactory.getLogger(AdministratorServiceImpl.class);
 
-    public AdministratorServiceImpl(RepairRepository repairRepository) {
+    public AdministratorServiceImpl(RepairRepository repairRepository, OwnerRepository ownerRepository,PropertyRepository propertyRepository) {
         this.repairRepository = repairRepository;
+        this.ownerRepository = ownerRepository;
+        this.propertyRepository=propertyRepository;
     }
 
     @Override
     public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException {
-        
+
         if (proposedCost == null) {
             logger.warn("The proposedCost is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
@@ -36,7 +42,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException {
-        if (ownerRepository.readEmail(email) == null) {
+        if (repairRepository.) == null) {
             logger.warn("The owner is null");
             throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
@@ -53,7 +59,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-         if (repairRepository == null) {
+        if (propertyRepository == null) {
             logger.warn("The repair is null");
             throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
