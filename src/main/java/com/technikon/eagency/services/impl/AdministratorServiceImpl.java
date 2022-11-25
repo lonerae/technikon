@@ -96,7 +96,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public List<Repair> findAllPendingRepairs() {
         return repairRepository.read()
                 .stream()
-                .filter(r -> StatusType.PENDING == r.getStatusType())
+                .filter(r -> StatusType.PENDING == r.getStatustype())
                 .collect(Collectors.toList());
 
     }

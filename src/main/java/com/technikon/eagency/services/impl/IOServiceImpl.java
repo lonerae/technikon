@@ -29,11 +29,19 @@ public class IOServiceImpl implements IOService {
     private PropertyRepository propertyRepository;
     private RepairRepository repairRepository;
 
-    public IOServiceImpl(OwnerRepository ownerRepository, PropertyRepository propertyRepository, RepairRepository repairRepository) {
+    public IOServiceImpl(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
+    }
+
+    public IOServiceImpl(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
+    }
+
+    public IOServiceImpl(RepairRepository repairRepository) {
         this.repairRepository = repairRepository;
     }
+
+   
 
    
 

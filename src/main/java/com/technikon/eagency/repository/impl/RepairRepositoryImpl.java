@@ -17,8 +17,6 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
         entityManager = JPAUtil.getEntityManager();
     }
   
-    
-
     @Override
     public List<Repair> readStartDate(LocalDate date) {
         List<Repair> resultList = read();

@@ -6,12 +6,11 @@ import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
-
 public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
     private final EntityManager entityManager;
-   
-
+ private Class<T> classGeneric;
+ 
     public RepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
@@ -27,17 +26,17 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     @Override
     public T read(int id) {
 
-        return entityManager.find(getEntityClass(), id);
+        return entityManager.find(classGeneric, id);
     }
 
     @Override
     public List<T> read() {
-        return entityManager.createQuery("from " + getEntityClass().getName(), getEntityClass()).getResultList();
+        return entityManager.createQuery("from " + classGeneric.getName(), classGeneric).getResultList();
     }
 
     @Override
     public boolean delete(int id) {
-        T t = entityManager.find(getEntityClass(), id);
+        T t = entityManager.find(classGeneric, id);
 
         if (t != null) {
             entityManager.getTransaction().begin();

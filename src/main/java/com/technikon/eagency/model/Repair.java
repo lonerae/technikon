@@ -45,11 +45,11 @@ public class Repair extends PersistentClass {
         this.shortDescription = shortDescription;
     }
 
-    public LocalDate getDateOfSubmisssion() {
+    public LocalDateTime getDateOfSubmisssion() {
         return dateOfSubmisssion;
     }
 
-    public void setDateOfSubmisssion(LocalDate dateOfSubmisssion) {
+    public void setDateOfSubmisssion(LocalDateTime dateOfSubmisssion) {
         this.dateOfSubmisssion = dateOfSubmisssion;
     }
 
@@ -61,11 +61,11 @@ public class Repair extends PersistentClass {
         this.descriptionOfWork = descriptionOfWork;
     }
 
-    public LocalDate getProposedDateOfStart() {
+    public LocalDateTime getProposedDateOfStart() {
         return proposedDateOfStart;
     }
 
-    public void setProposedDateOfStart(LocalDate proposedDateOfStart) {
+    public void setProposedDateOfStart(LocalDateTime proposedDateOfStart) {
         this.proposedDateOfStart = proposedDateOfStart;
     }
 
@@ -73,7 +73,7 @@ public class Repair extends PersistentClass {
         return proposedDateOfEnd;
     }
 
-    public void setProposedDateOfEnd(LocalDate proposedDateOfEnd) {
+    public void setProposedDateOfEnd(LocalDateTime proposedDateOfEnd) {
         this.proposedDateOfEnd = proposedDateOfEnd;
     }
 
@@ -94,26 +94,26 @@ public class Repair extends PersistentClass {
     }
 
     public StatusType getStatusType() {
-        return statustype;
+        return statusType;
     }
 
     public void setStatusType(StatusType statusType) {
-        this.statustype = statusType;
+        this.statusType = statusType;
     }
 
-    public LocalDate getDateOfStart() {
+    public LocalDateTime getDateOfStart() {
         return dateOfStart;
     }
 
-    public void setDateOfStart(LocalDate dateOfStart) {
+    public void setDateOfStart(LocalDateTime dateOfStart) {
         this.dateOfStart = dateOfStart;
     }
 
-    public LocalDate getDateOfEnd() {
+    public LocalDateTime getDateOfEnd() {
         return dateOfEnd;
     }
 
-    public void setDateOfEnd(LocalDate dateOfEnd) {
+    public void setDateOfEnd(LocalDateTime dateOfEnd) {
         this.dateOfEnd = dateOfEnd;
     }
 

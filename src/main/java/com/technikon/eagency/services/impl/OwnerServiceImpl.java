@@ -121,6 +121,6 @@ public class OwnerServiceImpl implements OwnerService {
                 .readOwner(vatNumberOfOwner)
                 .stream()
                 .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
-                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
+                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatustype));
     }
 }
