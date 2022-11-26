@@ -6,32 +6,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="Repair")
+@Table(name = "Repair")
 public class Repair extends PersistentClass {
 
+    @NotNull
     private RepairType repairtype;
+
+    @Size(max = 100)
     private String shortDescription;
+
+    @NotNull
     private LocalDate dateOfSubmisssion;
+
     private String descriptionOfWork;
     private LocalDate proposedDateOfStart;
     private LocalDate proposedDateOfEnd;
     private BigDecimal proposedCost;
     private boolean acceptance;
-    private StatusType statusType;
+    private StatusType statusType = StatusType.PENDING;
     private LocalDate dateOfStart;
     private LocalDate dateOfEnd;
 
     @ManyToOne
-    @JoinColumn(name="ownerId")
+    @NotNull
+    @JoinColumn(name = "ownerId")
     private Owner owner;
-    
-    
+
     @ManyToOne
-    @JoinColumn(name="propertyId")
+    @NotNull
+    @JoinColumn(name = "propertyId")
     private Property property;
 
     public RepairType getRepairtype() {
@@ -136,6 +145,6 @@ public class Repair extends PersistentClass {
 
     public void setProperty(Property property) {
         this.property = property;
-    } 
+    }
 
 }

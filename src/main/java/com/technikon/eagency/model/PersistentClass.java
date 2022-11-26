@@ -12,7 +12,7 @@ public abstract class PersistentClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private boolean isActive;
+    private boolean isActive = true;
 
     public int getId() {
         return id;
@@ -29,6 +29,5 @@ public abstract class PersistentClass {
     public void setActive(boolean isActive) {
         this.isActive = isActive;
     }
-    
-    
+
 }

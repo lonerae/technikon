@@ -6,15 +6,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "Property")
 public class Property extends PersistentClass {
 
+    @NotNull
     private long propertyId;
+
+    @NotNull
     private String address;
+
     private int yearOfConstruction;
+
+    @NotNull
     private PropertyType propertyType;
 
     @ManyToOne
@@ -71,6 +78,5 @@ public class Property extends PersistentClass {
     public void setRepairList(List<Repair> repairList) {
         this.repairList = repairList;
     }
-    
-    
+
 }

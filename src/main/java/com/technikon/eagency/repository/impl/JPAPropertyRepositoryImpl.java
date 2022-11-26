@@ -7,17 +7,19 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements PropertyRepository {
+public class JPAPropertyRepositoryImpl extends JPARepositoryImpl<Property> implements PropertyRepository {
 
     private final EntityManager entityManager;
 
-    public PropertyRepositoryImpl() {
+    public JPAPropertyRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
-@Override
+
+    @Override
     public Class<Property> getEntityClass() {
-     return Property.class;}
- 
+        return Property.class;
+    }
+
     @Override
     public Property readPropertyId(long propertyId) {
         return (Property) entityManager.createQuery("FROM Property p WHERE p.propertyId = :propertyId ", Property.class)
@@ -27,11 +29,9 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
     @Override
     public List<Property> readVatNumber(long vatNumberOfOwner) {
 
-      return entityManager.createQuery("FROM Property p Where p.vatNumber =:vatNumber ", Property.class)
+        return entityManager.createQuery("FROM Property p Where p.vatNumber =:vatNumber ", Property.class)
                 .setParameter("propertyId", vatNumberOfOwner)
                 .getResultList();
-    
-
     }
 
     @Override
@@ -42,9 +42,5 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
         entityManager.getTransaction().commit();
         return true;
     }
-
-    
-
-  
 
 }

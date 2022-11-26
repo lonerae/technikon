@@ -7,9 +7,9 @@ public interface Repository<T extends PersistentClass> {
 
     int create(T t);
 
-    T read(int id);
+    T readById(int id);
 
-    List<T> read();
+    List<T> readAll();
     
     boolean delete(int id);
 

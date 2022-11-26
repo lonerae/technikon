@@ -6,13 +6,13 @@ import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
-public abstract class RepositoryImpl<T extends PersistentClass> implements Repository<T> {
+public abstract class JPARepositoryImpl<T extends PersistentClass> implements Repository<T> {
 
     private final EntityManager entityManager;
 
     public abstract Class<T> getEntityClass();
 
-    public RepositoryImpl() {
+    public JPARepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
 
@@ -25,13 +25,12 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
     }
 
     @Override
-    public T read(int id) {
-
+    public T readById(int id) {
         return entityManager.find(getEntityClass(), id);
     }
 
     @Override
-    public List<T> read() {
+    public List<T> readAll() {
         return entityManager.createQuery("from " + getEntityClass().getName(), getEntityClass()).getResultList();
     }
 
@@ -50,7 +49,7 @@ public abstract class RepositoryImpl<T extends PersistentClass> implements Repos
 
     @Override
     public boolean safeDelete(int id) {
-        T t = read(id);
+        T t = readById(id);
         if (t != null) {
             t.setActive(false);
             return true;

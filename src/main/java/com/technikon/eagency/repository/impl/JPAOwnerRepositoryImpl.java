@@ -5,11 +5,11 @@ import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
-public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerRepository {
+public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements OwnerRepository {
 
     private final EntityManager entityManager;
 
-    public OwnerRepositoryImpl() {
+    public JPAOwnerRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
 
@@ -18,13 +18,7 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
         return Owner.class;
     }
 
-    /*
-    @Override
-    public Owner readVatNumber(long vatNumber) {
-        return (Owner) entityManager.createQuery("from Owner o Where o.vatNumber =:propertyId ", Owner.class)
-                .setParameter("vatNumber", vatNumber);
-    }
-     */
+    
     @Override
     public Owner readVatNumber(long vatNumber) {
         return (Owner) entityManager.createQuery(" FROM Owner o WHERE o.vatNumber  = :vatNumber", Owner.class)
@@ -39,11 +33,11 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
 
     @Override
     public boolean updateAddress(int ownerId, String address) {
-        Owner owner = read(ownerId);
+        Owner owner = readById(ownerId);
         if (owner != null) {
             owner.setAddress(address);
             entityManager.getTransaction().begin();
-            entityManager.merge(owner);
+            entityManager.persist(owner);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -52,11 +46,11 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
 
     @Override
     public boolean updateEmail(int ownerId, String email) {
-        Owner owner = read(ownerId);
+        Owner owner = readById(ownerId);
         if (owner != null) {
             owner.setEmail(email);
             entityManager.getTransaction().begin();
-            entityManager.merge(owner);
+            entityManager.persist(owner);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -65,11 +59,11 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
 
     @Override
     public boolean updatePassword(int ownerId, String password) {
-        Owner owner = read(ownerId);
+        Owner owner = readById(ownerId);
         if (owner != null) {
             owner.setPassword(password);
             entityManager.getTransaction().begin();
-            entityManager.merge(owner);
+            entityManager.persist(owner);
             entityManager.getTransaction().commit();
             return true;
         }
