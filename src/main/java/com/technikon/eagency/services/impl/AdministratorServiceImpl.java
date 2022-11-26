@@ -72,7 +72,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public LocalDate checkStartDate(int repairId) throws RepairException {
-        if (repairRepository.readStartDate(LocalDate.MAX) == null) {
+        if (propertyRepository.readPropertyId(repairId) == null) {
             logger.warn("The repair is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
