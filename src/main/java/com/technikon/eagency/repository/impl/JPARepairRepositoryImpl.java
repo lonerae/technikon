@@ -8,14 +8,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
+public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implements RepairRepository {
 
     private final EntityManager entityManager;
 
-    public RepairRepositoryImpl() {
+    public JPARepairRepositoryImpl() {
         entityManager = JPAUtil.getEntityManager();
     }
-  
+
     @Override
     public Class<Repair> getEntityClass() {
         return Repair.class;
@@ -63,7 +63,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
 
     @Override
     public boolean updateProposedStartDate(int repairId, LocalDate date) {
-        Repair repair = read(repairId);
+        Repair repair = readById(repairId);
         if (repair != null) {
             repair.setProposedDateOfStart(date);
             entityManager.getTransaction().begin();
@@ -76,7 +76,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
 
     @Override
     public boolean updateProposedEndDate(int repairId, LocalDate date) {
-        Repair repair = read(repairId);
+        Repair repair = readById(repairId);
         if (repair != null) {
             repair.setProposedDateOfEnd(date);
             entityManager.getTransaction().begin();
@@ -89,7 +89,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
 
     @Override
     public boolean updateProposedCost(int repairId, BigDecimal cost) {
-        Repair repair = read(repairId);
+        Repair repair = readById(repairId);
         if (repair != null) {
             repair.setProposedCost(cost);
             entityManager.getTransaction().begin();
@@ -109,5 +109,4 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
         return true;
     }
 
- 
 }

@@ -3,19 +3,37 @@ package com.technikon.eagency.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @Table(name = "Owner")
 public class Owner extends PersistentClass {
 
+    @NotNull
     private long vatNumber;
+
+    @NotNull
     private String username;
+
+    @NotNull
+    @Size(min = 6, max = 15)
     private String password;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String surname;
+
+    @NotNull
     private String address;
+
+    @NotNull
     private String phoneNumber;
+
+    @NotNull
     private String email;
 
     @OneToMany(mappedBy = "owner")
@@ -103,6 +121,5 @@ public class Owner extends PersistentClass {
     public void setRepairList(List<Repair> repairList) {
         this.repairList = repairList;
     }
-    
-    
+
 }
