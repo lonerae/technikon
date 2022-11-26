@@ -57,10 +57,11 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-        if (propertyRepository.readPropertyId(repairId))== null {
+        if (propertyRepository.readPropertyId(repairId) == null) {
             logger.warn("The repair is null");
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);}        
-        if (repairRepository.readStartDate(proposedEndDate))==null {
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
+        if (repairRepository.readStartDate(proposedEndDate) == null) {
             logger.warn("The proposedStartDate is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
@@ -82,12 +83,12 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public LocalDate checkEndDate(int repairId) throws RepairException {
-        if (repairRepository.readStartDate(LocalDate.MAX) == null) {
+        if (propertyRepository.readPropertyId(repairId) == null) {
             logger.warn("The repair is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         // exception?
-        logger.info("The check of StartDate was successful");
+        logger.info("The check of EndDate was successful");
         return repair.getDateOfEnd();
     }
 
