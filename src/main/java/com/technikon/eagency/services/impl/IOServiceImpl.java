@@ -41,6 +41,10 @@ public class IOServiceImpl implements IOService {
         this.repairRepository = repairRepository;
     }
 
+   
+
+   
+
     @Override
     public int readOwnerFromCsv(String filename) throws OwnerException {
 
@@ -98,7 +102,7 @@ public class IOServiceImpl implements IOService {
                     property.setPropertyId(Long.parseLong(words[1].trim()));
                     property.setAddress(words[2].trim());
                     property.setYearOfConstruction(Integer.parseInt(words[3].trim()));
-                    property.setOwner(owner);
+                    property.setOwner(ownerRepository.read(Integer.parseInt(words[4].trim())));
                     property.setPropertyType(PropertyType.valueOf(words[5]));
 
                     propertyRepository.create(property);
@@ -114,7 +118,7 @@ public class IOServiceImpl implements IOService {
         return rowsRead;
     }
 
-    @Override
+   /* @Override
     public int readRepairFromCsv(String filename) {
 
         File file = new File(filename);
@@ -145,7 +149,7 @@ public class IOServiceImpl implements IOService {
     }
         return rowsRead;
     }
-    
+    */
 
     @Override
     public int readRepairFromCsv(String filename) {
@@ -165,10 +169,10 @@ public class IOServiceImpl implements IOService {
                     Property property = new Property();
                     Owner owner = new Owner();
                     repair.setId(Integer.parseInt(words[0]));
-                    //repair.setProperty(propertyRepository.read(Integer.parseInt(words[1].trim())));
+                    repair.setProperty(propertyRepository.read(Integer.parseInt(words[1].trim())));
                     
                     repair.setShortDescription(words[2].trim());
-                    //repair.setOwner(ownerRepository.read(Integer.parseInt(words[3].trim())));
+                    repair.setOwner(ownerRepository.read(Integer.parseInt(words[3].trim())));
            
                     repair.setDateOfSubmisssion(LocalDate.parse(words[4].trim()));
                     repair.setDescriptionOfWork(words[5].trim());
@@ -179,7 +183,7 @@ public class IOServiceImpl implements IOService {
                     repair.setDateOfStart(LocalDate.parse(words[10].trim()));
                     repair.setDateOfEnd(LocalDate.parse(words[11].trim()));
                     repair.setRepairtype(RepairType.valueOf(words[12].trim()));
-                    repair.setStatustype(StatusType.valueOf(words[13].trim()));
+                    repair.setStatusType(StatusType.valueOf(words[13].trim()));
                     
                     repairRepository.create(repair);
                     rowsRead++;

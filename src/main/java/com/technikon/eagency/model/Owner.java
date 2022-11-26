@@ -2,9 +2,11 @@ package com.technikon.eagency.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "Owner")
 public class Owner extends PersistentClass {
 
     private long vatNumber;
