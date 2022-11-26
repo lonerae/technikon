@@ -9,9 +9,9 @@ import java.util.List;
 public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
     @Override
-    public List<Repair> readStartDate(LocalDate date) {
+    public List<Repair> readSubmissionDate(LocalDate date) {
         return readAll().stream()
-                .filter(repair -> repair.getDateOfStart().equals(date))
+                .filter(repair -> repair.getDateOfSubmission().equals(date))
                 .toList();
     }
 
@@ -68,7 +68,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
             oldRepair.setAcceptance(newRepair.isAcceptance());
             oldRepair.setDateOfEnd(newRepair.getDateOfEnd());
             oldRepair.setDateOfStart(newRepair.getDateOfStart());
-            oldRepair.setDateOfSubmisssion(newRepair.getDateOfSubmisssion());
+            oldRepair.setDateOfSubmission(newRepair.getDateOfSubmission());
             oldRepair.setDescriptionOfWork(newRepair.getDescriptionOfWork());
             oldRepair.setOwner(newRepair.getOwner());
             oldRepair.setProperty(newRepair.getProperty());

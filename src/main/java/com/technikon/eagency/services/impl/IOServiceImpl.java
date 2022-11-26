@@ -3,9 +3,6 @@ package com.technikon.eagency.services.impl;
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
-import com.technikon.eagency.exceptions.OwnerException;
-import com.technikon.eagency.exceptions.PropertyException;
-import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.model.Owner;
 import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
@@ -40,7 +37,7 @@ public class IOServiceImpl implements IOService {
     @Override
     public void saveOwnerToCsv(String filename) {
         File file = new File(filename);
-        List<Owner> ownerList = ownerRepository.read();
+        List<Owner> ownerList = ownerRepository.readAll();
         try ( PrintWriter pw = new PrintWriter(file)) {
             pw.println("﻿id,isActive,username,password,vatNumber,name,surname,address,phoneNumber,email");
             for (Owner owner : ownerList) {
@@ -65,7 +62,7 @@ public class IOServiceImpl implements IOService {
     @Override
     public void savePropertyToCsv(String filename) {
         File file = new File(filename);
-        List<Property> propertyList = propertyRepository.read();
+        List<Property> propertyList = propertyRepository.readAll();
         try ( PrintWriter pw = new PrintWriter(file)) {
             pw.println("﻿id,isActive,propertyId,address,yearOfConstruction,ownerId,propertyType");
             for (Property property : propertyList) {
@@ -84,14 +81,10 @@ public class IOServiceImpl implements IOService {
         }
     }
 
-   
-
-   
-
     @Override
     public void saveRepairToCsv(String filename) {
         File file = new File(filename);
-        List<Repair> repairList = repairRepository.read();
+        List<Repair> repairList = repairRepository.readAll();
         try ( PrintWriter pw = new PrintWriter(file)) {
             pw.println("﻿id,isActive,propertyId,shortDescription,ownerId,dateOfSubmission,"
                     + "descriptionOfWork,proposedDateOfStart,proposedDateOfEnd,proposedCost,"
@@ -103,7 +96,7 @@ public class IOServiceImpl implements IOService {
                         + repair.getProperty().getId() + ","
                         + repair.getShortDescription() + ","
                         + repair.getOwner().getId() + ","
-                        + repair.getDateOfSubmisssion() + ","
+                        + repair.getDateOfSubmission() + ","
                         + repair.getDescriptionOfWork() + ","
                         + repair.getProposedDateOfStart() + ","
                         + repair.getProposedDateOfEnd() + ","
@@ -171,7 +164,7 @@ public class IOServiceImpl implements IOService {
                     property.setPropertyId(Long.parseLong(words[2].trim()));
                     property.setAddress(words[3].trim());
                     property.setYearOfConstruction(Integer.parseInt(words[4].trim()));
-                    property.setOwner(ownerRepository.read(Integer.parseInt(words[5].trim())));
+                    property.setOwner(ownerRepository.readById(Integer.parseInt(words[5].trim())));
                     property.setPropertyType(PropertyType.valueOf(words[6]));
                     propertyRepository.create(property);
                     rowsRead++;
@@ -185,7 +178,7 @@ public class IOServiceImpl implements IOService {
         return rowsRead;
     }
 
-   /* @Override
+    @Override
     public int readRepairFromCsv(String filename) {
         File file = new File(filename);
         int rowsRead = 0;
@@ -197,14 +190,12 @@ public class IOServiceImpl implements IOService {
                 try {
                     String[] words = line.split(",");
                     Repair repair = new Repair();
-                    Property property = new Property();
-                    Owner owner = new Owner();
                     repair.setId(Integer.parseInt(words[0]));
                     repair.setActive(Boolean.parseBoolean(words[1].trim()));
-                    repair.setProperty(propertyRepository.read(Integer.parseInt(words[2].trim())));
+                    repair.setProperty(propertyRepository.readById(Integer.parseInt(words[2].trim())));
                     repair.setShortDescription(words[3].trim());
-                    repair.setOwner(ownerRepository.read(Integer.parseInt(words[4].trim())));
-                    repair.setDateOfSubmisssion(LocalDate.parse(words[5].trim()));
+                    repair.setOwner(ownerRepository.readById(Integer.parseInt(words[4].trim())));
+                    repair.setDateOfSubmission(LocalDate.parse(words[5].trim()));
                     repair.setDescriptionOfWork(words[6].trim());
                     repair.setProposedDateOfStart(LocalDate.parse(words[7].trim()));
                     repair.setProposedDateOfEnd(LocalDate.parse(words[8].trim()));

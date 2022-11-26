@@ -109,8 +109,8 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<Repair> findRepairs(LocalDate startDate) {
-        return repairRepository.readStartDate(startDate);
+    public List<Repair> findRepairs(LocalDate submissionDate) {
+        return repairRepository.readSubmissionDate(submissionDate);
     }
 
     @Override
