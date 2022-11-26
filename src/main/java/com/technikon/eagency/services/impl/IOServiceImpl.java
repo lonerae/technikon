@@ -23,10 +23,6 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Hara
- */
 public class IOServiceImpl implements IOService {
 
     private final OwnerRepository ownerRepository;
@@ -42,7 +38,7 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
-    public void saveOwnerToCsv(String filename) throws OwnerException {
+    public void saveOwnerToCsv(String filename) {
         File file = new File(filename);
         List<Owner> ownerList = ownerRepository.read();
         try ( PrintWriter pw = new PrintWriter(file)) {
@@ -62,12 +58,12 @@ public class IOServiceImpl implements IOService {
                 );
             }
         } catch (FileNotFoundException ex) {
-            logger.error("File {} could not be made.", filename);
+            logger.error("File {} for Owners could not be made.", filename);
         }
     }
 
     @Override
-    public void savePropertyToCsv(String filename) throws PropertyException {
+    public void savePropertyToCsv(String filename) {
         File file = new File(filename);
         List<Property> propertyList = propertyRepository.read();
         try ( PrintWriter pw = new PrintWriter(file)) {
@@ -84,12 +80,12 @@ public class IOServiceImpl implements IOService {
                 );
             }
         } catch (FileNotFoundException ex) {
-            logger.error("File {} could not be made.", filename);
+            logger.error("File {} for Properties could not be made.", filename);
         }
     }
 
     @Override
-    public void saveRepairToCsv(String filename) throws RepairException {
+    public void saveRepairToCsv(String filename) {
         File file = new File(filename);
         List<Repair> repairList = repairRepository.read();
         try ( PrintWriter pw = new PrintWriter(file)) {
@@ -116,12 +112,12 @@ public class IOServiceImpl implements IOService {
                 );
             }
         } catch (FileNotFoundException ex) {
-            logger.error("File {} could not be made.", filename);
+            logger.error("File {} for Repairs could not be made.", filename);
         }
     }
 
     @Override
-    public int readOwnerFromCsv(String filename) throws OwnerException {
+    public int readOwnerFromCsv(String filename) {
         File file = new File(filename);
         int rowsRead = 0;
         try {
@@ -145,12 +141,11 @@ public class IOServiceImpl implements IOService {
                     ownerRepository.create(owner);
                     rowsRead++;
                 } catch (NumberFormatException e) {
-                    logger.warn("Row {} dropped.", rowsRead);
-                    rowsRead++;
+                    logger.warn("Row dropped.");
                 }
             }
         } catch (FileNotFoundException ex) {
-            logger.error("File {} could not be found.", filename);
+            logger.error("File {} of Owners could not be found.", filename);
         }
         return rowsRead;
     }
@@ -177,12 +172,11 @@ public class IOServiceImpl implements IOService {
                     propertyRepository.create(property);
                     rowsRead++;
                 } catch (NumberFormatException e) {
-                    logger.warn("Row {} dropped.", rowsRead);
-                    rowsRead++;
+                    logger.warn("Row dropped.");
                 }
             }
         } catch (FileNotFoundException ex) {
-            logger.error("File {} could not be found.", filename);
+            logger.error("File {} of Properties could not be found.", filename);
         }
         return rowsRead;
     }
@@ -219,12 +213,11 @@ public class IOServiceImpl implements IOService {
                     repairRepository.create(repair);
                     rowsRead++;
                 } catch (NumberFormatException e) {
-                    logger.warn("Row {} dropped.", rowsRead);
-                    rowsRead++;
+                    logger.warn("Row dropped.");
                 }
             }
         } catch (FileNotFoundException ex) {
-            logger.error("File {} could not be found.", filename);
+            logger.error("File {} of Repairs could not be found.", filename);
         }
         return rowsRead;
     }
