@@ -60,7 +60,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         if (propertyRepository.readPropertyId(repairId))== null {
             logger.warn("The repair is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);}        
-        if (repairRepository.readStartDate(proposedEndDate)) {
+        if (repairRepository.readStartDate(proposedEndDate))==null {
             logger.warn("The proposedStartDate is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
