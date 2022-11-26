@@ -13,28 +13,25 @@ import java.util.Map;
 
 public interface OwnerService {
 
-
-    void registerOwner(Owner owner);
-
     void registerOwner(Owner owner) throws OwnerException;
 
     void registerProperty(Property property) throws PropertyException;
 
     void submitRepair(Repair repair) throws RepairException;
 
-    Owner findOwner(long vatNumber);
+    Owner findOwner(long vatNumber) throws OwnerException;
 
-    Owner findOwner(String email);
+    Owner findOwner(String email) throws OwnerException;
 
-    Property findProperty(long propertyId);
+    Property findProperty(long propertyId) throws PropertyException;
 
-    List<Property> findProperties(long vatNumberOfOwner);
+    List<Property> findProperties(long vatNumberOfOwner) throws PropertyException;
 
-    List<Repair> findRepairs(LocalDate startDate);
+    List<Repair> findRepairs(LocalDate startDate) throws RepairException;
 
-    List<Repair> findRepairs(LocalDate startDate, LocalDate endDate);
+    List<Repair> findRepairs(LocalDate startDate, LocalDate endDate) throws RepairException;
 
-    List<Repair> findRepairs(long vatNumberOfOwner);
+    List<Repair> findRepairs(long vatNumberOfOwner) throws RepairException;
 
     Map<Long, StatusType> getReport(long vatNumberOfOwner);
 

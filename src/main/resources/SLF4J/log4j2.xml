@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<Configuration monitorInterval="30" status="WARN">
+
+
+    -<Properties>
+
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} - [%15.15t] [%-35.35c{1.}] : %m%n%ex </Property>
+
+    </Properties>
+
+
+    -<Appenders>
+
+
+        -<Console name="ConsoleAppender" follow="true" target="SYSTEM_OUT">
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+
+        </Console>
+
+        <!-- Rolling Random Access File Appender with a default buffer of 256 * 1024 bytes -->
+
+
+
+        -<RollingRandomAccessFile name="DefaultAppender" filePattern="logs/java-path-json-%d{yyyy-MM-dd}.zip" fileName="logs/java-path-json.log">
+
+
+            -<PatternLayout>
+
+                <Pattern>${LOG_PATTERN}</Pattern>
+
+            </PatternLayout>
+
+
+            -<Policies>
+
+                <TimeBasedTriggeringPolicy/>
+
+            </Policies>
+
+
+            -<DefaultRolloverStrategy>
+
+
+                -<Delete basePath="logs">
+
+                    <IfLastModified age="30d"/>
+
+                </Delete>
+
+            </DefaultRolloverStrategy>
+
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+
+    -<Loggers>
+
+
+        -<Logger name="com.technikon" additivity="false" level="debug">
+
+            <AppenderRef ref="ConsoleAppender"/>
+
+            <AppenderRef ref="DefaultAppender"/>
+
+        </Logger>
+
+
+        -<Root level="info">
+
+            <AppenderRef ref="ConsoleAppender"/>
+
+            <!--	<AppenderRef ref="DefaultAppender"/>-->
+
+
+        </Root>
+
+    </Loggers>
+
+</Configuration>
