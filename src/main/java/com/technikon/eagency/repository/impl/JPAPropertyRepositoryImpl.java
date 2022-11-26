@@ -23,14 +23,16 @@ public class JPAPropertyRepositoryImpl extends JPARepositoryImpl<Property> imple
     @Override
     public Property readPropertyId(long propertyId) {
         return (Property) entityManager.createQuery("FROM Property p WHERE p.propertyId = :propertyId ", Property.class)
-                .setParameter("propertyId", propertyId);
+                .setParameter("propertyId", propertyId)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public List<Property> readVatNumber(long vatNumberOfOwner) {
-
-        return entityManager.createQuery("FROM Property p Where p.vatNumber =:vatNumber ", Property.class)
-                .setParameter("propertyId", vatNumberOfOwner)
+        return entityManager.createQuery("From Property p Where p.owner.vatNumber = :vatNumber  ", Property.class)
+                .setParameter("vatNumber", vatNumberOfOwner)
                 .getResultList();
     }
 

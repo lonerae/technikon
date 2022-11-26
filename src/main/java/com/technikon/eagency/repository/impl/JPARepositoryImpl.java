@@ -31,7 +31,8 @@ public abstract class JPARepositoryImpl<T extends PersistentClass> implements Re
 
     @Override
     public List<T> readAll() {
-        return entityManager.createQuery("from " + getEntityClass().getName(), getEntityClass()).getResultList();
+        return entityManager.createQuery("from " + getEntityClass().getName(), getEntityClass())
+                .getResultList();
     }
 
     @Override

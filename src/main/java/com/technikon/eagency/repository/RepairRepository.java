@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RepairRepository extends Repository<Repair> {
 
-  List<Repair> readStartDate(LocalDate date);
+  List<Repair> readSubmissionDate(LocalDate date);
     
   List<Repair> readDateRange(LocalDate startDate, LocalDate endDate);
     

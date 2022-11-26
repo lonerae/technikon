@@ -22,43 +22,25 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
     }
 
     @Override
-    public List<Repair> readStartDate(LocalDate date) {
-        return entityManager.createQuery("from Repair r Where r.dateOfStart = :date ", Repair.class)
+    public List<Repair> readSubmissionDate(LocalDate date) {
+        return entityManager.createQuery("from Repair r Where r.dateOfSubmission = :date ", Repair.class)
                 .setParameter("date", date)
                 .getResultList();
-
-//        STREAM IMPLEMENTATION
-//        List<Repair> resultList = read();
-//        return resultList.stream()
-//                .filter(repair -> repair.getDateOfStart().isEqual(date))
-//                .collect(Collectors.toList());
     }
 
     @Override
     public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
-        return entityManager.createQuery("from Repair r Where r.dateOfStart BETWEEN :start AND : end ", Repair.class)
+        return entityManager.createQuery("from Repair r Where r.dateOfSubmission BETWEEN :start AND : end ", Repair.class)
                 .setParameter("start", startDate)
                 .setParameter("end", endDate)
                 .getResultList();
-
-//        STREAM IMPLEMENTATION
-//        List<Repair> resultList = read();
-//        return resultList.stream()
-//                .filter(repair -> repair.getDateOfStart().compareTo(startDate) >= 0 && repair.getDateOfEnd().compareTo(startDate) <= 0)
-//                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Repair> readOwner(long vatNumber) {
-        return entityManager.createQuery("from Repair r join fetch r.Owner o  Where o.vatNumber = :vatNumber ", Repair.class)
-                .setParameter("vatNumber", vatNumber)
+    public List<Repair> readOwner(long vatNumberOfOwner) {
+        return entityManager.createQuery("from Repair r Where r.owner.vatNumber = :vatNumber ", Repair.class)
+                .setParameter("vatNumber", vatNumberOfOwner)
                 .getResultList();
-
-//        STREAM IMPLEMENTATION
-//        List<Repair> resultList = read();
-//        return resultList.stream()
-//                .filter(repair -> repair.getOwner().getVatNumber() == vatNumber)
-//                .collect(Collectors.toList());
     }
 
     @Override
@@ -67,7 +49,7 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
         if (repair != null) {
             repair.setProposedDateOfStart(date);
             entityManager.getTransaction().begin();
-            entityManager.persist(repair);
+            entityManager.merge(repair);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -80,7 +62,7 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
         if (repair != null) {
             repair.setProposedDateOfEnd(date);
             entityManager.getTransaction().begin();
-            entityManager.persist(repair);
+            entityManager.merge(repair);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -93,7 +75,7 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
         if (repair != null) {
             repair.setProposedCost(cost);
             entityManager.getTransaction().begin();
-            entityManager.persist(repair);
+            entityManager.merge(repair);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -104,7 +86,7 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
     public boolean update(Repair repair) {
         // exception if it doesn't exist then return false (services?)        
         entityManager.getTransaction().begin();
-        entityManager.persist(repair);
+        entityManager.merge(repair);
         entityManager.getTransaction().commit();
         return true;
     }

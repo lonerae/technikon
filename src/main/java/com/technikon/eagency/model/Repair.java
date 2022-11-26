@@ -22,7 +22,7 @@ public class Repair extends PersistentClass {
     private String shortDescription;
 
     @NotNull
-    private LocalDate dateOfSubmisssion;
+    private LocalDate dateOfSubmission;
 
     private String descriptionOfWork;
     private LocalDate proposedDateOfStart;
@@ -59,12 +59,12 @@ public class Repair extends PersistentClass {
         this.shortDescription = shortDescription;
     }
 
-    public LocalDate getDateOfSubmisssion() {
-        return dateOfSubmisssion;
+    public LocalDate getDateOfSubmission() {
+        return dateOfSubmission;
     }
 
-    public void setDateOfSubmisssion(LocalDate dateOfSubmisssion) {
-        this.dateOfSubmisssion = dateOfSubmisssion;
+    public void setDateOfSubmission(LocalDate dateOfSubmission) {
+        this.dateOfSubmission = dateOfSubmission;
     }
 
     public String getDescriptionOfWork() {
