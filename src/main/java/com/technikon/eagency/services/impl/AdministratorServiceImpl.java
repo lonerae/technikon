@@ -4,8 +4,6 @@ import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.exceptions.RepairExceptionCodes;
 import com.technikon.eagency.model.Repair;
-import com.technikon.eagency.repository.OwnerRepository;
-import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;
@@ -18,14 +16,10 @@ import org.slf4j.LoggerFactory;
 public class AdministratorServiceImpl implements AdministratorService {
 
     private final RepairRepository repairRepository;
-    private final OwnerRepository ownerRepository;
-    private final PropertyRepository propertyRepository;
     private static Logger logger = LoggerFactory.getLogger(AdministratorServiceImpl.class);
 
-    public AdministratorServiceImpl(RepairRepository repairRepository, OwnerRepository ownerRepository,PropertyRepository propertyRepository) {
+    public AdministratorServiceImpl(RepairRepository repairRepository) {
         this.repairRepository = repairRepository;
-        this.ownerRepository = ownerRepository;
-        this.propertyRepository=propertyRepository;
     }
 
     @Override
@@ -42,45 +36,33 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException {
-        if (repairRepository.) == null) {
-            logger.warn("The owner is null");
-            throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
-        }
-        logger.info("The search of owner was successful");
-        return ownerRepository.readEmail(email);
-        if (proposedStartDate == null) {
-            logger.warn("Not all data are given to create a proposedStartDate");
-            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
+        if (repairRepository.(repairId, proposedStartDate)) {
+            logger.warn("The repair is null");
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         // exception?
         repairRepository.updateProposedStartDate(repairId, proposedStartDate);
-        logger.info("The register was successful");
+        logger.info("The repair was successful");
     }
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-        if (propertyRepository == null) {
+        if (repairRepository.updateProposedEndDate(repairId, proposedEndDate)) {
             logger.warn("The repair is null");
-            throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
-        }
-        logger.info("The search of owner was successful");
-        return ownerRepository.readEmail(email);
-        if (proposedEndDate == null) {
-            logger.warning("The property is null");
-            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         // exception?
         repairRepository.updateProposedEndDate(repairId, proposedEndDate);
-        logger.info("The register was successful");
+        logger.info("The repair was successful");
     }
 
     @Override
     public LocalDate checkStartDate(int repairId) throws RepairException {
-        Repair repair = repairRepository.read(repairId);
-        if (repairId == null) {
-            logger.warning("The given data are not appropriate to create a repairId");
-            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATA);
+        if (repairRepository. == null) {
+            logger.warn("The repair is null");
+            throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
+        logger.info("The search of owner was successful");
         // exception?
         return repair.getDateOfStart();
     }
