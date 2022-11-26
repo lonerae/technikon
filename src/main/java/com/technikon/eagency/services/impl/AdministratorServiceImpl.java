@@ -62,7 +62,7 @@ public class AdministratorServiceImpl implements AdministratorService {
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         if (repairRepository.readStartDate(proposedEndDate) == null) {
-            logger.warn("The proposedStartDate is null");
+            logger.warn("The proposedEndDate is null");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         // exception?
