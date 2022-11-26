@@ -7,7 +7,6 @@ import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements RepairRepository {
 
@@ -18,35 +17,57 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
   
     @Override
+    public Class<Repair> getEntityClass() {
+        return Repair.class;
+    }
+
+    @Override
     public List<Repair> readStartDate(LocalDate date) {
-        List<Repair> resultList = read();
-        return resultList.stream()
-                .filter(repair -> repair.getDateOfStart().isEqual(date))
-                .collect(Collectors.toList());
+        return entityManager.createQuery("from Repair r Where r.dateOfStart = :date ", Repair.class)
+                .setParameter("date", date)
+                .getResultList();
+
+//        STREAM IMPLEMENTATION
+//        List<Repair> resultList = read();
+//        return resultList.stream()
+//                .filter(repair -> repair.getDateOfStart().isEqual(date))
+//                .collect(Collectors.toList());
     }
 
     @Override
     public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
-        List<Repair> resultList = read();
-        return resultList.stream()
-                .filter(repair -> repair.getDateOfStart().compareTo(startDate) >= 0 && repair.getDateOfEnd().compareTo(startDate) <= 0)
-                .collect(Collectors.toList());
+        return entityManager.createQuery("from Repair r Where r.dateOfStart BETWEEN :start AND : end ", Repair.class)
+                .setParameter("start", startDate)
+                .setParameter("end", endDate)
+                .getResultList();
+
+//        STREAM IMPLEMENTATION
+//        List<Repair> resultList = read();
+//        return resultList.stream()
+//                .filter(repair -> repair.getDateOfStart().compareTo(startDate) >= 0 && repair.getDateOfEnd().compareTo(startDate) <= 0)
+//                .collect(Collectors.toList());
     }
 
     @Override
     public List<Repair> readOwner(long vatNumber) {
-        List<Repair> resultList = read();
-        return resultList.stream()
-                .filter(repair -> repair.getOwner().getVatNumber() == vatNumber)
-                .collect(Collectors.toList());
+        return entityManager.createQuery("from Repair r join fetch r.Owner o  Where o.vatNumber = :vatNumber ", Repair.class)
+                .setParameter("vatNumber", vatNumber)
+                .getResultList();
+
+//        STREAM IMPLEMENTATION
+//        List<Repair> resultList = read();
+//        return resultList.stream()
+//                .filter(repair -> repair.getOwner().getVatNumber() == vatNumber)
+//                .collect(Collectors.toList());
     }
 
     @Override
     public boolean updateProposedStartDate(int repairId, LocalDate date) {
         Repair repair = read(repairId);
         if (repair != null) {
-            entityManager.getTransaction().begin();
             repair.setProposedDateOfStart(date);
+            entityManager.getTransaction().begin();
+            entityManager.persist(repair);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -59,7 +80,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
         if (repair != null) {
             repair.setProposedDateOfEnd(date);
             entityManager.getTransaction().begin();
-            entityManager.merge(repair);
+            entityManager.persist(repair);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -72,7 +93,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
         if (repair != null) {
             repair.setProposedCost(cost);
             entityManager.getTransaction().begin();
-            entityManager.merge(repair);
+            entityManager.persist(repair);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -83,7 +104,7 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     public boolean update(Repair repair) {
         // exception if it doesn't exist then return false (services?)        
         entityManager.getTransaction().begin();
-        entityManager.merge(repair);
+        entityManager.persist(repair);
         entityManager.getTransaction().commit();
         return true;
     }
