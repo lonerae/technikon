@@ -18,17 +18,22 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
         return Owner.class;
     }
 
-    
     @Override
     public Owner readVatNumber(long vatNumber) {
-        return (Owner) entityManager.createQuery(" FROM Owner o WHERE o.vatNumber  = :vatNumber", Owner.class)
-                .setParameter("vatNumber", vatNumber);
+        return entityManager.createQuery(" FROM Owner o WHERE o.vatNumber  = :vatNumber", Owner.class)
+                .setParameter("vatNumber", vatNumber)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public Owner readEmail(String email) {
         return (Owner) entityManager.createQuery(" FROM Owner o WHERE o.email =:email ", Owner.class)
-                .setParameter("email", email);
+                .setParameter("email", email)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -37,7 +42,7 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
         if (owner != null) {
             owner.setAddress(address);
             entityManager.getTransaction().begin();
-            entityManager.persist(owner);
+            entityManager.merge(owner);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -50,7 +55,7 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
         if (owner != null) {
             owner.setEmail(email);
             entityManager.getTransaction().begin();
-            entityManager.persist(owner);
+            entityManager.merge(owner);
             entityManager.getTransaction().commit();
             return true;
         }
@@ -63,7 +68,7 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
         if (owner != null) {
             owner.setPassword(password);
             entityManager.getTransaction().begin();
-            entityManager.persist(owner);
+            entityManager.merge(owner);
             entityManager.getTransaction().commit();
             return true;
         }
