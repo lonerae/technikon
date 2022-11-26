@@ -2,11 +2,14 @@ package com.technikon.eagency.model;
 
 import com.technikon.eagency.enums.PropertyType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "Property")
 public class Property extends PersistentClass {
 
     private long propertyId;
@@ -15,6 +18,7 @@ public class Property extends PersistentClass {
     private PropertyType propertyType;
 
     @ManyToOne
+    @JoinColumn(name = "ownerId")
     private Owner owner;
 
     @OneToMany(mappedBy = "property")
