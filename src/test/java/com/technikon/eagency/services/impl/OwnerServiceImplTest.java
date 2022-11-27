@@ -4,6 +4,8 @@
  */
 package com.technikon.eagency.services.impl;
 
+import com.technikon.eagency.enums.PropertyType;
+import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.exceptions.OwnerException;
 import com.technikon.eagency.exceptions.PropertyException;
 import com.technikon.eagency.exceptions.RepairException;
@@ -108,15 +110,42 @@ public class OwnerServiceImplTest {
 
     @Test
     public void addRepairsAndCheckIfTheyAreConnectedWithAppropriateOwner() throws Exception {
-        Owner owner = new Owner();
-        owner.setName("John");
-        owner.setVatNumber(11235813L);
-        Repair repair1 = new Repair();
-        repair1.setOwner(owner);
-        Repair repair2 = new Repair();
-        repair2.setOwner(owner);
-        service.registerOwner(owner);
-        //PROBLEM IN READ(), WON'T RUN
-        assertEquals(2, service.findRepairs(owner.getVatNumber()).size());
+        Owner o1 = new Owner();
+        o1.setName("John");
+        o1.setSurname("Doe");
+        o1.setVatNumber(11235813L);
+        o1.setAddress("athens");
+        o1.setEmail("placeholder2@test.com");
+        o1.setPhoneNumber("6999999999");
+        o1.setUsername("jdoe");
+        o1.setPassword("123456");
+        service.registerOwner(o1);
+        
+        Property p1 = new Property();
+        p1.setAddress("p 18");
+        p1.setOwner(o1);
+        p1.setPropertyId(111111111);
+        p1.setPropertyType(PropertyType.MAISONETTE);
+        p1.setYearOfConstruction(1970);
+        service.registerProperty(p1);
+        
+        Repair r1 = new Repair();
+        r1.setDateOfSubmission(LocalDate.of(2022, 7, 5));
+        r1.setOwner(o1);
+        r1.setRepairtype(RepairType.PAINTING);
+        r1.setShortDescription("mpla");
+        r1.setOwner(o1);
+        r1.setProperty(p1);
+        service.submitRepair(r1);
+        
+        Repair r2 = new Repair();
+        r2.setDateOfSubmission(LocalDate.of(2022, 7, 5));
+        r2.setRepairtype(RepairType.PAINTING);
+        r2.setShortDescription("mpla");
+        r2.setOwner(o1);
+        r2.setProperty(p1);
+        service.submitRepair(r2);
+        
+        assertEquals(2, service.findRepairs(o1.getVatNumber()).size());
     }
 }
