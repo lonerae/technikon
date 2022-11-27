@@ -1,6 +1,7 @@
 package com.technikon.eagency.model;
 
 import com.technikon.eagency.enums.PropertyType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,6 +15,7 @@ import java.util.List;
 public class Property extends PersistentClass {
 
     @NotNull
+    @Column(unique = true)
     private long propertyId;
 
     @NotNull
