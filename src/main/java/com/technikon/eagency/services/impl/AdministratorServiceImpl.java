@@ -4,7 +4,6 @@ import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.exceptions.RepairExceptionCodes;
 import com.technikon.eagency.model.Repair;
-import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;

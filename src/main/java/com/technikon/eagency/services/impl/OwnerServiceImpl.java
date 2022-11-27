@@ -123,10 +123,8 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<Repair> findRepairs(long vatNumberOfOwner) {
-        return repairRepository.readAll()
-                .stream()
-                .filter(repair -> repair.getOwner().getVatNumber() == vatNumberOfOwner)
-                .toList();
+        return repairRepository.readOwner(vatNumberOfOwner);
+
     }
 
     @Override

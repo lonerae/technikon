@@ -1,143 +1,476 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package com.technikon.eagency.services.impl;
 
+import com.technikon.eagency.enums.PropertyType;
+import com.technikon.eagency.enums.RepairType;
+import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.RepairException;
+import com.technikon.eagency.model.Owner;
+import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
-import com.technikon.eagency.repository.impl.OwnerRepositoryImpl;
-import com.technikon.eagency.repository.impl.PropertyRepositoryImpl;
-import com.technikon.eagency.repository.impl.RepairRepositoryImpl;
+import com.technikon.eagency.repository.impl.JPAOwnerRepositoryImpl;
+import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
+import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
 import com.technikon.eagency.services.AdministratorService;
 import com.technikon.eagency.services.OwnerService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.BeforeEach;
 
-/**
- *
- * @author panos
- */
 public class AdministratorServiceImplTest {
-    
-    public AdministratorServiceImplTest() {
-    }
-    
-    private final OwnerRepository ownerRepository = new OwnerRepositoryImpl();
-    private final PropertyRepository propertyRepository = new PropertyRepositoryImpl();
-    private final RepairRepository repairRepository = new RepairRepositoryImpl();
+
+    private final OwnerRepository ownerRepository = new JPAOwnerRepositoryImpl();
+    private final PropertyRepository propertyRepository = new JPAPropertyRepositoryImpl();
+    private final RepairRepository repairRepository = new JPARepairRepositoryImpl();
+    private OwnerService ownerService;
     private AdministratorService administratorService;
-    
+
     @BeforeEach
     public void beforeEach() {
         administratorService = new AdministratorServiceImpl(repairRepository);
+        ownerService = new OwnerServiceImpl(ownerRepository, propertyRepository, repairRepository);
     }
 
-    /**
-     * Test of proposeCost method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void addNullProposeCostAndCheckIfAdded() throws RepairException {
-        System.out.println("proposeCost");
-        int repairId = 0;
+    public void addNullProposedCostAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
         BigDecimal proposedCost = null;
-        AdministratorServiceImpl instance = null;
-        instance.proposeCost(repairId, proposedCost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertThrows(RepairException.class, () -> administratorService.proposeCost(1, proposedCost));
     }
 
-    /**
-     * Test of proposeStartDate method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void testProposeStartDate() throws Exception {
-        System.out.println("proposeStartDate");
-        int repairId = 0;
+    public void addNonexistentRepairAtProposedCostAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
+        BigDecimal proposedCost = BigDecimal.valueOf(340.5);
+        assertThrows(RepairException.class, () -> administratorService.proposeCost(2, proposedCost));
+    }
+
+    @Test
+    public void addRepairAtProposedCostAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
+        BigDecimal proposedCost = BigDecimal.valueOf(340.5);
+        administratorService.proposeCost(1, proposedCost);
+        assertTrue(proposedCost.equals(repairRepository.readById(1).getProposedCost()));
+    }
+
+    @Test
+    public void addNullProposedStartDateAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
         LocalDate proposedStartDate = null;
-        AdministratorServiceImpl instance = null;
-        instance.proposeStartDate(repairId, proposedStartDate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertThrows(RepairException.class, () -> administratorService.proposeStartDate(1, proposedStartDate));
     }
 
-    /**
-     * Test of proposeEndDate method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void testProposeEndDate() throws Exception {
-        System.out.println("proposeEndDate");
-        int repairId = 0;
+    public void addNonexistentRepairAtProposedStartDateAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
+        LocalDate proposedStartDate = null;
+        assertThrows(RepairException.class, () -> administratorService.proposeStartDate(2, proposedStartDate));
+    }
+
+    @Test
+    public void addRepairAtProposedStartDateAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
+        LocalDate proposedStartDate = LocalDate.of(2022, 5, 5);
+        administratorService.proposeStartDate(1, proposedStartDate);
+        assertTrue(proposedStartDate.equals(repairRepository.readById(1).getProposedDateOfStart()));
+    }
+
+    @Test
+    public void addNonexistentRepairAtProposedEndDateAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
+        LocalDate proposedEndDate = LocalDate.now();
+        assertThrows(RepairException.class, () -> administratorService.proposeEndDate(2, proposedEndDate));
+    }
+
+    @Test
+    public void addNullProposedEndDateAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
         LocalDate proposedEndDate = null;
-        AdministratorServiceImpl instance = null;
-        instance.proposeEndDate(repairId, proposedEndDate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertThrows(RepairException.class, () -> administratorService.proposeEndDate(1, proposedEndDate));
     }
 
-    /**
-     * Test of checkStartDate method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void testCheckStartDate() throws Exception {
-        System.out.println("checkStartDate");
-        int repairId = 0;
-        AdministratorServiceImpl instance = null;
-        LocalDate expResult = null;
-        LocalDate result = instance.checkStartDate(repairId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void addRepairAtProposedEndDateAndCheckIfAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        ownerService.submitRepair(repair1);
+
+        LocalDate proposedEndDate = LocalDate.of(2022, 5, 5);
+        administratorService.proposeEndDate(1, proposedEndDate);
+        assertTrue(proposedEndDate.equals(repairRepository.readById(1).getProposedDateOfEnd()));
     }
 
-    /**
-     * Test of checkEndDate method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void testCheckEndDate() throws Exception {
-        System.out.println("checkEndDate");
-        int repairId = 0;
-        AdministratorServiceImpl instance = null;
-        LocalDate expResult = null;
-        LocalDate result = instance.checkEndDate(repairId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void addNonexistentRepairAtCheckStartDateAndCheckIfReturns() throws Exception {
+        assertThrows(RepairException.class, () -> administratorService.checkStartDate(0));
     }
 
-    /**
-     * Test of findAllPendingRepairs method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void testFindAllPendingRepairs() {
-        System.out.println("findAllPendingRepairs");
-        AdministratorServiceImpl instance = null;
-        List<Repair> expResult = null;
-        List<Repair> result = instance.findAllPendingRepairs();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void addRepairAtCheckStartDateAndCheckIfReturns() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        repair1.setDateOfStart(LocalDate.now());
+        ownerService.submitRepair(repair1);
+
+        assertTrue(LocalDate.now().equals(administratorService.checkStartDate(1)));
     }
 
-    /**
-     * Test of findAllRepairs method, of class AdministratorServiceImpl.
-     */
     @Test
-    public void testFindAllRepairs() {
-        System.out.println("findAllRepairs");
-        AdministratorServiceImpl instance = null;
-        List<Repair> expResult = null;
-        List<Repair> result = instance.findAllRepairs();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void addNonexistentRepairAtCheckEndDateAndCheckIfReturns() throws Exception {
+        assertThrows(RepairException.class, () -> administratorService.checkEndDate(0));
     }
-    
+
+    @Test
+    public void addRepairsAndCheckIfFoundAllInReport() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        repair1.setStatusType(StatusType.COMPLETE);
+        ownerService.submitRepair(repair1);
+
+        Repair repair2 = new Repair();
+        repair2.setOwner(owner1);
+        repair2.setDateOfSubmission(LocalDate.now());
+        repair2.setRepairtype(RepairType.FRAMES);
+        repair2.setProperty(property1);
+        repair2.setStatusType(StatusType.PENDING);
+        ownerService.submitRepair(repair2);
+
+        Repair repair3 = new Repair();
+        repair3.setOwner(owner1);
+        repair3.setDateOfSubmission(LocalDate.now());
+        repair3.setRepairtype(RepairType.FRAMES);
+        repair3.setProperty(property1);
+        repair3.setStatusType(StatusType.PENDING);
+        ownerService.submitRepair(repair3);
+
+        assertEquals(3, administratorService.findAllRepairs().size());
+    }
+
+    @Test
+    public void addNoRepairsAndCheckIfFoundAllInReport() throws Exception {
+        assertEquals(0, administratorService.findAllRepairs().size());
+    }
+
+    @Test
+    public void addRepairsAndCheckIfFoundAllPendindInReport() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        ownerService.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        ownerService.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now());
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        repair1.setStatusType(StatusType.COMPLETE);
+        ownerService.submitRepair(repair1);
+
+        Repair repair2 = new Repair();
+        repair2.setOwner(owner1);
+        repair2.setDateOfSubmission(LocalDate.now());
+        repair2.setRepairtype(RepairType.FRAMES);
+        repair2.setProperty(property1);
+        repair2.setStatusType(StatusType.PENDING);
+        ownerService.submitRepair(repair2);
+
+        Repair repair3 = new Repair();
+        repair3.setOwner(owner1);
+        repair3.setDateOfSubmission(LocalDate.now());
+        repair3.setRepairtype(RepairType.FRAMES);
+        repair3.setProperty(property1);
+        repair3.setStatusType(StatusType.PENDING);
+        ownerService.submitRepair(repair3);
+
+        assertEquals(2, administratorService.findAllPendingRepairs().size());
+    }
+
+    @Test
+    public void addNoRepairsAndCheckIfFoundAllPendingInReport() throws Exception {
+        assertEquals(0, administratorService.findAllPendingRepairs().size());
+    }
 }
