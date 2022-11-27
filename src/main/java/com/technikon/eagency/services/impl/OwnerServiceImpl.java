@@ -43,6 +43,7 @@ public class OwnerServiceImpl implements OwnerService {
             throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
         long vatNumber = owner.getVatNumber();
+        System.out.println(vatNumber);
         String email = owner.getEmail();
         try {
             ownerRepository.create(owner);
@@ -123,6 +124,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<Repair> findRepairs(long vatNumberOfOwner) {
         return repairRepository.readOwner(vatNumberOfOwner);
+
     }
 
     @Override
