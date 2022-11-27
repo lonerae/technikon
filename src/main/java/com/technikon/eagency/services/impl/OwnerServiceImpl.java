@@ -165,7 +165,7 @@ public class OwnerServiceImpl implements OwnerService {
     public boolean acceptRepair(int repairId, boolean acceptance) {
         Repair repair = repairRepository.readById(repairId);
         if (repair != null) {
-            repair.setAcceptance(true);
+            repair.setAcceptance(acceptance);
             return repairRepository.update(repairRepository.readById(repairId));
         }
         return false;

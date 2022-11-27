@@ -1,5 +1,10 @@
 package com.technikon.eagency.util;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
@@ -21,10 +26,16 @@ import com.technikon.eagency.services.OwnerService;
 import com.technikon.eagency.services.impl.AdministratorServiceImpl;
 import com.technikon.eagency.services.impl.IOServiceImpl;
 import com.technikon.eagency.services.impl.OwnerServiceImpl;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UseCasesUtil {
 
@@ -46,7 +57,7 @@ public class UseCasesUtil {
     }
 
     /*4.2*/
-    public static void ownerRegistrationWithTwoProperties() throws OwnerException, PropertyException {
+    public static void ownerRegistrationWithTwoProperties() {
         owner = new Owner();
         owner.setVatNumber(11235813L);
         owner.setName("John");
@@ -56,7 +67,10 @@ public class UseCasesUtil {
         owner.setPhoneNumber("6999999999");
         owner.setUsername("jdoe");
         owner.setPassword("password");
-        ownerService.registerOwner(owner);
+        try {
+            ownerService.registerOwner(owner);
+        } catch (OwnerException ex) {
+        }
 
         Property property1 = new Property();
         property1.setPropertyId(123456789L);
@@ -64,7 +78,10 @@ public class UseCasesUtil {
         property1.setPropertyType(PropertyType.MAISONETTE);
         property1.setYearOfConstruction(1965);
         property1.setOwner(owner);
-        ownerService.registerProperty(property1);
+        try {
+            ownerService.registerProperty(property1);
+        } catch (PropertyException ex) {
+        }
 
         Property property2 = new Property();
         property2.setPropertyId(987654321L);
@@ -72,7 +89,10 @@ public class UseCasesUtil {
         property2.setPropertyType(PropertyType.APARTMENT_BUILDING);
         property2.setYearOfConstruction(2004);
         property2.setOwner(owner);
-        ownerService.registerProperty(property2);
+        try {
+            ownerService.registerProperty(property2);
+        } catch (PropertyException ex) {
+        }
 
         correctionsOnWronglyInsertedData(owner, property1);
     }
@@ -89,7 +109,7 @@ public class UseCasesUtil {
     }
 
     /*4.3*/
-    public static void repairRegistration() throws RepairException {
+    public static void repairRegistration() {
         List<Property> propertyList = ownerService.findProperties(owner.getVatNumber());
         System.out.println(propertyList);
 
@@ -102,52 +122,73 @@ public class UseCasesUtil {
         repair.setRepairtype(RepairType.PAINTING);
         repair.setStatusType(StatusType.PENDING);
 
-        ownerService.submitRepair(repair);
+        try {
+            ownerService.submitRepair(repair);
+        } catch (RepairException ex) {
+        }
     }
 
     /*4.4*/
-    public static void repairAdministration() throws RepairException {
+    public static void repairAdministration() {
         List<Repair> pendingRepairList = adminService.findAllPendingRepairs();
         int maxCost = 5000;
         int minCost = 1000;
         int rangeOfCost = maxCost - minCost + 1;
-        Random random = new Random();
+        Random random;
         for (Repair pendingRepair : pendingRepairList) {
-            double proposedCost = (Math.random() * rangeOfCost) + minCost;
-            adminService.proposeCost(pendingRepair.getId(), BigDecimal.valueOf(proposedCost));
-            LocalDate proposedDateOfStart = pendingRepair.getDateOfSubmission().plusWeeks(1);
-            adminService.proposeStartDate(pendingRepair.getId(), proposedDateOfStart);
-            LocalDate proposedDateOfEnd = pendingRepair.getProposedDateOfStart().plusWeeks(2);
-            adminService.proposeEndDate(pendingRepair.getId(), proposedDateOfEnd);
+            try {
+                double proposedCost = (Math.random() * rangeOfCost) + minCost;
+                adminService.proposeCost(pendingRepair.getId(), BigDecimal.valueOf(proposedCost)
+                        .setScale(1, RoundingMode.HALF_UP));
+                LocalDate proposedDateOfStart = pendingRepair.getDateOfSubmission().plusWeeks(1);
+                adminService.proposeStartDate(pendingRepair.getId(), proposedDateOfStart);
+                LocalDate proposedDateOfEnd = pendingRepair.getProposedDateOfStart().plusWeeks(2);
+                adminService.proposeEndDate(pendingRepair.getId(), proposedDateOfEnd);
 
-            
-            boolean acceptance = random.nextBoolean();
-            ownerService.acceptRepair(pendingRepair.getId(), acceptance);
-            
-            if (acceptance) {
-                adminService.updateStatusType(pendingRepair.getId(), StatusType.IN_PROGRESS);
-                adminService.checkStartDate(pendingRepair.getId(), pendingRepair.getProposedDateOfStart());
-                adminService.checkEndDate(pendingRepair.getId(), pendingRepair.getProposedDateOfEnd());
-            } else {
-                adminService.updateStatusType(pendingRepair.getId(), StatusType.DECLINED);
+                random = new Random();
+                boolean acceptance = random.nextBoolean();
+                ownerService.acceptRepair(pendingRepair.getId(), acceptance);
+
+                if (acceptance) {
+                    adminService.updateStatusType(pendingRepair.getId(), StatusType.IN_PROGRESS);
+                    adminService.checkStartDate(pendingRepair.getId(), pendingRepair.getProposedDateOfStart());
+                    adminService.checkEndDate(pendingRepair.getId(), pendingRepair.getProposedDateOfEnd());
+                } else {
+                    adminService.updateStatusType(pendingRepair.getId(), StatusType.DECLINED);
+                    adminService.checkStartDate(pendingRepair.getId(), null);
+                    adminService.checkEndDate(pendingRepair.getId(), null);
+                }
+            } catch (RepairException repairException) {
             }
         }
     }
 
     /*4.5*/
     public static void reports() {
-        List<Repair> ownerRepairs = ownerService.findRepairs(owner.getVatNumber());
-        ownerRepairs.stream()
-                .map(ownerRepair -> "Owner: " + ownerRepair.getOwner().getVatNumber()
-                + ", Property: " + ownerRepair.getProperty().getPropertyId())
-                .forEach(System.out::println);
+        Map<Long, StatusType> ownerRepairs = ownerService.getReport(owner.getVatNumber());
+        System.out.println("-------------------------------------------------");
+        System.out.println("Properties and Repair statuses of Owner " + owner.getName() + " " + owner.getSurname());
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(ownerRepairs));
 
         List<Repair> repairList = adminService.findAllRepairs();
+        System.out.println("-------------------------------------------------");
+        System.out.println("Repairs of Technikon (admin)");
         repairList.stream()
-                .map(ownerRepair -> "Owner: " + ownerRepair.getOwner().getVatNumber()
-                + ", Property: " + ownerRepair.getProperty().getPropertyId()
-                + ", Status: " + ownerRepair.getStatusType())
+                .map(repair -> pretty(repair))
                 .forEach(System.out::println);
+    }
+
+    private static String pretty(Repair repair) {
+        return "{\n"
+                + "\tOwner VAT number: " + repair.getOwner().getVatNumber() + "\n"
+                + "\tProperty E9: " + repair.getProperty().getPropertyId() + "\n"
+                + "\tStatus: " + repair.getStatusType() + "\n"
+                + "\tCost: " + repair.getProposedCost() + "\n"
+                + "\tStart date: " + repair.getDateOfStart() + "\n"
+                + "\tEnd date: " + repair.getDateOfEnd() + "\n"
+                + "\tType of repair: " + repair.getRepairtype() + "\n"
+                + "\tShort description: " + repair.getShortDescription() + "\n"
+                + "}";
     }
 
     /*------------------------------------------------------------------------*/
@@ -156,4 +197,5 @@ public class UseCasesUtil {
         ioService.savePropertiesToCsv("data/properties.csv");
         ioService.saveRepairsToCsv("data/repairs.csv");
     }
+
 }

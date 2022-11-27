@@ -1,21 +1,21 @@
 ﻿id,isActive,propertyId,shortDescription,ownerId,dateOfSubmission,descriptionOfWork,proposedDateOfStart,proposedDateOfEnd,proposedCost,acceptance,dateOfStart,dateOfEnd,repairType,statusType
-1,true,12,Painting repairs inside and/or outside of the property,16,2022-10-06,Painting in the master bedroom.,2022-11-30,2022-12-02,8202.0,true,2022-12-02,2022-12-05,PAINTING,PENDING
-2,true,16,Insulation installation (including the materials),9,2022-09-13,Insulation installation,2022-11-24,2023-01-11,9489.0,false,2022-11-26,2023-01-11,INSULATION,DECLINED
+1,true,12,Painting repairs inside and/or outside of the property,16,2022-10-06,Painting in the master bedroom.,2022-10-13,2022-10-27,3516.4112874227294,true,2022-10-13,2022-10-27,PAINTING,PENDING
+2,true,16,Insulation installation (including the materials),9,2022-09-13,Insulation installation,2022-11-24,2023-01-11,9489.0,false,,,INSULATION,DECLINED
 3,true,18,Frames installation,2,2022-09-01,Lorem ipsum dolor sit amet.,2022-11-25,2022-12-19,8515.0,true,2022-11-01,2022-12-19,FRAMES,IN_PROGRESS
 4,true,4,Repair/ replace of the electrical system,5,2022-10-07,Egestas maecenas pharetra convallis posuere morbi,2022-11-01,2022-11-20,6849.0,true,2022-11-02,2022-11-21,ELECTRICAL_WORK,COMPLETE
 5,true,14,Frames installation,8,2022-09-12,Duis at tellus at urna condimentum mattis pellentesque.,2022-11-10,2023-01-16,2536.0,true,2022-11-08,2023-01-16,FRAMES,IN_PROGRESS
-6,true,3,Repair/ replace of the electrical system,20,2022-10-27,Nisi est sit amet facilisis magna etiam tempor orci,2022-11-07,2023-01-19,5387.0,false,2022-11-10,2023-01-21,ELECTRICAL_WORK,DECLINED
+6,true,3,Repair/ replace of the electrical system,20,2022-10-27,Nisi est sit amet facilisis magna etiam tempor orci,2022-11-07,2023-01-19,5387.0,false,,,ELECTRICAL_WORK,DECLINED
 7,true,8,Repair/replace of the plumbing system,7,2022-10-13,Ut sem viverra aliquet eget. Id cursus metus aliquam eleifend mi in nulla posuere,2022-11-04,2023-01-16,3214.0,true,2022-11-05,2023-01-15,PLUMBING,IN_PROGRESS
-8,true,7,Repair/replace of the plumbing system,11,2022-10-28,Tempor nec feugiat nisl pretium fusce id velit ut tortor,2022-11-03,2022-12-23,9186.0,false,2022-11-06,2022-12-18,PLUMBING,PENDING
-9,true,9,Repair/ replace of the electrical system,10,2022-09-22,Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit,2022-11-02,2022-12-09,1645.0,false,2022-11-06,2022-12-12,ELECTRICAL_WORK,PENDING
+8,true,7,Repair/replace of the plumbing system,11,2022-10-28,Tempor nec feugiat nisl pretium fusce id velit ut tortor,2022-11-04,2022-11-18,4819.915405107125,true,2022-11-04,2022-11-18,PLUMBING,PENDING
+9,true,9,Repair/ replace of the electrical system,10,2022-09-22,Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit,2022-09-29,2022-10-13,1131.1719648955868,true,2022-09-29,2022-10-13,ELECTRICAL_WORK,PENDING
 10,true,10,Frames installation,19,2022-10-04,Auctor augue mauris augue neque gravida in fermentum.,2022-11-14,2022-12-12,7928.0,true,2022-12-03,2022-12-10,FRAMES,IN_PROGRESS
-11,true,11,Insulation installation (including the materials),6,2022-09-14,Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non,2022-11-29,2023-01-25,8833.0,false,2022-11-25,2023-01-15,INSULATION,PENDING
-12,true,6,Insulation installation (including the materials),4,2022-09-26,Malesuada fames ac turpis egestas maecenas pharetra convallis posuere. ,2022-11-23,2022-12-08,7818.0,false,2022-11-24,2022-12-07,INSULATION,DECLINED
-13,true,13,Repair/replace of the plumbing system,12,2022-10-25, Erat velit scelerisque in dictum non.,2022-11-22,2023-01-02,3390.0,false,2022-11-27,2023-01-04,PLUMBING,PENDING
+11,true,11,Insulation installation (including the materials),6,2022-09-14,Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non,2022-09-21,2022-10-05,3920.177343810636,true,2022-09-21,2022-10-05,INSULATION,PENDING
+12,true,6,Insulation installation (including the materials),4,2022-09-26,Malesuada fames ac turpis egestas maecenas pharetra convallis posuere. ,2022-11-23,2022-12-08,7818.0,false,,,INSULATION,DECLINED
+13,true,13,Repair/replace of the plumbing system,12,2022-10-25, Erat velit scelerisque in dictum non.,2022-11-01,2022-11-15,4937.13696499577,true,2022-11-01,2022-11-15,PLUMBING,PENDING
 14,true,5,Insulation installation (including the materials),14,2022-09-14,Neque viverra justo nec ultrices dui,2022-11-18,2023-01-17,6484.0,true,2022-11-20,2023-01-10,INSULATION,IN_PROGRESS
-15,true,15,Painting repairs inside and/or outside of the property,3,2022-09-23,Sit amet venenatis urna cursus eget nunc scelerisque.,2022-11-08,2022-12-27,1284.0,false,2022-11-10,2022-12-28,PAINTING,DECLINED
+15,true,15,Painting repairs inside and/or outside of the property,3,2022-09-23,Sit amet venenatis urna cursus eget nunc scelerisque.,2022-11-08,2022-12-27,1284.0,false,,,PAINTING,DECLINED
 16,true,2,Repair/ replace of the electrical system,1,2022-10-03,Pellentesque nec nam aliquam sem. Non nisi est sit amet facilisis magna etiam tempor.,2022-11-15,2022-11-30,7451.0,true,2022-11-17,2022-11-30,ELECTRICAL_WORK,COMPLETE
 17,true,17,Repair/replace of the plumbing system,17,2022-10-25,Odio euismod lacinia at quis risus sed vulputate odio ut. ,2022-11-09,2022-12-23,3380.0,true,2022-11-12,2022-12-20,PLUMBING,IN_PROGRESS
 18,true,20,Frames installation,15,2022-10-12,Arcu odio ut sem nulla. ,2022-11-28,2022-12-23,6214.0,true,2022-11-28,2022-11-30,FRAMES,COMPLETE
-19,true,19,Repair/replace of the plumbing system,13,2022-09-29,Dictumst vestibulum rhoncus est pellentesque elit ullamcorper.,2022-11-17,2022-12-13,6530.0,false,2022-11-17,2022-12-10,PLUMBING,DECLINED
+19,true,19,Repair/replace of the plumbing system,13,2022-09-29,Dictumst vestibulum rhoncus est pellentesque elit ullamcorper.,2022-11-17,2022-12-13,6530.0,false,,,PLUMBING,DECLINED
 20,true,1,Painting repairs inside and/or outside of the property,18,2022-09-02,Urna cursus eget nunc scelerisque viverra mauris in aliquam sem.,2022-11-11,2023-01-10,8366.0,true,2022-11-12,2023-01-09,PAINTING,IN_PROGRESS
