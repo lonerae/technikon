@@ -1,5 +1,6 @@
 package com.technikon.eagency.services;
 
+import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.model.Repair;
 import java.math.BigDecimal;
@@ -9,7 +10,7 @@ import java.util.List;
 public interface AdministratorService {
 
     /**
-     * Updates the cost of the Repair with the given id.
+     * Instantiates the cost of the Repair with the given id.
      *
      * @param repairId
      * @param proposedCost
@@ -18,7 +19,7 @@ public interface AdministratorService {
     void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException;
 
     /**
-     * Updates the start date of the Repair with the given id.
+     * Instantiates the start date of the Repair with the given id.
      *
      * @param repairId
      * @param proposedStartDate
@@ -28,7 +29,7 @@ public interface AdministratorService {
     void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException;
 
     /**
-     * Updates the end date of the Repair with the given id.
+     * Instantiates the proposed end date of the Repair with the given id.
      *
      * @param repairId
      * @param proposedEndDate
@@ -38,22 +39,34 @@ public interface AdministratorService {
     void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException;
 
     /**
-     * Returns the start date of the Repair with the given id.
+     * Updates the status of the Repair with the given id.
      *
      * @param repairId
+     * @param status
+     * @throws RepairException if no Repair with given id exists or if the given
+     * status is null
+     */
+    void updateStatusType(int repairId, StatusType status) throws RepairException;
+
+    /**
+     * Instantiates and returns the start date of the Repair with the given id.
+     *
+     * @param repairId
+     * @param dateOfStart
      * @return start date as LocalDate object
      * @throws RepairException if no Repair with given id exists
      */
-    LocalDate checkStartDate(int repairId) throws RepairException;
+    LocalDate checkStartDate(int repairId, LocalDate dateOfStart) throws RepairException;
 
     /**
-     * Returns the end date of Repair with the given id.
+     * Instantiates and returns the end date of Repair with the given id.
      *
      * @param repairId
+     * @param dateOfEnd
      * @return end date as LocalDate object
      * @throws RepairException if no Repair with given id exists
      */
-    LocalDate checkEndDate(int repairId) throws RepairException;
+    LocalDate checkEndDate(int repairId, LocalDate dateOfEnd) throws RepairException;
 
     /**
      * Returns all Repairs with PENDING status.

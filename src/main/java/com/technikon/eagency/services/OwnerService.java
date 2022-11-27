@@ -100,6 +100,55 @@ public interface OwnerService {
     List<Repair> findRepairs(long vatNumberOfOwner);
 
     /**
+     * Changes the address of the owner with the given id and updates the Owner
+     * database.
+     *
+     * @param ownerId
+     * @param address
+     * @return true if update was successful, false otherwise
+     */
+    boolean updateAddress(int ownerId, String address);
+
+    /**
+     * Changes the email of the owner with the given id and updates the Owner
+     * database.
+     *
+     * @param ownerId
+     * @param email
+     * @return true if update was successful, false otherwise
+     */
+    boolean updateEmail(int ownerId, String email);
+
+    /**
+     * Changes the password of the owner with the given id and updates the Owner
+     * database.
+     *
+     * @param ownerId
+     * @param password
+     * @return true if update was successful, false otherwise
+     */
+    boolean updatePassword(int ownerId, String password);
+
+    /**
+     * Overwrites the fields of a property with the same primary id in the
+     * database.
+     *
+     * @param property
+     * @return true if update was successful, false otherwise
+     */
+    boolean update(Property property);
+
+    /**
+     * Instantiates acceptance field to {@code acceptance} and updates the
+     * database.
+     *
+     * @param repairId
+     * @param acceptance
+     * @return true if acceptance was successfully submitted, false otherwise
+     */
+    boolean acceptRepair(int repairId, boolean acceptance);
+
+    /**
      * Gives a report with information of an owner's properties and repairs.
      *
      * @param vatNumberOfOwner

@@ -38,7 +38,6 @@ public class JPAPropertyRepositoryImpl extends JPARepositoryImpl<Property> imple
 
     @Override
     public boolean update(Property property) {
-        // exception if it doesn't exist then return false (services?)        
         entityManager.getTransaction().begin();
         entityManager.merge(property);
         entityManager.getTransaction().commit();
