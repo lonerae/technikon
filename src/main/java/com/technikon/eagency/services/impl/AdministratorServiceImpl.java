@@ -67,26 +67,28 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public LocalDate checkStartDate(int repairId) throws RepairException {
+    public LocalDate checkStartDate(int repairId, LocalDate dateOfStart) throws RepairException {
         Repair repair = repairRepository.readById(repairId);
         if (repair == null) {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        LocalDate dateOfStart = repair.getDateOfStart();
-        logger.info("Start date of Repair #{} was returned.", repairId);
+        repair.setDateOfStart(dateOfStart);
+        repairRepository.update(repair);
+        logger.info("Start date of Repair #{} was checked.", repairId);
         return dateOfStart;
     }
 
     @Override
-    public LocalDate checkEndDate(int repairId) throws RepairException {
+    public LocalDate checkEndDate(int repairId, LocalDate dateOfEnd) throws RepairException {
         Repair repair = repairRepository.readById(repairId);
         if (repair == null) {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        LocalDate dateOfEnd = repair.getDateOfEnd();
-        logger.info("End date of Repair #{} was returned.", repairId);
+        repair.setDateOfEnd(dateOfEnd);
+        repairRepository.update(repair);
+        logger.info("End date of Repair #{} was checked.", repairId);
         return dateOfEnd;
     }
 

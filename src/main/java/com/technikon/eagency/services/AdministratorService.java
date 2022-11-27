@@ -44,7 +44,7 @@ public interface AdministratorService {
      * @return start date as LocalDate object
      * @throws RepairException if no Repair with given id exists
      */
-    LocalDate checkStartDate(int repairId) throws RepairException;
+    LocalDate checkStartDate(int repairId, LocalDate dateOfStart) throws RepairException;
 
     /**
      * Returns the end date of Repair with the given id.
@@ -53,7 +53,7 @@ public interface AdministratorService {
      * @return end date as LocalDate object
      * @throws RepairException if no Repair with given id exists
      */
-    LocalDate checkEndDate(int repairId) throws RepairException;
+    LocalDate checkEndDate(int repairId, LocalDate dateOfEnd) throws RepairException;
 
     /**
      * Returns all Repairs with PENDING status.

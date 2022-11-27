@@ -100,12 +100,52 @@ public interface OwnerService {
     List<Repair> findRepairs(long vatNumberOfOwner);
 
     /**
+     *
+     * @param ownerId
+     * @param address
+     * @return
+     */
+    boolean updateAddress(int ownerId, String address);
+
+    /**
+     *
+     * @param ownerId
+     * @param email
+     * @return
+     */
+    boolean updateEmail(int ownerId, String email);
+
+    /**
+     *
+     * @param ownerId
+     * @param password
+     * @return
+     */
+    boolean updatePassword(int ownerId, String password);
+    
+    /**
+     *
+     * @param property
+     * @return
+     */
+    boolean update(Property property);
+    
+    /**
+     *
+     * @param repairId
+     * @param acceptance
+     * @return
+     */
+    boolean acceptRepair(int repairId, boolean acceptance);
+    
+    /**
      * Gives a report with information of an owner's properties and repairs.
      *
      * @param vatNumberOfOwner
      * @return a map with all the properties of owner with given VAT number and
      * their status
      */
-    Map<Long, StatusType> getReport(long vatNumberOfOwner);
+
+    Map<Long, StatusType> getReport (long vatNumberOfOwner);
 
 }

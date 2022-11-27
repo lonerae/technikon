@@ -130,6 +130,32 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
+    public boolean updateAddress(int ownerId, String address) {
+        return ownerRepository.updateAddress(ownerId, address);
+    }
+
+    @Override
+    public boolean updateEmail(int ownerId, String email) {
+        return ownerRepository.updateEmail(ownerId, email);
+    }
+
+    @Override
+    public boolean updatePassword(int ownerId, String password) {
+        return ownerRepository.updatePassword(ownerId, password);
+    }
+
+    @Override
+    public boolean update(Property property) {
+        return propertyRepository.update(property);
+    }
+
+    @Override
+    public boolean acceptRepair(int repairId, boolean acceptance) {
+        repairRepository.readById(repairId).setAcceptance(true);
+        return repairRepository.update(repairRepository.readById(repairId));
+    }
+    
+    @Override
     public Map<Long, StatusType> getReport(long vatNumberOfOwner) {
         return repairRepository
                 .readOwner(vatNumberOfOwner)
