@@ -122,7 +122,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<Repair> findRepairs(long vatNumberOfOwner) {
-        return (List<Repair>) ownerRepository.readVatNumber(vatNumberOfOwner);
+        return repairRepository.readOwner(vatNumberOfOwner);
     }
 
     @Override

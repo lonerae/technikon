@@ -4,6 +4,8 @@
  */
 package com.technikon.eagency.services.impl;
 
+import com.technikon.eagency.enums.PropertyType;
+import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.exceptions.OwnerException;
 import com.technikon.eagency.exceptions.PropertyException;
 import com.technikon.eagency.exceptions.RepairException;
@@ -18,6 +20,7 @@ import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
 import com.technikon.eagency.services.OwnerService;
 import jakarta.persistence.PersistenceException;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,7 +102,59 @@ public class OwnerServiceImplTest {
         Property property = null;
         assertThrows(PropertyException.class, () -> service.registerProperty(property));
     }
+    
+     @Test
+    public void addPropertyWithTheSamePropertyIdAndCheckIfPropertyIsNotAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("p@mail.com");
+        owner1.setName("panos");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("vaz");
+        owner1.setUsername("panv");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("p 4");
+        service.registerOwner(owner1);
+        
+        Property property1 = new Property();
+        property1.setAddress("ppp 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        service.registerProperty(property1);
 
+        Property property2 = new Property();
+        property2.setAddress("aaa 18");
+        property2.setOwner(owner1);
+        property2.setPropertyId(111111111);
+        property2.setPropertyType(PropertyType.DETACHED_HOUSE);
+        property2.setYearOfConstruction(1980);
+
+        assertThrows(PersistenceException.class, () -> service.registerProperty(property2));
+    }
+
+    @Test
+    public void addPropertyWithNoAddressAndCheckIfPropertyIsNotAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("p@mail.com");
+        owner1.setName("panos");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("vaz");
+        owner1.setUsername("panv");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("p 4");
+        service.registerOwner(owner1);
+        
+        Property property1 = new Property();
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+
+        assertThrows(PropertyException.class, () -> service.registerProperty(property1));
+    }
     @Test
     public void addNullRepairAndCheckIfRepairIsNotAdded() throws RepairException {
         Repair repair = null;
@@ -108,15 +163,68 @@ public class OwnerServiceImplTest {
 
     @Test
     public void addRepairsAndCheckIfTheyAreConnectedWithAppropriateOwner() throws Exception {
-        Owner owner = new Owner();
-        owner.setName("John");
-        owner.setVatNumber(11235813L);
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        service.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        service.registerProperty(property1);
+
         Repair repair1 = new Repair();
-        repair1.setOwner(owner);
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now() );
+        repair1.setRepairtype(RepairType.PAINTING);
+        repair1.setProperty(property1);
+        service.submitRepair(repair1);
+
         Repair repair2 = new Repair();
-        repair2.setOwner(owner);
-        service.registerOwner(owner);
-        //PROBLEM IN READ(), WON'T RUN
-        assertEquals(2, service.findRepairs(owner.getVatNumber()).size());
+        repair2.setOwner(owner1);
+        repair2.setDateOfSubmission(LocalDate.now() );
+        repair2.setRepairtype(RepairType.PAINTING);
+        repair2.setProperty(property1);
+        service.submitRepair(repair2);
+
+        assertEquals(2, service.findRepairs(owner1.getVatNumber()).size());
     }
+    
+    @Test
+    public void addRepairWithNoTypeAndCheckIfNoAdded() throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setEmail("john@mail.com");
+        owner1.setName("John");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("Johny");
+        owner1.setUsername("JohnJohny");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("Johnion 4");
+        service.registerOwner(owner1);
+
+        Property property1 = new Property();
+        property1.setAddress("p 18");
+        property1.setOwner(owner1);
+        property1.setPropertyId(111111111);
+        property1.setPropertyType(PropertyType.MAISONETTE);
+        property1.setYearOfConstruction(1970);
+        service.registerProperty(property1);
+
+        Repair repair1 = new Repair();
+        repair1.setOwner(owner1);
+        repair1.setDateOfSubmission(LocalDate.now() );
+        repair1.setProperty(property1);
+        assertThrows(RepairException.class, () -> service.submitRepair(repair1));
+    }
+    
 }
