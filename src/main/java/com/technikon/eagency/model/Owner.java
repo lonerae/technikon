@@ -1,5 +1,6 @@
 package com.technikon.eagency.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import java.util.List;
 public class Owner extends PersistentClass {
 
     @NotNull
+    @Column(unique = true)
     private long vatNumber;
 
     @NotNull
@@ -34,6 +36,7 @@ public class Owner extends PersistentClass {
     private String phoneNumber;
 
     @NotNull
+    @Column(unique = true)
     private String email;
 
     @OneToMany(mappedBy = "owner")

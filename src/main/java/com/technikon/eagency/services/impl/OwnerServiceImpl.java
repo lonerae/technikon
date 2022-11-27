@@ -14,6 +14,7 @@ import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.OwnerService;
+import jakarta.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -44,19 +45,13 @@ public class OwnerServiceImpl implements OwnerService {
         long vatNumber = owner.getVatNumber();
         System.out.println(vatNumber);
         String email = owner.getEmail();
-        System.out.println(email);
-        if (findOwner(vatNumber) != null) {
-            int id = findOwner(vatNumber).getId();
-            logger.warn("The Owner with VAT number {} already exists, under id {}.", vatNumber, id);
-            throw new OwnerException(OwnerExceptionCodes.OWNER_ALREADY_EXISTS);
+        try {
+            ownerRepository.create(owner);
+            logger.info("The registration of Owner with VAT number {} and email {} was successful.", vatNumber, email);
+        } catch (PersistenceException e) {
+            logger.warn("The Owner already exists");
+            throw new PersistenceException(OwnerExceptionCodes.OWNER_ALREADY_EXISTS + e);
         }
-        if (findOwner(email) != null) {
-            int id = findOwner(email).getId();
-            logger.warn("The Owner with email {} already exists, under id {}.", email, id);
-            throw new OwnerException(OwnerExceptionCodes.OWNER_ALREADY_EXISTS);
-        }
-        ownerRepository.create(owner);
-        logger.info("The registration of Owner with VAT number {} was successful.", vatNumber);
     }
 
     @Override
@@ -69,8 +64,14 @@ public class OwnerServiceImpl implements OwnerService {
             logger.warn("Attempt to register Property without address.");
             throw new PropertyException(PropertyExceptionCodes.PROPERTY_MISSING_DATA);
         }
-        propertyRepository.create(property);
-        logger.info("The register of Property with E9 {} was successful.", property.getPropertyId());
+        try {
+            propertyRepository.create(property);
+            logger.info("The register of Property with E9 {} was successful.", property.getPropertyId());
+        } catch (PersistenceException e) {
+            logger.warn("The property already exists");
+            throw new PersistenceException(PropertyExceptionCodes.PROPERTY_ALREADY_EXISTS + e);
+        }
+
     }
 
     @Override

@@ -18,11 +18,8 @@ import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.repository.impl.JPAOwnerRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
-import com.technikon.eagency.repository.impl.OwnerRepositoryImpl;
-import com.technikon.eagency.repository.impl.PropertyRepositoryImpl;
-import com.technikon.eagency.repository.impl.RepairRepositoryImpl;
 import com.technikon.eagency.services.OwnerService;
-import java.time.LocalDate;
+import jakarta.persistence.PersistenceException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +34,7 @@ public class OwnerServiceImplTest {
     private final PropertyRepository propertyRepository = new JPAPropertyRepositoryImpl();
     private final RepairRepository repairRepository = new JPARepairRepositoryImpl();
     private OwnerService service;
-    
+
     @BeforeEach
     public void beforeEach() {
         service = new OwnerServiceImpl(ownerRepository, propertyRepository, repairRepository);
@@ -48,40 +45,55 @@ public class OwnerServiceImplTest {
         Owner owner = null;
         assertThrows(OwnerException.class, () -> service.registerOwner(owner));
     }
-    
+
     @Test
-    public void addOwnerWithSameVatNumberAndCheckIfOwnerIsNotAdded() throws OwnerException {
+    public void addOwnerWithSameVatNumberAndCheckIfOwnerIsNotAdded() throws PersistenceException, OwnerException {
         Owner owner1 = new Owner();
-        owner1.setVatNumber(123456789L);
+        owner1.setEmail("p@mail.com");
+        owner1.setName("panos");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("vaz");
+        owner1.setUsername("panv");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("p 4");
         service.registerOwner(owner1);
+
         Owner owner2 = new Owner();
-        owner2.setVatNumber(123456789L);
-        assertThrows(OwnerException.class, () -> service.registerOwner(owner2));
+        owner2.setEmail("j@mail.com");
+        owner2.setName("janos");
+        owner2.setPassword("1234567");
+        owner2.setPhoneNumber("697555555");
+        owner2.setSurname("vaz");
+        owner2.setUsername("janv");
+        owner2.setVatNumber(444444444);
+        owner2.setAddress("j 4");
+        assertThrows(PersistenceException.class, () -> service.registerOwner(owner2));
     }
-    
+
     @Test
-    public void addOwnerWithSameEmailAndCheckIfOwnerIsNotAdded() throws OwnerException {
-        Owner o1 = new Owner();
-        o1.setName("John");
-        o1.setSurname("Doe");
-        o1.setVatNumber(11235813L);
-        o1.setAddress("athens");
-        o1.setEmail("placeholder2@test.com");
-        o1.setPhoneNumber("6999999999");
-        o1.setUsername("jdoe");
-        o1.setPassword("123456");
-        service.registerOwner(o1);
-        
-        Owner o2 = new Owner();
-        o2.setName("janos");
-        o2.setSurname("vaz");
-        o2.setVatNumber(55555555);
-        o2.setAddress("j 4");
-        o2.setEmail("placeholder2@test.com");
-        o2.setPhoneNumber("697555555");
-        o2.setUsername("janv");
-        o2.setPassword("1234567");
-        assertThrows(OwnerException.class, () -> service.registerOwner(o2));
+    public void addOwnerWithSameEmailAndCheckIfOwnerIsNotAdded() throws PersistenceException, OwnerException {
+        Owner owner1 = new Owner();
+        owner1.setEmail("p@mail.com");
+        owner1.setName("panos");
+        owner1.setPassword("1234567");
+        owner1.setPhoneNumber("697424444");
+        owner1.setSurname("vaz");
+        owner1.setUsername("panv");
+        owner1.setVatNumber(444444444);
+        owner1.setAddress("p 4");
+        service.registerOwner(owner1);
+
+        Owner owner2 = new Owner();
+        owner2.setEmail("p@mail.com");
+        owner2.setName("janos");
+        owner2.setPassword("1234567");
+        owner2.setPhoneNumber("697555555");
+        owner2.setSurname("vaz");
+        owner2.setUsername("janv");
+        owner2.setVatNumber(55555555);
+        owner2.setAddress("j 4");
+        assertThrows(PersistenceException.class, () -> service.registerOwner(owner2));
     }
 
     @Test
@@ -89,13 +101,13 @@ public class OwnerServiceImplTest {
         Property property = null;
         assertThrows(PropertyException.class, () -> service.registerProperty(property));
     }
-    
+
     @Test
     public void addNullRepairAndCheckIfRepairIsNotAdded() throws RepairException {
         Repair repair = null;
         assertThrows(RepairException.class, () -> service.submitRepair(repair));
     }
-    
+
     @Test
     public void addRepairsAndCheckIfTheyAreConnectedWithAppropriateOwner() throws Exception {
         Owner o1 = new Owner();

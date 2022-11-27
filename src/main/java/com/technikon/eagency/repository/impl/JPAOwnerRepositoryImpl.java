@@ -29,7 +29,7 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
 
     @Override
     public Owner readEmail(String email) {
-        return (Owner) entityManager.createQuery(" FROM Owner o WHERE o.email =:email ", Owner.class)
+        return entityManager.createQuery(" FROM Owner o WHERE o.email =:email ", Owner.class)
                 .setParameter("email", email)
                 .getResultStream()
                 .findFirst()
