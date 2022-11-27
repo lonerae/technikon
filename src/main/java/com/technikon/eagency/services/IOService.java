@@ -8,7 +8,7 @@ public interface IOService {
      *
      * @param filename
      */
-    void saveOwnerToCsv(String filename);
+    void saveOwnersToCsv(String filename);
 
     /**
      * Saves all properties of Property database to a CSV file with the given
@@ -16,7 +16,7 @@ public interface IOService {
      *
      * @param filename
      */
-    void savePropertyToCsv(String filename);
+    void savePropertiesToCsv(String filename);
 
     /**
      * Saves all repairs of Repair database to a CSV file with the given name.
@@ -24,7 +24,7 @@ public interface IOService {
      *
      * @param filename
      */
-    void saveRepairToCsv(String filename);
+    void saveRepairsToCsv(String filename);
 
     /**
      * Inserts all owners saved in the CSV file with the given name, to the
@@ -34,7 +34,7 @@ public interface IOService {
      * @param filename
      * @return number of rows that were successfully read
      */
-    int readOwnerFromCsv(String filename);
+    int readOwnersCsv(String filename);
 
     /**
      * Inserts all properties saved in the CSV file with the given name, to the
@@ -44,7 +44,7 @@ public interface IOService {
      * @param filename
      * @return number of rows that were successfully read
      */
-    int readPropertyFromCsv(String filename);
+    int readPropertiesCsv(String filename);
 
     /**
      * Inserts all repairs saved in the CSV file with the given name, to the
