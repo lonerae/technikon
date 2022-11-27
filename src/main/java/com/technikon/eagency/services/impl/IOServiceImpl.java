@@ -125,7 +125,6 @@ public class IOServiceImpl implements IOService {
                 try {
                     String[] words = line.split(",");
                     Owner owner = new Owner();
-                    owner.setId(Integer.parseInt(words[0]));
                     owner.setActive(Boolean.parseBoolean(words[1].trim()));
                     owner.setUsername(words[2].trim());
                     owner.setPassword(words[3].trim());
@@ -136,8 +135,10 @@ public class IOServiceImpl implements IOService {
                     owner.setPhoneNumber(words[8].trim());
                     owner.setEmail(words[9].trim());
                     ownerRepository.create(owner);
+                    logger.info("The registration of Owner with VAT number {} was successful.", owner.getVatNumber());
                     rowsRead++;
                 } catch (NumberFormatException e) {
+                    logger.warn(e.getMessage());
                     logger.warn("Row dropped.");
                 }
             }
@@ -159,7 +160,6 @@ public class IOServiceImpl implements IOService {
                 try {
                     String[] words = line.split(",");
                     Property property = new Property();
-                    property.setId(Integer.parseInt(words[0]));
                     property.setActive(Boolean.parseBoolean(words[1].trim()));
                     property.setPropertyId(Long.parseLong(words[2].trim()));
                     property.setAddress(words[3].trim());
@@ -167,8 +167,10 @@ public class IOServiceImpl implements IOService {
                     property.setOwner(ownerRepository.readById(Integer.parseInt(words[5].trim())));
                     property.setPropertyType(PropertyType.valueOf(words[6]));
                     propertyRepository.create(property);
+                    logger.info("The registration of Property with E9 {} was successful.", property.getPropertyId());
                     rowsRead++;
                 } catch (NumberFormatException e) {
+                    logger.warn(e.getMessage());
                     logger.warn("Row dropped.");
                 }
             }
@@ -190,11 +192,12 @@ public class IOServiceImpl implements IOService {
                 try {
                     String[] words = line.split(",");
                     Repair repair = new Repair();
-                    repair.setId(Integer.parseInt(words[0]));
                     repair.setActive(Boolean.parseBoolean(words[1].trim()));
-                    repair.setProperty(propertyRepository.readById(Integer.parseInt(words[2].trim())));
+                    Property property = propertyRepository.readById(Integer.parseInt(words[2].trim()));
+                    repair.setProperty(property);
                     repair.setShortDescription(words[3].trim());
-                    repair.setOwner(ownerRepository.readById(Integer.parseInt(words[4].trim())));
+                    Owner owner = ownerRepository.readById(Integer.parseInt(words[4].trim()));
+                    repair.setOwner(owner);
                     repair.setDateOfSubmission(LocalDate.parse(words[5].trim()));
                     repair.setDescriptionOfWork(words[6].trim());
                     repair.setProposedDateOfStart(LocalDate.parse(words[7].trim()));
@@ -206,8 +209,11 @@ public class IOServiceImpl implements IOService {
                     repair.setRepairtype(RepairType.valueOf(words[13].trim()));
                     repair.setStatusType(StatusType.valueOf(words[14].trim()));
                     repairRepository.create(repair);
+                    logger.info("The submission of Repair on Property with id {}, of Owner with id {}, was successful.",
+                            property.getId(), owner.getId());
                     rowsRead++;
                 } catch (NumberFormatException e) {
+                    logger.warn(e.getMessage());
                     logger.warn("Row dropped.");
                 }
             }
