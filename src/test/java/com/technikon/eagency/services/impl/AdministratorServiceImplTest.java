@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.enums.PropertyType;
@@ -17,22 +13,14 @@ import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.repository.impl.JPAOwnerRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
-import com.technikon.eagency.repository.impl.OwnerRepositoryImpl;
-import com.technikon.eagency.repository.impl.PropertyRepositoryImpl;
-import com.technikon.eagency.repository.impl.RepairRepositoryImpl;
 import com.technikon.eagency.services.AdministratorService;
 import com.technikon.eagency.services.OwnerService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.BeforeEach;
 
-/**
- *
- * @author panos
- */
 public class AdministratorServiceImplTest {
 
     private final OwnerRepository ownerRepository = new JPAOwnerRepositoryImpl();

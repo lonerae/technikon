@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package com.technikon.eagency.services.impl;
 
 import com.technikon.eagency.enums.PropertyType;
@@ -25,10 +21,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
-/**
- *
- * @author lonerae
- */
 public class OwnerServiceImplTest {
 
     private final OwnerRepository ownerRepository = new JPAOwnerRepositoryImpl();
@@ -102,8 +94,8 @@ public class OwnerServiceImplTest {
         Property property = null;
         assertThrows(PropertyException.class, () -> service.registerProperty(property));
     }
-    
-     @Test
+
+    @Test
     public void addPropertyWithTheSamePropertyIdAndCheckIfPropertyIsNotAdded() throws Exception {
         Owner owner1 = new Owner();
         owner1.setEmail("p@mail.com");
@@ -115,7 +107,7 @@ public class OwnerServiceImplTest {
         owner1.setVatNumber(444444444);
         owner1.setAddress("p 4");
         service.registerOwner(owner1);
-        
+
         Property property1 = new Property();
         property1.setAddress("ppp 18");
         property1.setOwner(owner1);
@@ -146,7 +138,7 @@ public class OwnerServiceImplTest {
         owner1.setVatNumber(444444444);
         owner1.setAddress("p 4");
         service.registerOwner(owner1);
-        
+
         Property property1 = new Property();
         property1.setOwner(owner1);
         property1.setPropertyId(111111111);
@@ -155,6 +147,7 @@ public class OwnerServiceImplTest {
 
         assertThrows(PropertyException.class, () -> service.registerProperty(property1));
     }
+
     @Test
     public void addNullRepairAndCheckIfRepairIsNotAdded() throws RepairException {
         Repair repair = null;
@@ -184,21 +177,21 @@ public class OwnerServiceImplTest {
 
         Repair repair1 = new Repair();
         repair1.setOwner(owner1);
-        repair1.setDateOfSubmission(LocalDate.now() );
+        repair1.setDateOfSubmission(LocalDate.now());
         repair1.setRepairtype(RepairType.PAINTING);
         repair1.setProperty(property1);
         service.submitRepair(repair1);
 
         Repair repair2 = new Repair();
         repair2.setOwner(owner1);
-        repair2.setDateOfSubmission(LocalDate.now() );
+        repair2.setDateOfSubmission(LocalDate.now());
         repair2.setRepairtype(RepairType.PAINTING);
         repair2.setProperty(property1);
         service.submitRepair(repair2);
 
         assertEquals(2, service.findRepairs(owner1.getVatNumber()).size());
     }
-    
+
     @Test
     public void addRepairWithNoTypeAndCheckIfNoAdded() throws Exception {
         Owner owner1 = new Owner();
@@ -222,9 +215,9 @@ public class OwnerServiceImplTest {
 
         Repair repair1 = new Repair();
         repair1.setOwner(owner1);
-        repair1.setDateOfSubmission(LocalDate.now() );
+        repair1.setDateOfSubmission(LocalDate.now());
         repair1.setProperty(property1);
         assertThrows(RepairException.class, () -> service.submitRepair(repair1));
     }
-    
+
 }
