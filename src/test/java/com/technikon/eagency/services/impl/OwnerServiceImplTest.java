@@ -4,6 +4,8 @@
  */
 package com.technikon.eagency.services.impl;
 
+import com.technikon.eagency.enums.PropertyType;
+import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.exceptions.OwnerException;
 import com.technikon.eagency.exceptions.PropertyException;
 import com.technikon.eagency.exceptions.RepairException;
@@ -13,10 +15,14 @@ import com.technikon.eagency.model.Repair;
 import com.technikon.eagency.repository.OwnerRepository;
 import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
+import com.technikon.eagency.repository.impl.JPAOwnerRepositoryImpl;
+import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
+import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
 import com.technikon.eagency.repository.impl.OwnerRepositoryImpl;
 import com.technikon.eagency.repository.impl.PropertyRepositoryImpl;
 import com.technikon.eagency.repository.impl.RepairRepositoryImpl;
 import com.technikon.eagency.services.OwnerService;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +33,9 @@ import org.junit.jupiter.api.BeforeEach;
  */
 public class OwnerServiceImplTest {
 
-    private final OwnerRepository ownerRepository = new OwnerRepositoryImpl();
-    private final PropertyRepository propertyRepository = new PropertyRepositoryImpl();
-    private final RepairRepository repairRepository = new RepairRepositoryImpl();
+    private final OwnerRepository ownerRepository = new JPAOwnerRepositoryImpl();
+    private final PropertyRepository propertyRepository = new JPAPropertyRepositoryImpl();
+    private final RepairRepository repairRepository = new JPARepairRepositoryImpl();
     private OwnerService service;
     
     @BeforeEach
@@ -55,12 +61,27 @@ public class OwnerServiceImplTest {
     
     @Test
     public void addOwnerWithSameEmailAndCheckIfOwnerIsNotAdded() throws OwnerException {
-        Owner owner1 = new Owner();
-        owner1.setEmail("placeholder@test.com");
-        service.registerOwner(owner1);
-        Owner owner2 = new Owner();
-        owner2.setEmail("placeholder@test.com");
-        assertThrows(OwnerException.class, () -> service.registerOwner(owner2));
+        Owner o1 = new Owner();
+        o1.setName("John");
+        o1.setSurname("Doe");
+        o1.setVatNumber(11235813L);
+        o1.setAddress("athens");
+        o1.setEmail("placeholder2@test.com");
+        o1.setPhoneNumber("6999999999");
+        o1.setUsername("jdoe");
+        o1.setPassword("123456");
+        service.registerOwner(o1);
+        
+        Owner o2 = new Owner();
+        o2.setName("janos");
+        o2.setSurname("vaz");
+        o2.setVatNumber(55555555);
+        o2.setAddress("j 4");
+        o2.setEmail("placeholder2@test.com");
+        o2.setPhoneNumber("697555555");
+        o2.setUsername("janv");
+        o2.setPassword("1234567");
+        assertThrows(OwnerException.class, () -> service.registerOwner(o2));
     }
 
     @Test
@@ -77,15 +98,42 @@ public class OwnerServiceImplTest {
     
     @Test
     public void addRepairsAndCheckIfTheyAreConnectedWithAppropriateOwner() throws Exception {
-        Owner owner = new Owner();
-        owner.setName("John");
-        owner.setVatNumber(11235813L);
-        Repair repair1 = new Repair();
-        repair1.setOwner(owner);
-        Repair repair2 = new Repair();
-        repair2.setOwner(owner);
-        service.registerOwner(owner);
-        //PROBLEM IN READ(), WON'T RUN
-        assertEquals(2, service.findRepairs(owner.getVatNumber()).size());
+        Owner o1 = new Owner();
+        o1.setName("John");
+        o1.setSurname("Doe");
+        o1.setVatNumber(11235813L);
+        o1.setAddress("athens");
+        o1.setEmail("placeholder2@test.com");
+        o1.setPhoneNumber("6999999999");
+        o1.setUsername("jdoe");
+        o1.setPassword("123456");
+        service.registerOwner(o1);
+        
+        Property p1 = new Property();
+        p1.setAddress("p 18");
+        p1.setOwner(o1);
+        p1.setPropertyId(111111111);
+        p1.setPropertyType(PropertyType.MAISONETTE);
+        p1.setYearOfConstruction(1970);
+        service.registerProperty(p1);
+        
+        Repair r1 = new Repair();
+        r1.setDateOfSubmission(LocalDate.of(2022, 7, 5));
+        r1.setOwner(o1);
+        r1.setRepairtype(RepairType.PAINTING);
+        r1.setShortDescription("mpla");
+        r1.setOwner(o1);
+        r1.setProperty(p1);
+        service.submitRepair(r1);
+        
+        Repair r2 = new Repair();
+        r2.setDateOfSubmission(LocalDate.of(2022, 7, 5));
+        r2.setRepairtype(RepairType.PAINTING);
+        r2.setShortDescription("mpla");
+        r2.setOwner(o1);
+        r2.setProperty(p1);
+        service.submitRepair(r2);
+        
+        assertEquals(2, service.findRepairs(o1.getVatNumber()).size());
     }
 }

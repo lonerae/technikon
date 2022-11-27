@@ -42,7 +42,9 @@ public class OwnerServiceImpl implements OwnerService {
             throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
         long vatNumber = owner.getVatNumber();
+        System.out.println(vatNumber);
         String email = owner.getEmail();
+        System.out.println(email);
         if (findOwner(vatNumber) != null) {
             int id = findOwner(vatNumber).getId();
             logger.warn("The Owner with VAT number {} already exists, under id {}.", vatNumber, id);
@@ -120,7 +122,10 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<Repair> findRepairs(long vatNumberOfOwner) {
-        return (List<Repair>) ownerRepository.readVatNumber(vatNumberOfOwner);
+        return repairRepository.readAll()
+                .stream()
+                .filter(repair -> repair.getOwner().getVatNumber() == vatNumberOfOwner)
+                .toList();
     }
 
     @Override
