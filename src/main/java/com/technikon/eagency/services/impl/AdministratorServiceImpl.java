@@ -17,93 +17,90 @@ import org.slf4j.LoggerFactory;
 public class AdministratorServiceImpl implements AdministratorService {
 
     private final RepairRepository repairRepository;
-    private final PropertyRepository propertyRepository;
-    private static Logger logger = LoggerFactory.getLogger(AdministratorServiceImpl.class);
+    private static Logger logger;
 
-    public AdministratorServiceImpl(RepairRepository repairRepository, PropertyRepository propertyRepository) {
+    public AdministratorServiceImpl(RepairRepository repairRepository) {
         this.repairRepository = repairRepository;
-        this.propertyRepository = propertyRepository;
+        logger = LoggerFactory.getLogger(AdministratorServiceImpl.class);
     }
 
     @Override
     public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException {
-        if (propertyRepository.readPropertyId(repairId) == null) {
-            logger.warn("The repair is null");
+        if (repairRepository.readById(repairId) == null) {
+            logger.warn("The repair is null.");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
         if (proposedCost == null) {
-            logger.warn("The proposedCost of repair is null");
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+            logger.warn("No appropriate cost was given.");
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
-        // exception?
         repairRepository.updateProposedCost(repairId, proposedCost);
-        logger.info("The repair was successful");
+        logger.info("Cost of Repair #{} was successfully updated to {}.", repairId, proposedCost.toString());
     }
 
     @Override
     public void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException {
-        if (propertyRepository.readPropertyId(repairId) == null) {
-            logger.warn("The repair is null");
+        if (repairRepository.readById(repairId) == null) {
+            logger.warn("The repair is null.");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        if (repairRepository.readStartDate(proposedStartDate) == null) {
-            logger.warn("The proposedStartDate is null");
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        if (proposedStartDate == null) {
+            logger.warn("No appropriate date was given.");
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
-        // exception?
         repairRepository.updateProposedStartDate(repairId, proposedStartDate);
-        logger.info("The repair was successful");
+        logger.info("Proposed start date of Repair #{} was successfully updated to {}.", repairId, proposedStartDate.toString());
     }
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-        if (propertyRepository.readPropertyId(repairId) == null) {
-            logger.warn("The repair is null");
+        if (repairRepository.readById(repairId) == null) {
+            logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        if (repairRepository.readStartDate(proposedEndDate) == null) {
-            logger.warn("The proposedEndDate is null");
-            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        if (proposedEndDate == null) {
+            logger.warn("No appropriate date was given.");
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
         }
-        // exception?
         repairRepository.updateProposedEndDate(repairId, proposedEndDate);
-        logger.info("The repair was successful");
+        logger.info("Proposed end date of Repair #{} was successfully updated to {}.", repairId, proposedEndDate.toString());
     }
 
     @Override
     public LocalDate checkStartDate(int repairId) throws RepairException {
-        if (propertyRepository.readPropertyId(repairId) == null) {
-            logger.warn("The repair is null");
+        Repair repair = repairRepository.readById(repairId);
+        if (repair == null) {
+            logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        // exception?
-        logger.info("The check of StartDate was successful");
-        return repair.getDateOfStart();
+        LocalDate dateOfStart = repair.getDateOfStart();
+        logger.info("Start date of Repair #{} was returned.", repairId);
+        return dateOfStart;
     }
 
     @Override
     public LocalDate checkEndDate(int repairId) throws RepairException {
-        if (propertyRepository.readPropertyId(repairId) == null) {
-            logger.warn("The repair is null");
+        Repair repair = repairRepository.readById(repairId);
+        if (repair == null) {
+            logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        // exception?
-        logger.info("The check of EndDate was successful");
-        return repair.getDateOfEnd();
+        LocalDate dateOfEnd = repair.getDateOfEnd();
+        logger.info("End date of Repair #{} was returned.", repairId);
+        return dateOfEnd;
     }
 
     @Override
     public List<Repair> findAllPendingRepairs() {
-        return repairRepository.read()
+        return repairRepository.readAll()
                 .stream()
-                .filter(r -> StatusType.PENDING == r.getStatustype())
+                .filter(r -> StatusType.PENDING.equals(r.getStatusType()))
                 .collect(Collectors.toList());
-
     }
 
     @Override
     public List<Repair> findAllRepairs() {
-        return repairRepository.read();
+        return repairRepository.readAll();
     }
 
 }
