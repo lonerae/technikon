@@ -24,8 +24,7 @@ import com.technikon.eagency.services.impl.OwnerServiceImpl;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Random;
 
 public class UseCasesUtil {
 
@@ -47,7 +46,7 @@ public class UseCasesUtil {
     }
 
     /*4.2*/
-    public static void ownerRegistrationWithTwoProperties() throws OwnerException, PropertyException{
+    public static void ownerRegistrationWithTwoProperties() throws OwnerException, PropertyException {
         owner = new Owner();
         owner.setVatNumber(11235813L);
         owner.setName("John");
@@ -90,7 +89,7 @@ public class UseCasesUtil {
     }
 
     /*4.3*/
-    public static void repairRegistration() {
+    public static void repairRegistration() throws RepairException {
         List<Property> propertyList = ownerService.findProperties(owner.getVatNumber());
         System.out.println(propertyList);
 
@@ -103,32 +102,34 @@ public class UseCasesUtil {
         repair.setRepairtype(RepairType.PAINTING);
         repair.setStatusType(StatusType.PENDING);
 
-        try {
-            ownerService.submitRepair(repair);
-        } catch (RepairException ex) {
-        }
+        ownerService.submitRepair(repair);
     }
 
     /*4.4*/
-    public static void repairAdministration() {
+    public static void repairAdministration() throws RepairException {
         List<Repair> pendingRepairList = adminService.findAllPendingRepairs();
         int maxCost = 5000;
         int minCost = 1000;
         int rangeOfCost = maxCost - minCost + 1;
+        Random random = new Random();
         for (Repair pendingRepair : pendingRepairList) {
-            try {
-                double proposedCost = (Math.random() * rangeOfCost) + minCost;
-                adminService.proposeCost(pendingRepair.getId(), BigDecimal.valueOf(proposedCost));
-                LocalDate proposedDateOfStart = pendingRepair.getDateOfSubmission().plusWeeks(1);
-                adminService.proposeStartDate(pendingRepair.getId(), proposedDateOfStart);
-                LocalDate proposedDateOfEnd = pendingRepair.getProposedDateOfStart().plusWeeks(2);
-                adminService.proposeEndDate(pendingRepair.getId(), proposedDateOfEnd);
+            double proposedCost = (Math.random() * rangeOfCost) + minCost;
+            adminService.proposeCost(pendingRepair.getId(), BigDecimal.valueOf(proposedCost));
+            LocalDate proposedDateOfStart = pendingRepair.getDateOfSubmission().plusWeeks(1);
+            adminService.proposeStartDate(pendingRepair.getId(), proposedDateOfStart);
+            LocalDate proposedDateOfEnd = pendingRepair.getProposedDateOfStart().plusWeeks(2);
+            adminService.proposeEndDate(pendingRepair.getId(), proposedDateOfEnd);
 
-                ownerService.acceptRepair(pendingRepair.getId(), true);
-
+            
+            boolean acceptance = random.nextBoolean();
+            ownerService.acceptRepair(pendingRepair.getId(), acceptance);
+            
+            if (acceptance) {
+                adminService.updateStatusType(pendingRepair.getId(), StatusType.IN_PROGRESS);
                 adminService.checkStartDate(pendingRepair.getId(), pendingRepair.getProposedDateOfStart());
                 adminService.checkEndDate(pendingRepair.getId(), pendingRepair.getProposedDateOfEnd());
-            } catch (RepairException ex) {
+            } else {
+                adminService.updateStatusType(pendingRepair.getId(), StatusType.DECLINED);
             }
         }
     }

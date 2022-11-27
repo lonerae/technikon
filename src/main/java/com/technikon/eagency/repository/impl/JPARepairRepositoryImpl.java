@@ -84,7 +84,6 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
 
     @Override
     public boolean update(Repair repair) {
-        // exception if it doesn't exist then return false (services?)        
         entityManager.getTransaction().begin();
         entityManager.merge(repair);
         entityManager.getTransaction().commit();

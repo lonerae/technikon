@@ -131,28 +131,44 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public boolean updateAddress(int ownerId, String address) {
-        return ownerRepository.updateAddress(ownerId, address);
+        if (!address.isBlank()) {
+            return ownerRepository.updateAddress(ownerId, address);
+        }
+        return false;
     }
 
     @Override
     public boolean updateEmail(int ownerId, String email) {
-        return ownerRepository.updateEmail(ownerId, email);
+        if (!email.isBlank()) {
+            return ownerRepository.updateEmail(ownerId, email);
+        }
+        return false;
     }
 
     @Override
     public boolean updatePassword(int ownerId, String password) {
-        return ownerRepository.updatePassword(ownerId, password);
+        if (!password.isBlank()) {
+            return ownerRepository.updatePassword(ownerId, password);
+        }
+        return false;
     }
 
     @Override
     public boolean update(Property property) {
-        return propertyRepository.update(property);
+        if (property != null) {
+            return propertyRepository.update(property);
+        }
+        return false;
     }
 
     @Override
     public boolean acceptRepair(int repairId, boolean acceptance) {
-        repairRepository.readById(repairId).setAcceptance(true);
-        return repairRepository.update(repairRepository.readById(repairId));
+        Repair repair = repairRepository.readById(repairId);
+        if (repair != null) {
+            repair.setAcceptance(true);
+            return repairRepository.update(repairRepository.readById(repairId));
+        }
+        return false;
     }
     
     @Override

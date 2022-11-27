@@ -4,7 +4,6 @@ import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.RepairException;
 import com.technikon.eagency.exceptions.RepairExceptionCodes;
 import com.technikon.eagency.model.Repair;
-import com.technikon.eagency.repository.PropertyRepository;
 import com.technikon.eagency.repository.RepairRepository;
 import com.technikon.eagency.services.AdministratorService;
 import java.math.BigDecimal;
@@ -64,6 +63,22 @@ public class AdministratorServiceImpl implements AdministratorService {
         }
         repairRepository.updateProposedEndDate(repairId, proposedEndDate);
         logger.info("Proposed end date of Repair #{} was successfully updated to {}.", repairId, proposedEndDate.toString());
+    }
+
+    @Override
+    public void updateStatusType(int repairId, StatusType status) throws RepairException {
+        Repair repair = repairRepository.readById(repairId);
+        if (repair == null) {
+            logger.warn("The repair is null.");
+            throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
+        if (status == null) {
+            logger.warn("No appropriate status was given.");
+            throw new RepairException(RepairExceptionCodes.REPAIR_MISSING_DATA);
+        }
+        repair.setStatusType(status);
+        repairRepository.update(repair);
+        logger.info("Status of Repair #{} was successfully updated to {}.", repairId, status.toString());
     }
 
     @Override
