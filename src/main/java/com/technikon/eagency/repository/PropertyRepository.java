@@ -5,10 +5,10 @@ import java.util.List;
 
 public interface PropertyRepository extends Repository<Property> {
 
-  Property readPropertyId(long propertyId);
-    
-  List<Property> readVatNumber(long vatNumberOfOwner);
-    
-  boolean update(Property property);
+    Property readPropertyId(long propertyId);
+
+    List<Property> readVatNumber(long vatNumberOfOwner);
+
+    boolean update(Property property);
 
 }
