@@ -15,7 +15,7 @@ the customer.
 The admin of the application has the ability to propose a cost as well as an indicative start and end date of the repair 
 process . Furthermore the admin can a receive an extentive report for all the registered repairs.
 
-##**Key points of the design and the implementation**
+## **Key points of the design and the implementation**
 
 In order to work more efficienlty our team decided to divide the project in 6 packages.
 
