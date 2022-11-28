@@ -1,21 +1,21 @@
 ﻿id,isActive,username,password,vatNumber,name,surname,address,phoneNumber,email
-1,true,athanasia123,a3oI4G^i5x8M,647342486,Athanasia,Dima,Mpizaniou 103,Ilion,6980071645
-2,true,marin89,sB6d904Th&bW,933017639,Marina,Nikolaou,Kostantinoupoleos 2,Petroupoli,6932554834
-3,false,dimit0,j71Lm21^8pBh,658900599,Dimitra,Dimopoulou,Elaion 78,Pagrati,6387210096
-4,true,basil4,e4M7Z56@@ltZ,806334548,Elena,Aygenaki,Zaimh 18,Patra,6945725489
-5,false,chris7v,rD4qvNp&45Y1,649350545,Christoforos,Papakaliatis,Solonos 46,Agii Anargiri,6985120736
-6,false,dimit49,mXy59z7bO#XL,549640784,Dimitris,Mandas,Beikou 24,Galatsi,6944424450
-7,true,panag00,22S!0m3%Q1m@,801804315,Panagiotis,Aygerinos,Parnithos 130,Kipseli,6938880045
-8,true,nikif6,82RFI7Vc!I#4,315092424,Nikiforos,Nikolaou,Axarnai 96,Axarnai,6977754641
-9,true,menel77,mf&V7p3A8En6,503019316,Menelaos,Papoutsis,Liosion 136,Athina,6932074720
-10,false,apoll4X,ek6MXY06&w1N,380862514,Apollonas,Zografos,Odemisiou 12,Vironas,6932445410
-11,false,xaril2,8F76$9DzCQtd,897234028,Xarilaos,Limneou,Vosporou 10,Ilioupoli,6912015203
-12,true,apost3N,40lkNI1pg@61,995300606,Apostolis,Sarantopoulos,Platonos 65,Alimos,6952446310
-13,true,diony2$,U6hE$H5W4o@&,893036743,Dionysis,Dimitriou,Ragkavi 13,Pireas,6978142245
-14,false,aliki0I,^G48IR4Rx73l,262817629,Aliki,Zaxari,Paulou Mela 75,Chaidari,6932225016
-15,false,aglai45,z3$k55gg0BUo,430217116,Aglaia,Panou,Kifisou 11,Patras,6978849452
-16,true,afrod59D,R9m9D4%D70X0,807304420,Afroditi,Kola,Dim. Gounari 49,Patras,6978224563
-17,false,pinel4G,Ok!iGu71O2L4,294865984,Pinelopi,Karampela,Kanakari 66,Patras,6947182432
-18,true,dorot23,cH$x3Uu^00!G,736622865,Dorothea,Kalifoni,Pente Pigadion 43,Patras,6980056201
-19,false,xar24,oh5D4dAJ*078,109065222,Xara,Xenopoulou,Raftopoulou 17,Iraklio,6978410235
-20,true,pelag5,2$#dH5xFBs4X,758063038,Pelagia,Papadaki,Zimvrakakidon 85,Chania,6945632598
+1,true,athanasia123,a3oI4G^i5x8M,647342486,Athanasia,Dima,Mpizaniou 103,6980071645,adima@mail.com
+2,true,marin89,sB6d904Th&bW,933017639,Marina,Nikolaou,Kostantinoupoleos 2,6932554834,mnikolaou@mail.com
+3,false,dimit0,j71Lm21^8pBh,658900599,Dimitra,Dimopoulou,Elaion 78,6387210096,ddimopoulou@mail.com
+4,true,basil4,e4M7Z56@@ltZ,806334548,Elena,Aygenaki,Zaimh 18,6945725489,eaygenaki@mail.com
+5,false,chris7v,rD4qvNp&45Y1,649350545,Christoforos,Papakaliatis,Solonos 46,6985120736,cpapakaliatis@mail.com
+6,false,dimit49,mXy59z7bO#XL,549640784,Dimitris,Mandas,Beikou 24,6944424450,dmandas@mail.com
+7,true,panag00,22S!0m3%Q1m@,801804315,Panagiotis,Aygerinos,Parnithos 130,6938880045,paygerinos@mail.com
+8,true,nikif6,82RFI7Vc!I#4,315092424,Nikiforos,Nikolaou,Axarnai 96,6977754641,nnikolaou@mail.com
+9,true,menel77,mf&V7p3A8En6,503019316,Menelaos,Papoutsis,Liosion 136,6932074720,mpapoutsis@mail.com
+10,false,apoll4X,ek6MXY06&w1N,380862514,Apollonas,Zografos,Odemisiou 12,6932445410,azografos@mail.com
+11,false,xaril2,8F76$9DzCQtd,897234028,Xarilaos,Limneou,Vosporou 10,6912015203,xlimneou@mail.com
+12,true,apost3N,40lkNI1pg@61,995300606,Apostolis,Sarantopoulos,Platonos 65,6952446310,asarantopoulos@mail.com
+13,true,diony2$,U6hE$H5W4o@&,893036743,Dionysis,Dimitriou,Ragkavi 13,6978142245,ddimitriou@mail.com
+14,false,aliki0I,^G48IR4Rx73l,262817629,Aliki,Zaxari,Paulou Mela 75,6932225016,azaxari@mail.com
+15,false,aglai45,z3$k55gg0BUo,430217116,Aglaia,Panou,Kifisou 11,6978849452,apanou@mail.com
+16,true,afrod59D,R9m9D4%D70X0,807304420,Afroditi,Kola,Dim. Gounari 49,6978224563,akola@mail.com
+17,false,pinel4G,Ok!iGu71O2L4,294865984,Pinelopi,Karampela,Kanakari 66,6947182432,pkarampela@mail.com
+18,true,dorot23,cH$x3Uu^00!G,736622865,Dorothea,Kalifoni,Pente Pigadion 43,6980056201,dkalifoni@mail.com
+19,false,xar24,oh5D4dAJ*078,109065222,Xara,Xenopoulou,Raftopoulou 17,6978410235,xxenopoulou@mail.com
+20,true,pelag5,2$#dH5xFBs4X,758063038,Pelagia,Papadaki,Zimvrakakidon 85,6945632598,ppapadaki@mail.com
