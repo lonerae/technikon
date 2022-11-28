@@ -23,14 +23,14 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
 
     @Override
     public List<Repair> readSubmissionDate(LocalDate date) {
-        return entityManager.createQuery("from Repair r Where r.dateOfSubmission = :date ", Repair.class)
+        return entityManager.createQuery("FROM Repair r WHERE r.dateOfSubmission = :date ", Repair.class)
                 .setParameter("date", date)
                 .getResultList();
     }
 
     @Override
     public List<Repair> readDateRange(LocalDate startDate, LocalDate endDate) {
-        return entityManager.createQuery("from Repair r Where r.dateOfSubmission BETWEEN :start AND : end ", Repair.class)
+        return entityManager.createQuery("FROM Repair r WHERE r.dateOfSubmission BETWEEN :start AND : end ", Repair.class)
                 .setParameter("start", startDate)
                 .setParameter("end", endDate)
                 .getResultList();
@@ -38,56 +38,43 @@ public class JPARepairRepositoryImpl extends JPARepositoryImpl<Repair> implement
 
     @Override
     public List<Repair> readOwner(long vatNumberOfOwner) {
-        return entityManager.createQuery("from Repair r Where r.owner.vatNumber = :vatNumber ", Repair.class)
+        return entityManager.createQuery("FROM Repair r WHERE r.owner.vatNumber = :vatNumber ", Repair.class)
                 .setParameter("vatNumber", vatNumberOfOwner)
                 .getResultList();
     }
 
     @Override
-    public boolean updateProposedStartDate(int repairId, LocalDate date) {
+    public void updateProposedStartDate(int repairId, LocalDate date) {
         Repair repair = readById(repairId);
-        if (repair != null) {
-            repair.setProposedDateOfStart(date);
-            entityManager.getTransaction().begin();
-            entityManager.merge(repair);
-            entityManager.getTransaction().commit();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean updateProposedEndDate(int repairId, LocalDate date) {
-        Repair repair = readById(repairId);
-        if (repair != null) {
-            repair.setProposedDateOfEnd(date);
-            entityManager.getTransaction().begin();
-            entityManager.merge(repair);
-            entityManager.getTransaction().commit();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean updateProposedCost(int repairId, BigDecimal cost) {
-        Repair repair = readById(repairId);
-        if (repair != null) {
-            repair.setProposedCost(cost);
-            entityManager.getTransaction().begin();
-            entityManager.merge(repair);
-            entityManager.getTransaction().commit();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean update(Repair repair) {
+        repair.setProposedDateOfStart(date);
         entityManager.getTransaction().begin();
         entityManager.merge(repair);
         entityManager.getTransaction().commit();
-        return true;
+    }
+
+    @Override
+    public void updateProposedEndDate(int repairId, LocalDate date) {
+        Repair repair = readById(repairId);
+        repair.setProposedDateOfEnd(date);
+        entityManager.getTransaction().begin();
+        entityManager.merge(repair);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void updateProposedCost(int repairId, BigDecimal cost) {
+        Repair repair = readById(repairId);
+        repair.setProposedCost(cost);
+        entityManager.getTransaction().begin();
+        entityManager.merge(repair);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void update(Repair repair) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(repair);
+        entityManager.getTransaction().commit();
     }
 
 }
