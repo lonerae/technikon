@@ -27,7 +27,7 @@ of the repairs.
 In the exceptions package are included the classes that handle the exception messages that occur in our code. 
 
 **Model Package**
-In the model package are included the classes that specify the modeling of our project. (*PersistenClass* , *Owner*, 
+In the model package are included the classes that specify the modeling of our project. (*PersistenClass*, *Owner*, 
 *Property*, *Repair*)
 
 **Repository Package**
@@ -50,10 +50,10 @@ The essential development tools required to run the project are:
 When the enviroment is set up, all you have to do is  run the Technikon.java, a file that include the main method and implements
 the basic use cases of our project.
 More specifically by running the main, the following procedures will take place:
-- By the method **dataPopulation()** we popoulate our database with tha data given by the CSV files.
+- By the method **dataPopulation()** we populate our database with the data given by the CSV files.
 - By the method **ownerRegistrationWithTwoProperties()** the customer directly register himself/hershelf into the 
 application and two of his/her properties. The relevant fields are being filled in the database.
-- By the method **repairRegistration()** the owner register a repair for one of hiw properties in the application.
-- By the method **repairAdministration()** the admin can overview the pending repairs that are registered in the platform and by the 
-method **reports()** the admin gets a full report of the repairs in all statuses.
+- By the method **repairRegistration()** the owner register a repair for one of his/her properties in the application.
+- By the method **repairAdministration()** the admin can overview the pending repairs that are registered in the platform  
+- By the method **reports()** the admin gets a full report of the repairs in all statuses.
 
