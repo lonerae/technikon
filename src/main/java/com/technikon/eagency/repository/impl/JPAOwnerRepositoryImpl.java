@@ -37,42 +37,30 @@ public class JPAOwnerRepositoryImpl extends JPARepositoryImpl<Owner> implements 
     }
 
     @Override
-    public boolean updateAddress(int ownerId, String address) {
+    public void updateAddress(int ownerId, String address) {
         Owner owner = readById(ownerId);
-        if (owner != null) {
-            owner.setAddress(address);
-            entityManager.getTransaction().begin();
-            entityManager.merge(owner);
-            entityManager.getTransaction().commit();
-            return true;
-        }
-        return false;
+        owner.setAddress(address);
+        entityManager.getTransaction().begin();
+        entityManager.merge(owner);
+        entityManager.getTransaction().commit();
     }
 
     @Override
-    public boolean updateEmail(int ownerId, String email) {
+    public void updateEmail(int ownerId, String email) {
         Owner owner = readById(ownerId);
-        if (owner != null) {
-            owner.setEmail(email);
-            entityManager.getTransaction().begin();
-            entityManager.merge(owner);
-            entityManager.getTransaction().commit();
-            return true;
-        }
-        return false;
+        owner.setEmail(email);
+        entityManager.getTransaction().begin();
+        entityManager.merge(owner);
+        entityManager.getTransaction().commit();
     }
 
     @Override
-    public boolean updatePassword(int ownerId, String password) {
+    public void updatePassword(int ownerId, String password) {
         Owner owner = readById(ownerId);
-        if (owner != null) {
-            owner.setPassword(password);
-            entityManager.getTransaction().begin();
-            entityManager.merge(owner);
-            entityManager.getTransaction().commit();
-            return true;
-        }
-        return false;
+        owner.setPassword(password);
+        entityManager.getTransaction().begin();
+        entityManager.merge(owner);
+        entityManager.getTransaction().commit();
     }
 
 }

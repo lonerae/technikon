@@ -20,33 +20,21 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
     }
 
     @Override
-    public boolean updateAddress(int ownerId, String address) {
+    public void updateAddress(int ownerId, String address) {
         Owner owner = readById(ownerId);
-        if (owner != null) {
-            owner.setAddress(address);
-            return true;
-        }
-        return false;
+        owner.setAddress(address);
     }
 
     @Override
-    public boolean updateEmail(int ownerId, String email) {
+    public void updateEmail(int ownerId, String email) {
         Owner owner = readById(ownerId);
-        if (owner != null) {
-            owner.setEmail(email);
-            return true;
-        }
-        return false;
+        owner.setEmail(email);
     }
 
     @Override
-    public boolean updatePassword(int ownerId, String password) {
+    public void updatePassword(int ownerId, String password) {
         Owner owner = readById(ownerId);
-        if (owner != null) {
-            owner.setPassword(password);
-            return true;
-        }
-        return false;
+        owner.setPassword(password);
     }
 
 }

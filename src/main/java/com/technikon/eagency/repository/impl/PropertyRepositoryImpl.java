@@ -21,18 +21,14 @@ public class PropertyRepositoryImpl extends RepositoryImpl<Property> implements 
     }
 
     @Override
-    public boolean update(Property newProperty) {
+    public void update(Property newProperty) {
         Property oldProperty = readById(newProperty.getId());
-        if (oldProperty != null) {
-            oldProperty.setAddress(newProperty.getAddress());
-            oldProperty.setOwner(newProperty.getOwner());
-            oldProperty.setPropertyId(newProperty.getPropertyId());
-            oldProperty.setPropertyType(newProperty.getPropertyType());
-            oldProperty.setRepairList(newProperty.getRepairList());
-            oldProperty.setYearOfConstruction(newProperty.getYearOfConstruction());
-            return true;
-        }
-        return false;
+        oldProperty.setAddress(newProperty.getAddress());
+        oldProperty.setOwner(newProperty.getOwner());
+        oldProperty.setPropertyId(newProperty.getPropertyId());
+        oldProperty.setPropertyType(newProperty.getPropertyType());
+        oldProperty.setRepairList(newProperty.getRepairList());
+        oldProperty.setYearOfConstruction(newProperty.getYearOfConstruction());
     }
 
 }

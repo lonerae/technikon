@@ -13,12 +13,12 @@ public interface RepairRepository extends Repository<Repair> {
 
     List<Repair> readOwner(long vatNumber);
 
-    boolean updateProposedStartDate(int repairId, LocalDate date);
+    void updateProposedStartDate(int repairId, LocalDate date);
 
-    boolean updateProposedEndDate(int repairId, LocalDate date);
+    void updateProposedEndDate(int repairId, LocalDate date);
 
-    boolean updateProposedCost(int repairId, BigDecimal cost);
+    void updateProposedCost(int repairId, BigDecimal cost);
 
-    boolean update(Repair repair);
+    void update(Repair repair);
 
 }

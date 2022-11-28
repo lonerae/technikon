@@ -31,55 +31,38 @@ public class RepairRepositoryImpl extends RepositoryImpl<Repair> implements Repa
     }
 
     @Override
-    public boolean updateProposedStartDate(int repairId, LocalDate date) {
+    public void updateProposedStartDate(int repairId, LocalDate date) {
         Repair repair = readById(repairId);
-        if (repair != null) {
-            repair.setDateOfStart(date);
-            return true;
-        }
-        return false;
+        repair.setDateOfStart(date);
     }
 
     @Override
-    public boolean updateProposedEndDate(int repairId, LocalDate date) {
+    public void updateProposedEndDate(int repairId, LocalDate date) {
         Repair repair = readById(repairId);
-        if (repair != null) {
-            repair.setDateOfEnd(date);
-            return true;
-        }
-        return false;
+        repair.setDateOfEnd(date);
     }
 
     @Override
-    public boolean updateProposedCost(int repairId, BigDecimal cost) {
+    public void updateProposedCost(int repairId, BigDecimal cost) {
         Repair repair = readById(repairId);
-        if (repair != null) {
-            repair.setProposedCost(cost);
-            return true;
-        }
-        return false;
-
+        repair.setProposedCost(cost);
     }
 
     @Override
-    public boolean update(Repair newRepair) {
+    public void update(Repair newRepair) {
         Repair oldRepair = readById(newRepair.getId());
-        if (oldRepair != null) {
-            oldRepair.setAcceptance(newRepair.isAcceptance());
-            oldRepair.setDateOfEnd(newRepair.getDateOfEnd());
-            oldRepair.setDateOfStart(newRepair.getDateOfStart());
-            oldRepair.setDateOfSubmission(newRepair.getDateOfSubmission());
-            oldRepair.setDescriptionOfWork(newRepair.getDescriptionOfWork());
-            oldRepair.setOwner(newRepair.getOwner());
-            oldRepair.setProperty(newRepair.getProperty());
-            oldRepair.setProposedCost(newRepair.getProposedCost());
-            oldRepair.setProposedDateOfEnd(newRepair.getProposedDateOfEnd());
-            oldRepair.setProposedDateOfStart(newRepair.getProposedDateOfStart());
-            oldRepair.setRepairtype(newRepair.getRepairtype());
-            oldRepair.setShortDescription(newRepair.getShortDescription());
-            oldRepair.setStatusType(newRepair.getStatusType());
-            return true;
-        }
-        return false;
+        oldRepair.setAcceptance(newRepair.isAcceptance());
+        oldRepair.setDateOfEnd(newRepair.getDateOfEnd());
+        oldRepair.setDateOfStart(newRepair.getDateOfStart());
+        oldRepair.setDateOfSubmission(newRepair.getDateOfSubmission());
+        oldRepair.setDescriptionOfWork(newRepair.getDescriptionOfWork());
+        oldRepair.setOwner(newRepair.getOwner());
+        oldRepair.setProperty(newRepair.getProperty());
+        oldRepair.setProposedCost(newRepair.getProposedCost());
+        oldRepair.setProposedDateOfEnd(newRepair.getProposedDateOfEnd());
+        oldRepair.setProposedDateOfStart(newRepair.getProposedDateOfStart());
+        oldRepair.setRepairtype(newRepair.getRepairtype());
+        oldRepair.setShortDescription(newRepair.getShortDescription());
+        oldRepair.setStatusType(newRepair.getStatusType());
     }
 }

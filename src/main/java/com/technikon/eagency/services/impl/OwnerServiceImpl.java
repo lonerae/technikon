@@ -1,6 +1,5 @@
 package com.technikon.eagency.services.impl;
 
-import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.OwnerException;
 import com.technikon.eagency.exceptions.OwnerExceptionCodes;
 import com.technikon.eagency.exceptions.PropertyException;
@@ -17,8 +16,6 @@ import com.technikon.eagency.services.OwnerService;
 import jakarta.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +40,6 @@ public class OwnerServiceImpl implements OwnerService {
             throw new OwnerException(OwnerExceptionCodes.OWNER_IS_NULL);
         }
         long vatNumber = owner.getVatNumber();
-        System.out.println(vatNumber);
         String email = owner.getEmail();
         try {
             ownerRepository.create(owner);
@@ -145,10 +141,11 @@ public class OwnerServiceImpl implements OwnerService {
         if (ownerRetrieved == null || !ownerRetrieved.isActive()) {
             return false;
         }
-        if (!address.isBlank()) {
-            return ownerRepository.updateAddress(ownerId, address);
+        if (address.isBlank()) {
+            return false;
         }
-        return false;
+        ownerRepository.updateAddress(ownerId, address);
+        return true;
     }
 
     @Override
@@ -160,7 +157,8 @@ public class OwnerServiceImpl implements OwnerService {
         if (email.isBlank()) {
             return false;
         }
-        return ownerRepository.updateEmail(ownerId, email);
+        ownerRepository.updateEmail(ownerId, email);
+        return true;
 
     }
 
@@ -173,26 +171,28 @@ public class OwnerServiceImpl implements OwnerService {
         if (password.isBlank()) {
             return false;
         }
-        return ownerRepository.updatePassword(ownerId, password);
-
+        ownerRepository.updatePassword(ownerId, password);
+        return true;
     }
 
     @Override
     public boolean update(Property property) {
-        if (property != null && property.isActive()) {
-            return propertyRepository.update(property);
+        if (property == null && !property.isActive()) {
+            return false;
         }
-        return false;
+        propertyRepository.update(property);
+        return true;
     }
 
     @Override
     public boolean acceptRepair(int repairId, boolean acceptance) {
         Repair repair = repairRepository.readById(repairId);
-        if (repair != null && repair.isActive()) {
-            repair.setAcceptance(acceptance);
-            return repairRepository.update(repairRepository.readById(repairId));
+        if (repair == null && !repair.isActive()) {
+            return false;
         }
-        return false;
+        repair.setAcceptance(acceptance);
+        repairRepository.update(repairRepository.readById(repairId));
+        return true;
     }
 
     @Override
