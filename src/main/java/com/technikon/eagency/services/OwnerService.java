@@ -149,12 +149,12 @@ public interface OwnerService {
     boolean acceptRepair(int repairId, boolean acceptance);
 
     /**
-     * Gives a report with information of an owner's properties and repairs.
+     * Gives a report with information of an owner's active properties and
+     * repairs.
      *
      * @param vatNumberOfOwner
-     * @return a map with all the properties of owner with given VAT number and
-     * their status
+     * @return a list with all the repairs of owner with given VAT number
      */
-    Map<Long, StatusType> getReport(long vatNumberOfOwner);
+    List<Repair> getReport(long vatNumberOfOwner);
 
 }
