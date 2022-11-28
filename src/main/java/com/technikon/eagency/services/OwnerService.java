@@ -1,6 +1,5 @@
 package com.technikon.eagency.services;
 
-import com.technikon.eagency.enums.StatusType;
 import com.technikon.eagency.exceptions.OwnerException;
 import com.technikon.eagency.exceptions.PropertyException;
 import com.technikon.eagency.exceptions.RepairException;
@@ -9,7 +8,6 @@ import com.technikon.eagency.model.Property;
 import com.technikon.eagency.model.Repair;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public interface OwnerService {
 
