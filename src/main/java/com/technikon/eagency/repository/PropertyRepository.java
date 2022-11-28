@@ -9,6 +9,6 @@ public interface PropertyRepository extends Repository<Property> {
 
     List<Property> readVatNumber(long vatNumberOfOwner);
 
-    boolean update(Property property);
+    void update(Property property);
 
 }
