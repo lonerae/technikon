@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static java.io.File.separator;
+
 public class UseCasesUtil {
 
     private static final OwnerRepository ownerRepo = new JPAOwnerRepositoryImpl();
@@ -43,9 +45,9 @@ public class UseCasesUtil {
 
     /*4.1*/
     public static void dataPopulation() {
-        ioService.readOwnersCsv("data/owners.csv");
-        ioService.readPropertiesCsv("data/properties.csv");
-        ioService.readRepairFromCsv("data/repairs.csv");
+        ioService.readOwnersCsv("data" + separator + "owners.csv");
+        ioService.readPropertiesCsv("data" + separator + "properties.csv");
+        ioService.readRepairFromCsv("data" + separator + "repairs.csv");
     }
 
     /*4.2*/
@@ -62,6 +64,7 @@ public class UseCasesUtil {
         try {
             ownerService.registerOwner(owner);
         } catch (OwnerException ex) {
+            System.out.println(ex.getMessage());
         }
 
         Property property1 = new Property();
@@ -73,6 +76,7 @@ public class UseCasesUtil {
         try {
             ownerService.registerProperty(property1);
         } catch (PropertyException ex) {
+            System.out.println(ex.getMessage());
         }
 
         Property property2 = new Property();
@@ -84,6 +88,7 @@ public class UseCasesUtil {
         try {
             ownerService.registerProperty(property2);
         } catch (PropertyException ex) {
+            System.out.println(ex.getMessage());
         }
 
         correctionsOnWronglyInsertedData(owner, property1);
@@ -117,6 +122,7 @@ public class UseCasesUtil {
         try {
             ownerService.submitRepair(repair);
         } catch (RepairException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -150,7 +156,8 @@ public class UseCasesUtil {
                     adminService.checkStartDate(pendingRepair.getId(), null);
                     adminService.checkEndDate(pendingRepair.getId(), null);
                 }
-            } catch (RepairException repairException) {
+            } catch (RepairException ex) {
+                System.out.println(ex.getMessage());
             }
         }
     }
@@ -185,9 +192,9 @@ public class UseCasesUtil {
 
     /*------------------------------------------------------------------------*/
     public static void saveChanges() {
-        ioService.saveOwnersToCsv("data/owners.csv");
-        ioService.savePropertiesToCsv("data/properties.csv");
-        ioService.saveRepairsToCsv("data/repairs.csv");
+        ioService.saveOwnersToCsv("data" + separator + "owners.csv");
+        ioService.savePropertiesToCsv("data" + separator + "properties.csv");
+        ioService.saveRepairsToCsv("data" + separator + "repairs.csv");
     }
 
 }
