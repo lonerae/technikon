@@ -196,11 +196,11 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Map<Long, StatusType> getReport(long vatNumberOfOwner) {
+    public List<Repair> getReport(long vatNumberOfOwner) {
         return repairRepository
                 .readOwner(vatNumberOfOwner)
                 .stream()
                 .filter(r -> r.getOwner().getVatNumber() == vatNumberOfOwner)
-                .collect(Collectors.toMap(r -> r.getProperty().getPropertyId(), Repair::getStatusType));
+                .toList();
     }
 }

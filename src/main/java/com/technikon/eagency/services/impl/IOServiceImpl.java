@@ -338,7 +338,12 @@ public class IOServiceImpl implements IOService {
         repair.setDescriptionOfWork(words[6].trim());
         repair.setProposedDateOfStart(LocalDate.parse(words[7].trim()));
         repair.setProposedDateOfEnd(LocalDate.parse(words[8].trim()));
-        repair.setProposedCost(BigDecimal.valueOf(Double.parseDouble(words[9].trim())));
+        String cost = words[9].trim();
+        if (!cost.isBlank()) {
+            repair.setProposedCost(BigDecimal.valueOf(Double.parseDouble(cost)));
+        } else {
+            repair.setProposedCost(null);
+        }
         repair.setAcceptance(Boolean.parseBoolean(words[10].trim()));
         String dateOfStart = words[11].trim();
         if (!dateOfStart.isBlank()) {
