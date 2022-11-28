@@ -25,7 +25,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeCost(int repairId, BigDecimal proposedCost) throws RepairException {
-        if (repairRepository.readById(repairId) == null) {
+        Repair repairRetrieved = repairRepository.readById(repairId);
+        if (repairRetrieved == null || !repairRetrieved.isActive()) {
             logger.warn("The repair is null.");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
@@ -39,7 +40,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeStartDate(int repairId, LocalDate proposedStartDate) throws RepairException {
-        if (repairRepository.readById(repairId) == null) {
+        Repair repairRetrieved = repairRepository.readById(repairId);
+
+        if (repairRetrieved == null || !repairRetrieved.isActive()) {
             logger.warn("The repair is null.");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
@@ -53,7 +56,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void proposeEndDate(int repairId, LocalDate proposedEndDate) throws RepairException {
-        if (repairRepository.readById(repairId) == null) {
+        Repair repairRetrieved = repairRepository.readById(repairId);
+
+        if (repairRetrieved == null || !repairRetrieved.isActive()) {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
@@ -68,7 +73,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void updateStatusType(int repairId, StatusType status) throws RepairException {
         Repair repair = repairRepository.readById(repairId);
-        if (repair == null) {
+        if (repair == null || !repair.isActive()) {
             logger.warn("The repair is null.");
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
@@ -84,11 +89,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public LocalDate checkStartDate(int repairId, LocalDate dateOfStart) throws RepairException {
         Repair repair = repairRepository.readById(repairId);
-        if (repair == null) {
+        if (repair == null || !repair.isActive()) {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        if ( dateOfStart !=null && dateOfStart.isBefore(repair.getDateOfSubmission())) {
+        if (dateOfStart != null && dateOfStart.isBefore(repair.getDateOfSubmission())) {
             logger.warn("Start date is before the date of submission");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATE_OF_START);
         }
@@ -101,11 +106,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public LocalDate checkEndDate(int repairId, LocalDate dateOfEnd) throws RepairException {
         Repair repair = repairRepository.readById(repairId);
-        if (repair == null) {
+        if (repair == null || !repair.isActive()) {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
-        if (dateOfEnd !=null && dateOfEnd.isBefore(repair.getDateOfSubmission())) {
+        if (dateOfEnd != null && dateOfEnd.isBefore(repair.getDateOfSubmission())) {
             logger.warn("End date is before the date of submission");
             throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATE_OF_END);
         }
@@ -119,13 +124,16 @@ public class AdministratorServiceImpl implements AdministratorService {
     public List<Repair> findAllPendingRepairs() {
         return repairRepository.readAll()
                 .stream()
-                .filter(r -> StatusType.PENDING.equals(r.getStatusType()))
+                .filter(r -> StatusType.PENDING.equals(r.getStatusType()) && r.isActive())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Repair> findAllRepairs() {
-        return repairRepository.readAll();
+        return repairRepository.readAll()
+                .stream()
+                .filter(r -> r.isActive())
+                .collect(Collectors.toList());
     }
 
 }
