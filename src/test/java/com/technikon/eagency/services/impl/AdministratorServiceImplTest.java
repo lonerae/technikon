@@ -15,6 +15,7 @@ import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
 import com.technikon.eagency.services.AdministratorService;
 import com.technikon.eagency.services.OwnerService;
+import com.technikon.eagency.util.JPAUtil;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -23,16 +24,20 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class AdministratorServiceImplTest {
 
-    private final OwnerRepository ownerRepository = new JPAOwnerRepositoryImpl();
-    private final PropertyRepository propertyRepository = new JPAPropertyRepositoryImpl();
-    private final RepairRepository repairRepository = new JPARepairRepositoryImpl();
+    private OwnerRepository ownerRepository;
+    private PropertyRepository propertyRepository;
+    private RepairRepository repairRepository;
     private OwnerService ownerService;
     private AdministratorService administratorService;
 
     @BeforeEach
     public void beforeEach() {
-        administratorService = new AdministratorServiceImpl(repairRepository);
+        JPAUtil.shutdown();
+        ownerRepository = new JPAOwnerRepositoryImpl();
+        propertyRepository = new JPAPropertyRepositoryImpl();
+        repairRepository = new JPARepairRepositoryImpl();
         ownerService = new OwnerServiceImpl(ownerRepository, propertyRepository, repairRepository);
+        administratorService = new AdministratorServiceImpl(repairRepository);
     }
 
     @Test
@@ -328,7 +333,7 @@ public class AdministratorServiceImplTest {
 
     @Test
     public void addNonexistentRepairAtCheckStartDateAndCheckIfReturns() throws Exception {
-        assertThrows(RepairException.class, () -> administratorService.checkStartDate(0));
+        assertThrows(RepairException.class, () -> administratorService.checkStartDate(0, LocalDate.now()));
     }
 
     @Test
@@ -357,15 +362,15 @@ public class AdministratorServiceImplTest {
         repair1.setDateOfSubmission(LocalDate.now());
         repair1.setRepairtype(RepairType.PAINTING);
         repair1.setProperty(property1);
-        repair1.setDateOfStart(LocalDate.now());
+        repair1.setDateOfStart(LocalDate.of(2022, 5, 10));
         ownerService.submitRepair(repair1);
 
-        assertTrue(LocalDate.now().equals(administratorService.checkStartDate(1)));
+        assertTrue(LocalDate.now().equals(administratorService.checkStartDate(1, LocalDate.now())));
     }
 
     @Test
     public void addNonexistentRepairAtCheckEndDateAndCheckIfReturns() throws Exception {
-        assertThrows(RepairException.class, () -> administratorService.checkEndDate(0));
+        assertThrows(RepairException.class, () -> administratorService.checkEndDate(0, LocalDate.now()));
     }
 
     @Test

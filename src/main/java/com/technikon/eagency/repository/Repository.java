@@ -10,10 +10,9 @@ public interface Repository<T extends PersistentClass> {
     T readById(int id);
 
     List<T> readAll();
-    
+
     boolean delete(int id);
 
     boolean safeDelete(int id);
 
 }
-

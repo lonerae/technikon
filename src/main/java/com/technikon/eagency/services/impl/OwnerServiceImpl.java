@@ -168,7 +168,7 @@ public class OwnerServiceImpl implements OwnerService {
         }
         return false;
     }
-    
+
     @Override
     public Map<Long, StatusType> getReport(long vatNumberOfOwner) {
         return repairRepository

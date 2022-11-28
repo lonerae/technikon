@@ -1,10 +1,6 @@
 package com.technikon.eagency.util;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.technikon.eagency.enums.PropertyType;
 import com.technikon.eagency.enums.RepairType;
 import com.technikon.eagency.enums.StatusType;
@@ -26,16 +22,12 @@ import com.technikon.eagency.services.OwnerService;
 import com.technikon.eagency.services.impl.AdministratorServiceImpl;
 import com.technikon.eagency.services.impl.IOServiceImpl;
 import com.technikon.eagency.services.impl.OwnerServiceImpl;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UseCasesUtil {
 

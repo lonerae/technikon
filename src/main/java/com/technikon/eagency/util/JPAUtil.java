@@ -7,10 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- *
- * @author Hara
- */
 public class JPAUtil {
 
     private static final String PERSISTENCE_UNIT_NAME = "Persistence";

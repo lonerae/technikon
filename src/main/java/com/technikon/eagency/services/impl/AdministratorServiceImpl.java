@@ -88,6 +88,10 @@ public class AdministratorServiceImpl implements AdministratorService {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
         }
+        if ( dateOfStart !=null && dateOfStart.isBefore(repair.getDateOfSubmission())) {
+            logger.warn("Start date is before the date of submission");
+            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATE_OF_START);
+        }
         repair.setDateOfStart(dateOfStart);
         repairRepository.update(repair);
         logger.info("Start date of Repair #{} was checked.", repairId);
@@ -100,6 +104,10 @@ public class AdministratorServiceImpl implements AdministratorService {
         if (repair == null) {
             logger.warn("No repair under id {}", repairId);
             throw new RepairException(RepairExceptionCodes.REPAIR_IS_NULL);
+        }
+        if (dateOfEnd !=null && dateOfEnd.isBefore(repair.getDateOfSubmission())) {
+            logger.warn("End date is before the date of submission");
+            throw new RepairException(RepairExceptionCodes.REPAIR_INVALID_DATE_OF_END);
         }
         repair.setDateOfEnd(dateOfEnd);
         repairRepository.update(repair);

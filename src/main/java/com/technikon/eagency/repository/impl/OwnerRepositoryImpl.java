@@ -48,5 +48,5 @@ public class OwnerRepositoryImpl extends RepositoryImpl<Owner> implements OwnerR
         }
         return false;
     }
-    
+
 }

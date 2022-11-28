@@ -15,6 +15,7 @@ import com.technikon.eagency.repository.impl.JPAOwnerRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPAPropertyRepositoryImpl;
 import com.technikon.eagency.repository.impl.JPARepairRepositoryImpl;
 import com.technikon.eagency.services.OwnerService;
+import com.technikon.eagency.util.JPAUtil;
 import jakarta.persistence.PersistenceException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,17 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class OwnerServiceImplTest {
 
-    private final OwnerRepository ownerRepository = new JPAOwnerRepositoryImpl();
-    private final PropertyRepository propertyRepository = new JPAPropertyRepositoryImpl();
-    private final RepairRepository repairRepository = new JPARepairRepositoryImpl();
+    private OwnerRepository ownerRepository;
+    private PropertyRepository propertyRepository;
+    private RepairRepository repairRepository;
     private OwnerService service;
 
     @BeforeEach
     public void beforeEach() {
+        JPAUtil.shutdown();
+        ownerRepository = new JPAOwnerRepositoryImpl();
+        propertyRepository = new JPAPropertyRepositoryImpl();
+        repairRepository = new JPARepairRepositoryImpl();
         service = new OwnerServiceImpl(ownerRepository, propertyRepository, repairRepository);
     }
 
