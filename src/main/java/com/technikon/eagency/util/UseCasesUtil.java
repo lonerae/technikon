@@ -25,7 +25,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import static java.io.File.separator;
@@ -87,8 +86,6 @@ public class UseCasesUtil {
         property1.setOwner(owner);
         try {
             ownerService.registerProperty(property1);
-            Property dbProperty1 = ownerService.findProperty(property1.getPropertyId());
-            System.out.println(pretty(dbProperty1));
         } catch (PropertyException ex) {
             System.out.println(ex.getMessage());
         }
@@ -103,6 +100,11 @@ public class UseCasesUtil {
             ownerService.registerProperty(property2);
         } catch (PropertyException ex) {
             System.out.println(ex.getMessage());
+        }
+
+        List<Property> ownerProperties = ownerService.findProperties(owner.getVatNumber());
+        for (Property ownerProperty : ownerProperties) {
+            System.out.println(pretty(ownerProperty));
         }
 
         System.out.println();
@@ -168,12 +170,12 @@ public class UseCasesUtil {
 
         System.out.println();
         System.out.println("|-------------------ACCEPTING REPAIR SCENARIO-------------------|");
-        
+
         //hard coded for testing purposes
         int maxCost = 5000;
         int minCost = 1000;
         int rangeOfCost = maxCost - minCost + 1;
-        
+
         for (Repair pendingRepair : pendingRepairList) {
             try {
                 adminProposes(rangeOfCost, minCost, pendingRepair);
@@ -235,9 +237,17 @@ public class UseCasesUtil {
         System.out.println("|-------------------END OF USE CASES-------------------|");
     }
 
+    /*------------------------------------------------------------------------*/
+    public static void saveChanges() {
+        ioService.saveOwnersToCsv("data" + separator + "owners.csv");
+        ioService.savePropertiesToCsv("data" + separator + "properties.csv");
+        ioService.saveRepairsToCsv("data" + separator + "repairs.csv");
+    }
+
     private static String pretty(Owner owner) {
-        return "{\n"
-                + "\tName: " + owner.getName() + "\n"
+        return """
+               {
+               \tName: """ + owner.getName() + "\n"
                 + "\tSurname: " + owner.getSurname() + "\n"
                 + "\tVAT number: " + owner.getVatNumber() + "\n"
                 + "\tEmail: " + owner.getEmail() + "\n"
@@ -249,8 +259,9 @@ public class UseCasesUtil {
     }
 
     private static String pretty(Property property) {
-        return "{\n"
-                + "\tE9: " + property.getPropertyId() + "\n"
+        return """
+               {
+               \tE9: """ + property.getPropertyId() + "\n"
                 + "\tOwner VAT number: " + property.getOwner().getVatNumber() + "\n"
                 + "\tProperty type: " + property.getPropertyType() + "\n"
                 + "\tAddress: " + property.getAddress() + "\n"
@@ -259,8 +270,9 @@ public class UseCasesUtil {
     }
 
     private static String pretty(Repair repair) {
-        return "{\n"
-                + "\tOwner VAT number: " + repair.getOwner().getVatNumber() + "\n"
+        return """
+               {
+               \tOwner VAT number: """ + repair.getOwner().getVatNumber() + "\n"
                 + "\tProperty E9: " + repair.getProperty().getPropertyId() + "\n"
                 + "\tStatus: " + repair.getStatusType() + "\n"
                 + "\tCost: " + repair.getProposedCost() + "\n"
@@ -270,12 +282,4 @@ public class UseCasesUtil {
                 + "\tShort description: " + repair.getShortDescription() + "\n"
                 + "}";
     }
-
-    /*------------------------------------------------------------------------*/
-    public static void saveChanges() {
-        ioService.saveOwnersToCsv("data" + separator + "owners.csv");
-        ioService.savePropertiesToCsv("data" + separator + "properties.csv");
-        ioService.saveRepairsToCsv("data" + separator + "repairs.csv");
-    }
-
 }
