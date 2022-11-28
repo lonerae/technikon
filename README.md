@@ -37,7 +37,7 @@ to access our data sources.
 **Services Package**
 In the services package are implemented the services of the customer, the admin and the data manipulation.
 
-**Util Package**
+**Util Package** 
 In the util package we implement the standard code for the JPA specification as well as the use cases of the project.
 
 
