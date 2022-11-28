@@ -1,7 +1,7 @@
 #  **Project Technikon**
 ## A group project for the Java Bootcamp by CodeHub
 
-#### Description
+### Description
 
 This project implements an application for a Renovation Contractor Agency, Technicon. 
 The types of users for the application are two: an **admin** and an **owner**, who is the customer of the platform.
@@ -43,9 +43,9 @@ In the util package we implement the standard code for the JPA specification as 
 
 ### How to Run the Project
 The essential development tools required to run the project are:
-JDK 17
-Any IDE that supports Java(Apache NetBeans, Eclipse etc)
-Maven
+-JDK 17
+-Any IDE that supports Java(Apache NetBeans, Eclipse etc)
+-Maven
 
 When the enviroment is set up, all you have to do is  run the Technikon.java, a file that include the main method and implements
 the basic use cases of our project.More specifically by running the main, the following procedures will take place:
