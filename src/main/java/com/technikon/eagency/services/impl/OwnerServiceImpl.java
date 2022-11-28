@@ -93,17 +93,29 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Owner findOwner(long vatNumber) {
-        return ownerRepository.readVatNumber(vatNumber);
+        Owner ownerRetrieved = ownerRepository.readVatNumber(vatNumber);
+        if (ownerRetrieved == null || !ownerRetrieved.isActive()) {
+            return null;
+        }
+        return ownerRetrieved;
     }
 
     @Override
     public Owner findOwner(String email) {
-        return ownerRepository.readEmail(email);
+        Owner ownerRetrieved = ownerRepository.readEmail(email);
+        if (ownerRetrieved == null || !ownerRetrieved.isActive()) {
+            return null;
+        }
+        return ownerRetrieved;
     }
 
     @Override
     public Property findProperty(long propertyId) {
-        return propertyRepository.readPropertyId(propertyId);
+        Property propertyRetrieved = propertyRepository.readPropertyId(propertyId);
+        if (propertyRetrieved == null || !propertyRetrieved.isActive()) {
+            return null;
+        }
+        return propertyRetrieved;
     }
 
     @Override
@@ -129,6 +141,10 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public boolean updateAddress(int ownerId, String address) {
+        Owner ownerRetrieved = ownerRepository.readById(ownerId);
+        if (ownerRetrieved == null || !ownerRetrieved.isActive()) {
+            return false;
+        }
         if (!address.isBlank()) {
             return ownerRepository.updateAddress(ownerId, address);
         }
@@ -137,23 +153,33 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public boolean updateEmail(int ownerId, String email) {
-        if (!email.isBlank()) {
-            return ownerRepository.updateEmail(ownerId, email);
+        Owner ownerRetrieved = ownerRepository.readById(ownerId);
+        if (ownerRetrieved == null || !ownerRetrieved.isActive()) {
+            return false;
         }
-        return false;
+        if (email.isBlank()) {
+            return false;
+        }
+        return ownerRepository.updateEmail(ownerId, email);
+
     }
 
     @Override
     public boolean updatePassword(int ownerId, String password) {
-        if (!password.isBlank()) {
-            return ownerRepository.updatePassword(ownerId, password);
+        Owner ownerRetrieved = ownerRepository.readById(ownerId);
+        if (ownerRetrieved == null || !ownerRetrieved.isActive()) {
+            return false;
         }
-        return false;
+        if (password.isBlank()) {
+            return false;
+        }
+        return ownerRepository.updatePassword(ownerId, password);
+
     }
 
     @Override
     public boolean update(Property property) {
-        if (property != null) {
+        if (property != null && property.isActive()) {
             return propertyRepository.update(property);
         }
         return false;
@@ -162,7 +188,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public boolean acceptRepair(int repairId, boolean acceptance) {
         Repair repair = repairRepository.readById(repairId);
-        if (repair != null) {
+        if (repair != null && repair.isActive()) {
             repair.setAcceptance(acceptance);
             return repairRepository.update(repairRepository.readById(repairId));
         }
