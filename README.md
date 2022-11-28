@@ -43,16 +43,17 @@ In the util package we implement the standard code for the JPA specification as 
 
 ### How to Run the Project
 The essential development tools required to run the project are:
--JDK 17
--Any IDE that supports Java(Apache NetBeans, Eclipse etc)
--Maven
+- JDK 17
+- Any IDE that supports Java(Apache NetBeans, Eclipse etc)
+- Maven
 
 When the enviroment is set up, all you have to do is  run the Technikon.java, a file that include the main method and implements
-the basic use cases of our project.More specifically by running the main, the following procedures will take place:
-By the method **dataPopulation()** we popoulate our database with tha data given by the CSV files.
-By the method **ownerRegistrationWithTwoProperties()** the customer directly register himself/hershelf into the 
+the basic use cases of our project.
+More specifically by running the main, the following procedures will take place:
+- By the method **dataPopulation()** we popoulate our database with tha data given by the CSV files.
+- By the method **ownerRegistrationWithTwoProperties()** the customer directly register himself/hershelf into the 
 application and two of his/her properties. The relevant fields are being filled in the database.
-By the method **repairRegistration()** the owner register a repair for one of hiw properties in the application.
-By the method **repairAdministration()** the admin can overview the pending repairs that are registered in the platform and by the 
+- By the method **repairRegistration()** the owner register a repair for one of hiw properties in the application.
+- By the method **repairAdministration()** the admin can overview the pending repairs that are registered in the platform and by the 
 method **reports()** the admin gets a full report of the repairs in all statuses.
 
